@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    
+    <title>番茄工作法——原理剖析与实践 - Hexo</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <meta name="description" content="是否还在为专注工作时被打断而苦恼？是否因为久坐而导致颈肩与腰椎的疼痛？是否每天喝水都不足1L？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="番茄工作法——原理剖析与实践">
+<meta property="og:url" content="http://example.com/2021/11/29/%E7%95%AA%E8%8C%84%E5%B7%A5%E4%BD%9C%E6%B3%95%E2%80%94%E2%80%94%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90%E4%B8%8E%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="是否还在为专注工作时被打断而苦恼？是否因为久坐而导致颈肩与腰椎的疼痛？是否每天喝水都不足1L？">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-11-29T14:28:16.000Z">
+<meta property="article:modified_time" content="2022-03-01T22:32:42.459Z">
+<meta property="article:author" content="KangQingYu">
+<meta property="article:tag" content="效率">
+<meta property="article:tag" content="工作">
+<meta name="twitter:card" content="summary">
+    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1646176409131">
+    
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1646176409131">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1646176409131">
+    <link rel="stylesheet" href="/css/style.css?v=1646176409131">
+     
+    
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(http://cdn.kangqingyu.com/common/blogArticleBackground2_819h.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="KangQingYu" class="mdui-btn mdui-btn-icon"><img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="KangQingYu">
+            <img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu" alt="KangQingYu">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>Articles</span>12</div>
+        <div><span>Tags</span>8</div>
+        <div><span>Categories</span>3</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/PY.html" title="我的朋友">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:nexmoe.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://space.bilibili.com/552775698" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/kangqingyu/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="mailto:kangqingyu@gmail.com" target="_blank" mdui-tooltip="{content: 'mail'}" style="color: rgb(249,8,8);background-color: rgba(249,8,8,.1);">
+            <i class="nexmoefont icon-mail-fill"></i>
+        </a>
+    </div>
+</div>
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/iOS/">iOS</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/脚本/">脚本</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/读书感悟/">读书感悟</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iOS%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 10px;">iOS环境配置</a> <a href="/tags/%E5%B7%A5%E4%BD%9C/" style="font-size: 10px;">工作</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">性能优化</a> <a href="/tags/%E6%95%88%E7%8E%87/" style="font-size: 20px;">效率</a> <a href="/tags/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/" style="font-size: 10px;">时间管理</a> <a href="/tags/%E8%84%9A%E6%9C%AC/" style="font-size: 20px;">脚本</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E6%84%9F%E6%82%9F/" style="font-size: 20px;">读书感悟</a>
+    </div>
+    
+  </div>
+
+    
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2022 KangQingYu
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 42.65625%;"> 
+              <img data-src="http://cdn.kangqingyu.com/common/blogArticleBackground2_819h.png" data-sizes="auto" alt="番茄工作法——原理剖析与实践" class="lazyload">
+              <h1>番茄工作法——原理剖析与实践</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2021年11月29日</a>
+</div>
+
+      
+
+      <p>是否还在为专注工作时被打断而苦恼？<br>是否因为久坐而导致颈肩与腰椎的疼痛？<br>是否每天喝水都不足1L？</p>
+<span id="more"></span> 
+
+<p>那不妨试一试：番茄工作法。<br>即每工作25分钟休息5分钟。工作的25分钟称为一个番茄。</p>
+<ul>
+<li><a href="#%E6%B5%81%E7%A8%8B">流程</a><ul>
+<li><a href="#step1-%E6%97%A9%E4%B8%8A%E6%88%96%E5%89%8D%E4%B8%80%E5%A4%A9%E6%99%9A%E4%B8%8A%E5%87%86%E5%A4%87%E4%BB%8A%E6%97%A5%E6%B8%85%E5%8D%95%E4%BB%8A%E5%A4%A9%E8%A6%81%E5%81%9A%E7%9A%84%E4%BA%8B%E6%83%85">step1 早上或前一天晚上，准备今日清单（今天要做的事情）</a></li>
+<li><a href="#step2-%E5%87%86%E5%A4%87%E5%BC%80%E5%A7%8B%E4%B8%80%E4%B8%AA%E7%95%AA%E8%8C%84%E5%80%92%E8%AE%A1%E6%97%B625%E5%88%86%E9%92%9F">step2 准备开始一个番茄。倒计时25分钟。</a></li>
+<li><a href="#step3-25%E5%88%86%E9%92%9F%E6%89%A7%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B">step3 25分钟执行的过程。</a></li>
+<li><a href="#step4-25%E5%88%86%E9%92%9F%E7%9A%84%E7%95%AA%E8%8C%84%E7%BB%93%E6%9D%9F%E4%BC%91%E6%81%AF5%E5%88%86%E9%92%9F">step4 25分钟的番茄结束，休息5分钟</a></li>
+<li><a href="#step5-%E5%87%86%E5%A4%87%E4%B8%8B%E4%B8%AA%E7%95%AA%E8%8C%84%E5%86%8D%E4%BB%8E%E7%AC%AC2%E6%AD%A5%E5%BC%80%E5%A7%8B%E5%BE%AA%E7%8E%AF%E6%89%A7%E8%A1%8C">step5 准备下个番茄。再从第2步开始循环执行。</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%80-%E8%AE%A1%E5%88%92%E5%BE%85%E5%8A%9E%E6%B8%85%E5%8D%95%E4%B8%8E%E4%BB%8A%E6%97%A5%E6%B8%85%E5%8D%95">一 计划。待办清单与今日清单</a><ul>
+<li><a href="#%E4%BB%8A%E6%97%A5%E6%B8%85%E5%8D%95%E4%B8%8E%E5%BE%85%E5%8A%9E%E6%B8%85%E5%8D%95%E7%9A%84%E5%8C%BA%E5%88%AB">今日清单与待办清单的区别</a></li>
+<li><a href="#%E4%BB%8A%E6%97%A5%E6%B8%85%E5%8D%95%E6%8E%92%E5%BA%8F%E7%9A%84%E5%8E%9F%E5%88%99">今日清单排序的原则</a><ul>
+<li><a href="#%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86%E7%9A%84%E4%BA%8C%E7%BB%B4%E5%9B%A0%E7%B4%A0">时间管理的二维因素</a></li>
+<li><a href="#%E5%85%88%E5%81%9A%E5%9B%B0%E9%9A%BE%E7%9A%84%E9%9C%80%E8%A6%81%E9%AB%98%E5%BA%A6%E4%B8%93%E6%B3%A8%E7%9A%84%E4%BB%BB%E5%8A%A1">先做困难的、需要高度专注的任务。</a></li>
+<li><a href="#%E6%89%B9%E5%A4%84%E7%90%86%E6%95%B4%E5%90%88%E4%BB%BB%E5%8A%A1%E9%81%BF%E5%85%8D%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%B6%88%E8%80%97">批处理整合任务，避免上下文切换带来的消耗</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E4%B8%BA%E4%BD%95%E6%AF%8F%E6%AC%A1%E5%B7%A5%E4%BD%9C25%E5%88%86%E9%92%9F">二 为何每次工作25分钟？</a><ul>
+<li><a href="#%E4%B8%93%E6%B3%A8%E5%8A%9B%E7%9A%84%E6%9E%81%E9%99%90%E4%B8%8E%E7%B2%BE%E5%8A%9B%E6%81%A2%E5%A4%8D">专注力的极限与精力恢复</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E6%89%A7%E8%A1%8C%E7%95%AA%E8%8C%84%E9%92%9F%E7%9A%84%E8%BF%87%E7%A8%8B%E8%A2%AB%E6%89%93%E6%96%AD%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E">三 执行番茄钟的过程，被打断了怎么办？</a><ul>
+<li><a href="#1-%E5%86%85%E9%83%A8%E4%B8%AD%E6%96%AD%E6%9D%82%E5%BF%B5">1 内部中断，杂念</a></li>
+<li><a href="#2-%E9%80%9A%E8%AE%AF%E8%BD%AF%E4%BB%B6">2 通讯软件</a></li>
+<li><a href="#3-%E5%A4%96%E9%83%A8%E4%B8%AD%E6%96%AD%E6%9C%89%E4%BA%BA%E6%9D%A5%E6%89%BE%E6%88%91">3 外部中断，有人来找我</a><ul>
+<li><a href="#%E5%8E%9F%E5%AD%90%E6%80%A7">原子性</a></li>
+<li><a href="#%E6%95%B0%E9%87%8F%E4%B8%8E%E8%B4%A8%E9%87%8F">数量与质量</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B-%E4%BC%91%E6%81%AF5%E5%88%86%E9%92%9F%E7%9A%84%E6%84%8F%E4%B9%89">四 休息5分钟的意义</a><ul>
+<li><a href="#%E4%BC%91%E6%81%AF5%E5%88%86%E9%92%9F%E5%8F%AF%E4%BB%A5%E5%B9%B2%E4%BB%80%E4%B9%88">休息5分钟，可以干什么</a></li>
+<li><a href="#%E4%BC%91%E6%81%AF5%E5%88%86%E9%92%9F%E4%B8%8D%E8%83%BD%E5%B9%B2%E4%BB%80%E4%B9%88">休息5分钟，不能干什么</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%94-%E8%8A%82%E5%A5%8F%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7">五 节奏的重要性</a><ul>
+<li><a href="#%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%88%87%E6%8D%A2">状态模式的切换</a></li>
+<li><a href="#%E7%94%9F%E7%89%A9%E8%8A%82%E5%BE%8B">生物节律</a></li>
+</ul>
+</li>
+<li><a href="#%E5%85%AD-%E8%BD%AF%E4%BB%B6%E7%9A%84%E9%80%89%E6%8B%A9">六 软件的选择</a><ul>
+<li><a href="#%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E7%9A%84%E4%B8%89%E9%87%8D%E5%A2%83%E7%95%8C%E5%99%A8%E6%9C%AF%E9%81%93">工具使用的三重境界：器、术、道</a></li>
+<li><a href="#%E6%8E%A8%E8%8D%90%E8%BD%AF%E4%BB%B6">推荐软件</a></li>
+</ul>
+</li>
+</ul>
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+
+
+
+<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><h2 id="step1-早上或前一天晚上，准备今日清单（今天要做的事情）"><a href="#step1-早上或前一天晚上，准备今日清单（今天要做的事情）" class="headerlink" title="step1 早上或前一天晚上，准备今日清单（今天要做的事情）"></a>step1 早上或前一天晚上，准备今日清单（今天要做的事情）</h2><h2 id="step2-准备开始一个番茄。倒计时25分钟。"><a href="#step2-准备开始一个番茄。倒计时25分钟。" class="headerlink" title="step2 准备开始一个番茄。倒计时25分钟。"></a>step2 准备开始一个番茄。倒计时25分钟。</h2><ul>
+<li>关闭通信软件。</li>
+<li>戴上降噪耳机</li>
+</ul>
+<h2 id="step3-25分钟执行的过程。"><a href="#step3-25分钟执行的过程。" class="headerlink" title="step3 25分钟执行的过程。"></a>step3 25分钟执行的过程。</h2><ul>
+<li>如果脑海中有冒出其他的想法，不要切换现在做的事情，把想法先记下来。</li>
+</ul>
+<h2 id="step4-25分钟的番茄结束，休息5分钟"><a href="#step4-25分钟的番茄结束，休息5分钟" class="headerlink" title="step4 25分钟的番茄结束，休息5分钟"></a>step4 25分钟的番茄结束，休息5分钟</h2><ul>
+<li>打开通信软件、回复留言消息。</li>
+<li>喝水、接水。</li>
+<li>到楼梯附近走几步。</li>
+</ul>
+<h2 id="step5-准备下个番茄。再从第2步开始循环执行。"><a href="#step5-准备下个番茄。再从第2步开始循环执行。" class="headerlink" title="step5 准备下个番茄。再从第2步开始循环执行。"></a>step5 准备下个番茄。再从第2步开始循环执行。</h2><p>虽然步骤很简单，但涉及很多重要细节，下面从原理方面来逐一介绍。</p>
+<h1 id="一-计划。待办清单与今日清单"><a href="#一-计划。待办清单与今日清单" class="headerlink" title="一 计划。待办清单与今日清单"></a>一 计划。待办清单与今日清单</h1><p>任务：即指工作、生活、学习中需要做的事情。<br>其实对于任务管理系统，有专业的GTD理论。本文暂不讨论这些。对于番茄工作法，所有的任务只分为两类：</p>
+<ul>
+<li>待办清单</li>
+<li>今日清单</li>
+</ul>
+<p>待办清单指的是近期的规划，可能是明天，或者是下个月的任务。比如一个项目的排期一周，可以将其拆分成很多个以半天、或几个小时为颗粒度的待办任务。</p>
+<p>今日清单，每天上班之前，从待办清单中挑选出一些，转移到今日清单。这是承诺今天要完成的任务。</p>
+<h2 id="今日清单与待办清单的区别"><a href="#今日清单与待办清单的区别" class="headerlink" title="今日清单与待办清单的区别"></a>今日清单与待办清单的区别</h2><p>今日清单是自己的承诺，当天完成、能更好得给予自己反馈，让自己有成就感。<br>为何有人喜欢游戏带来的成就感？因为游戏20多分钟就能带来反馈：奖励（胜利，翻盘，队友的点赞等）。而一个几周、甚至几个月的计划，可能没有非常强的成就感。所以将其拆解成周、日计划，即冲刺目标。甚至是25分钟的番茄工作周期，这样能带来更快的反馈。</p>
+<h2 id="今日清单排序的原则"><a href="#今日清单排序的原则" class="headerlink" title="今日清单排序的原则"></a>今日清单排序的原则</h2><h3 id="时间管理的二维因素"><a href="#时间管理的二维因素" class="headerlink" title="时间管理的二维因素"></a>时间管理的二维因素</h3><p>当今天计划已确定时，如果突然插入一小时的任务，就要替换掉原计划的一小时的任务。即，一小时换一小时，那这种思维方式就是一维的时间管理方式。</p>
+<p>但是自从小时我们就会发现，同样是一堂课，一个班上的同学，学习的效果有非常大的差别。<br>工作中可能更明显了，其实每天的工作量 &#x3D; 时间 * 效率。所以不像一维那样，只考虑时间，还要加上效率这个维度。</p>
+<p>那如何分配任务，才能有更高的效率呢？</p>
+<h3 id="先做困难的、需要高度专注的任务。"><a href="#先做困难的、需要高度专注的任务。" class="headerlink" title="先做困难的、需要高度专注的任务。"></a>先做困难的、需要高度专注的任务。</h3><p>对于简单、熟悉的开发需求，其实在什么时间都能做。而且一下午，持续写3个小时不成问题。但是如果是看陌生的源码，你会发现，根本看不了3个小时就会难受，特别是在晚上，看进来效率是更低。<br>这是因为人的精力是有限的，通常来说早上精力充沛，而到了晚上，因为一天的忙碌，势必精力缺失，再看有挑战、需要专注力的，看陌生的源码，必定会比较累。<br>当然，并不是说晚上精力就是最弱，如果下午进行适当的休息或运动，晚上也能有很好的精力。<br>如果早上就先看邮件、做一些简单的工作，把困难的放在晚上，势必浪费了早上精力充沛这一段时间。</p>
+<h3 id="批处理整合任务，避免上下文切换带来的消耗"><a href="#批处理整合任务，避免上下文切换带来的消耗" class="headerlink" title="批处理整合任务，避免上下文切换带来的消耗"></a>批处理整合任务，避免上下文切换带来的消耗</h3><p>在计算机领域，上下文切换指在两件事情之间切换，会造成额外的切换成本。<br>批处理指的是对某对象进行批量的处理。在工作的领域，可以认为是一种聚类工作的集合，即将一类的任务整合在一起，尤其是琐碎的事情。比如将某些2-5分钟即可完成的事情，整合在一个番茄钟内处理。</p>
+<h1 id="二-为何每次工作25分钟？"><a href="#二-为何每次工作25分钟？" class="headerlink" title="二 为何每次工作25分钟？"></a>二 为何每次工作25分钟？</h1><h2 id="专注力的极限与精力恢复"><a href="#专注力的极限与精力恢复" class="headerlink" title="专注力的极限与精力恢复"></a>专注力的极限与精力恢复</h2><p>普通人专注力只有15分钟，练习过一段时间可以达到25分钟，但是很难超越45分钟。世界顶级的运动员经过特殊的训练也最多只能达到90分钟。有时候会发现世界级比赛，某些顶级的选手失误了，出现了一个业余观众都感觉可笑的失误，其实这就是因为没有得到很好的休息，专注力已经超出极限了。<br>所以为了能够及时的恢复精力，对大部分人来说25分钟比较合适，当然也可以根据自己的情况做上下调整。</p>
+<h1 id="三-执行番茄钟的过程，被打断了怎么办？"><a href="#三-执行番茄钟的过程，被打断了怎么办？" class="headerlink" title="三 执行番茄钟的过程，被打断了怎么办？"></a>三 执行番茄钟的过程，被打断了怎么办？</h1><p>打断有3种：心中杂念造成的内部打断，通讯软件的声音与振动，他人来找我。</p>
+<h2 id="1-内部中断，杂念"><a href="#1-内部中断，杂念" class="headerlink" title="1 内部中断，杂念"></a>1 内部中断，杂念</h2><p>工作时脑海可能会突然冒出一个想法：xx事还没有做，现在要做吗？张三会不会给我发了一条消息、赶紧看看吧。书包里有块巧克力，要不现在吃掉它？<br>这些都是来自人体内部的本能，放弃现在的任务转而做其他事，很有可能是准备拖延。<br>如果你强制继续工作，脑海中的想法可能会一直浮现。其实解决方法很简单，写下来，加入到待办清单中，如果确实是今天必须得做的东西，那就加入到今日清单中，稍后休息的时候再来决定是否下一个番茄钟就要执行。</p>
+<h2 id="2-通讯软件"><a href="#2-通讯软件" class="headerlink" title="2 通讯软件"></a>2 通讯软件</h2><p>想要达到极致的专注状态，很多书的作者都建议工作时切断网络、不使用电子设备。但是咱不能用纸写代码啊，所以，我的做法是把IM类软件关闭。有人可能会担心如果PM问我问题，我25分钟之后再回复他，PM会不会很伤心。<br>这个完全不用担心，如果是普通的问题，25分钟后再回复，并不晚，你想想如果你发出的消息25分钟之内一定收到回复，你应该很高兴才对吧；如果是紧急的问题，PM直接就打电话了，甚至直接当面来找你了，不可能很着急、还一直等你回复消息。</p>
+<h2 id="3-外部中断，有人来找我"><a href="#3-外部中断，有人来找我" class="headerlink" title="3 外部中断，有人来找我"></a>3 外部中断，有人来找我</h2><p>如果直接有人来找你，要紧急的开会，那只能先去开会了。<br>那开会结束之后，是否要继续刚才暂停的番茄钟呢？</p>
+<h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p>番茄钟具有原子性，不可分割，25分钟是这套流程中最小的货币单位。如果任务被暂停了，无论是短期、还是长期的暂停，当前的番茄钟都必须作废。</p>
+<p>因为如果暂停，休息一会再继续，就失去了达到一个稳定节奏的目的，不能太容易屈服于中断的诱惑。因为转做其他更紧急的事情而作废番茄钟并不意味着工作的失败，只能说明自己的流程不够完善。每天“完成的番茄钟数”不是拿来衡量工作能力的标准，年底的时候你不会拿着这个去找老板谈加薪吧？记录完整的番茄钟个数，只是为了总结时对比，改进自己的流程。记录跟踪数据，是为了进行自我改进和流程改进。</p>
+<h3 id="数量与质量"><a href="#数量与质量" class="headerlink" title="数量与质量"></a>数量与质量</h3><p>番茄钟的数量，其实是质量与数量哪个更重要的问题。<br>再看一个类似的跑步的例子。跑步时有一种MAF跑法，即跑步时最大心率要低于180-年龄。假如25岁则配速不能超过155。在刚开始训练的时候，会发现按自己正常5分的配速，心率可能达到170；如果严格按照MAF规则155的心率，配速可能只有7分。所以有人感觉速度太慢了，不好看，就超过了最大心率跑，确实截图给别人看的时候，看着配速挺快，但是这样练一年，速度依然不会有提升。反之如果按照规则练习，虽然配速会暂时降到7分，但是几个月之后，就会发现有氧能力有了很大的提升。</p>
+<p>再看一个写代码的例子。如果每天都是写printf，一个月写了一万行，确实可以很自豪得说：我一个月工作量是1万行代码，但是就算是写了10万行，几年之后，水平还是那样。但如果是做一些更有意义的算法优化，可能只写了100行，对自己的成长就会有质的提升。</p>
+<p>所以，质量与数量，要选择能对自己长期成长更有利的，而不是拿出来看的。</p>
+<h1 id="四-休息5分钟的意义"><a href="#四-休息5分钟的意义" class="headerlink" title="四 休息5分钟的意义"></a>四 休息5分钟的意义</h1><p>如果工作了25分钟，我还是不累，那有必要休息吗？<br>及时的休息，有利于恢复更高的效率。如果感觉灵感迸发，实在不想休息，那也最好站起来站1分钟。<br>如果口渴，再喝水，说明体内已严重缺水，因此喝水不能等到渴了再喝。<br>如果感觉累了，说明精力已经严重不足，不如早点休息尽快恢复精力。</p>
+<p>但是注意这5分钟的休息，并不是传统意义上的娱乐休息。</p>
+<h2 id="休息5分钟，可以干什么"><a href="#休息5分钟，可以干什么" class="headerlink" title="休息5分钟，可以干什么"></a>休息5分钟，可以干什么</h2><ul>
+<li>冥想。</li>
+<li>若有插入任务，重整之后的计划。</li>
+<li>喝水、接水，站起来走一走，缓解久坐的问题。</li>
+</ul>
+<p>冥想是一种公认的高效休息的方式，其目的就是要专注当下的呼吸。</p>
+<p>站起来，主要目的是缓解久坐的问题。可能有人感觉自己没有很明显的腰椎问题。但是一旦出现症状再治就比较困难了，预防还是要平时多注意。</p>
+<h2 id="休息5分钟，不能干什么"><a href="#休息5分钟，不能干什么" class="headerlink" title="休息5分钟，不能干什么"></a>休息5分钟，不能干什么</h2><p>不要做视觉类的娱乐的事情，比如刷抖音，看朋友圈。这会极大得消耗精力，影响自己的节奏。</p>
+<p>尽量不要打重要的电话、回复重要的文字。因为其会影响下一个周期，如有必要，可以设置一个紧急插入的番茄周期来完成。</p>
+<p>5分钟休息，是从专注状态切换到全局状态的时间，是一种状态模式的切换。及时的切换，可以保持一个好的节奏。</p>
+<h1 id="五-节奏的重要性"><a href="#五-节奏的重要性" class="headerlink" title="五 节奏的重要性"></a>五 节奏的重要性</h1><h2 id="状态模式的切换"><a href="#状态模式的切换" class="headerlink" title="状态模式的切换"></a>状态模式的切换</h2><p>有一种状态叫心流，这是一种非常神奇的感受，会让你感受到工作的自豪感与幸福感。<br>工作的25分钟，可能会进入心流状态，专注力与创造力强。但是缺乏全局观，缺少统筹力。<br>5分钟的休息时间，可以换上战略眼光，观察全局。然后再回到心流中。这就是节奏。</p>
+<p>为啥要戴上降噪耳机，一方面，确实可以让环境更安静，另外它是模式切换的开头。戴上耳机，告诉自己，现在是专注工作的模式。</p>
+<h2 id="生物节律"><a href="#生物节律" class="headerlink" title="生物节律"></a>生物节律</h2><p>人体器官的运转，激素的分泌都是有节律的，正如每周、每月，每年一直在循环。工作的专注也是有周期的。保持好的周期节奏，可以及时得恢复最高的专注效果。</p>
+<p>一个比较明显的例子就是睡眠，如果某天熬夜打破了正常的睡眠周期，就很容易在白天时感觉精力不足。<br>有人对此不以为然，认为今天熬夜了，过几天不是可以补回来吗？<br>假如今年春节要求你加班，不让你回家，因为明年还有春节呢，可以明年回家嘛，你的心情如何呢？<br>其实你不是一个人在战斗，大脑中有两个“我”，一个是理性的，另外一个可以理解成潜意识。比如有些比赛之前，有些世界顶级运动员对自己说“放松，我一定可以稳定发挥的”，这就是在对潜意识的我对话。<br>所以打破节奏，也是在损害“潜意识的我”的利益。</p>
+<h1 id="六-软件的选择"><a href="#六-软件的选择" class="headerlink" title="六 软件的选择"></a>六 软件的选择</h1><h2 id="工具使用的三重境界：器、术、道"><a href="#工具使用的三重境界：器、术、道" class="headerlink" title="工具使用的三重境界：器、术、道"></a>工具使用的三重境界：器、术、道</h2><p>比如学习编程，如果只会用一个函数式编程的框架，那是“器”。如果了解框架的源码，可以做少量的定制化修改，这是“术”。如果明白函数式编程的重表达式轻运算、无副作用、引用透明的特点，那么我们就可以在自己的需求中，做更适合自己的框架，这就是“道”，这是一种思维方式，最高的境界。浅显的学习只会使用，而深入的学习、明白底层的原理，拥有自己的思维方式，才能拓展性发散使用。</p>
+<p>在软件使用层面，基本都属于“器”的层面，我们要做的就是明白“道”，或最起码达到“术”的境界，知道我们的真正的需求是什么，才可以选择自己的软件，不能过多纠结与软件的选择上。所以没有好与坏的软件，只有是否适合自己的软件。</p>
+<h2 id="推荐软件"><a href="#推荐软件" class="headerlink" title="推荐软件"></a>推荐软件</h2><p>在我使用众多种番茄钟软件当中，如果只推荐一款，我认为session是最优秀的，高度还原了番茄钟的各种原理与细节。session，免费版可以满足基本的功能。收费的订阅制高级版本，有更多的自动化能力。
+ </p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>Author：</strong>KangQingYu<br>
+        <strong>Link：</strong><a href="http://example.com/2021/11/29/%E7%95%AA%E8%8C%84%E5%B7%A5%E4%BD%9C%E6%B3%95%E2%80%94%E2%80%94%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90%E4%B8%8E%E5%AE%9E%E8%B7%B5/" title="http:&#x2F;&#x2F;example.com&#x2F;2021&#x2F;11&#x2F;29&#x2F;%E7%95%AA%E8%8C%84%E5%B7%A5%E4%BD%9C%E6%B3%95%E2%80%94%E2%80%94%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90%E4%B8%8E%E5%AE%9E%E8%B7%B5&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2021&#x2F;11&#x2F;29&#x2F;%E7%95%AA%E8%8C%84%E5%B7%A5%E4%BD%9C%E6%B3%95%E2%80%94%E2%80%94%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90%E4%B8%8E%E5%AE%9E%E8%B7%B5&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E5%B7%A5%E4%BD%9C/" rel="tag">工作</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E6%95%88%E7%8E%87/" rel="tag">效率</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '80b2453b6d5f37ad6225',
+        clientSecret: '43e99fa852795c9a7b3eb924b2558c64b84bbdeb',
+        id: window.location.pathname,
+        repo: 'kangqingyu.github.io',
+        owner: 'kangqingyu',
+        admin: 'kangqingyu'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+    <div id="nexmoe-search-space">
+        <div class="search-container">
+            <div class="search-header">
+                <div class="search-input-container">
+                    <input class="search-input" type="text" placeholder="Search" oninput="sinput();">
+                </div>
+                <a class="search-close" onclick="sclose();">×</a>
+            </div>
+            <div class="search-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+ 
+
+<script async src="/js/app.js?v=1646176409131"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+
+
+
+
+
+</body>
+
+</html>
