@@ -4,7 +4,7 @@
 
 <head>
     
-    <title>iPhone如何拿到ipa?iPhone如何查看沙盒 iOS12 - Hexo</title>
+    <title>iPhone如何拿到ipa?iPhone如何查看沙盒 iOS12 - KangQingYu</title>
     <meta charset="UTF-8">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
@@ -16,7 +16,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="iPhone如何拿到ipa?iPhone如何查看沙盒 iOS12">
 <meta property="og:url" content="http://example.com/2018/10/13/iPhone%E5%A6%82%E4%BD%95%E6%8B%BF%E5%88%B0ipa">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="KangQingYu">
 <meta property="og:description" content="工作需要，将一条Log写在文件中，然后拿到此Log，这就需要查看沙盒，通过拿到ipa来查看log文件，其写入在沙盒Document目录下的日志文件。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2183154-5a3a32605936cd91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -29,11 +29,11 @@
 <meta property="article:author" content="KangQingYu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2183154-5a3a32605936cd91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1646176409139">
+    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1646176717520">
     
-    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1646176409139">
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1646176409139">
-    <link rel="stylesheet" href="/css/style.css?v=1646176409139">
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1646176717520">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1646176717520">
+    <link rel="stylesheet" href="/css/style.css?v=1646176717520">
      
     
 <meta name="generator" content="Hexo 6.0.0"></head>
@@ -285,7 +285,7 @@
 
  
 
-<script async src="/js/app.js?v=1646176409140"></script>
+<script async src="/js/app.js?v=1646176717521"></script>
 
 
 
