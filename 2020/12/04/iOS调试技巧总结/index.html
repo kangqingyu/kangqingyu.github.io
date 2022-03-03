@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    
+    <title>iOS调试技巧总结 - KangQingYu</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <meta name="description" content="对于大型APP，每次修改重新编译，都需要几分钟时间，因此要在一次运行中尽量多的解决问题，减少编译的次数。无论是需求的迭代，还是bug的调试，都可能会遇到陌生的代码，对于不熟悉的代码，如何调试呢？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS调试技巧总结">
+<meta property="og:url" content="http://example.com/2020/12/04/iOS%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="KangQingYu">
+<meta property="og:description" content="对于大型APP，每次修改重新编译，都需要几分钟时间，因此要在一次运行中尽量多的解决问题，减少编译的次数。无论是需求的迭代，还是bug的调试，都可能会遇到陌生的代码，对于不熟悉的代码，如何调试呢？">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462685481382.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462685556863.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462685633461.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462685721436.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462685792296.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462685893437.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462685948804.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462686015249.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462686084992.jpg">
+<meta property="article:published_time" content="2020-12-04T06:58:32.000Z">
+<meta property="article:modified_time" content="2022-03-03T00:50:41.920Z">
+<meta property="article:author" content="KangQingYu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.kangqingyu.com/mweb/16462685481382.jpg">
+    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1646269449052">
+    
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1646269449052">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1646269449052">
+    <link rel="stylesheet" href="/css/style.css?v=1646269449052">
+     
+    
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(http://cdn.kangqingyu.com/mweb/1920-213.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="KangQingYu" class="mdui-btn mdui-btn-icon"><img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="KangQingYu">
+            <img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu" alt="KangQingYu">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>Articles</span>21</div>
+        <div><span>Tags</span>13</div>
+        <div><span>Categories</span>5</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/PY.html" title="我的朋友">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:nexmoe.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://space.bilibili.com/552775698" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/kangqingyu/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="mailto:kangqingyu@gmail.com" target="_blank" mdui-tooltip="{content: 'mail'}" style="color: rgb(249,8,8);background-color: rgba(249,8,8,.1);">
+            <i class="nexmoefont icon-mail-fill"></i>
+        </a>
+    </div>
+</div>
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/iOS/">iOS</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/iOS开发/">iOS开发</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/动手实践/">动手实践</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/脚本/">脚本</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/读书感悟/">读书感悟</a>
+          <span class="category-list-count">7</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iOS%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 10px;">iOS环境配置</a> <a href="/tags/iOS%E8%B0%83%E8%AF%95/" style="font-size: 10px;">iOS调试</a> <a href="/tags/%E5%AE%9E%E8%B7%B5%EF%BC%9F/" style="font-size: 10px;">实践？</a> <a href="/tags/%E5%B7%A5%E4%BD%9C/" style="font-size: 10px;">工作</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">性能优化</a> <a href="/tags/%E6%8B%86%E6%9C%BA/" style="font-size: 10px;">拆机</a> <a href="/tags/%E6%95%88%E7%8E%87/" style="font-size: 20px;">效率</a> <a href="/tags/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/" style="font-size: 10px;">时间管理</a> <a href="/tags/%E7%90%86%E8%B4%A2/" style="font-size: 10px;">理财</a> <a href="/tags/%E8%84%9A%E6%9C%AC/" style="font-size: 20px;">脚本</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E6%84%9F%E6%82%9F/" style="font-size: 10px;">读书感悟</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E6%84%9F%E6%82%9F%E5%AE%9E%E8%B7%B5/" style="font-size: 10px;">读书感悟实践</a>
+    </div>
+    
+  </div>
+
+    
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2022 KangQingYu
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 11.09375%;"> 
+              <img data-src="http://cdn.kangqingyu.com/mweb/1920-213.png" data-sizes="auto" alt="iOS调试技巧总结" class="lazyload">
+              <h1>iOS调试技巧总结</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2020年12月04日</a>
+</div>
+
+      
+
+      <p> 对于大型APP，每次修改重新编译，都需要几分钟时间，因此要在一次运行中尽量多的解决问题，减少编译的次数。<br>无论是需求的迭代，还是bug的调试，都可能会遇到陌生的代码，对于不熟悉的代码，如何调试呢？</p>
+<span id="more"></span> 
+
+
+
+<h1 id="一-打Log"><a href="#一-打Log" class="headerlink" title="一 打Log"></a>一 打Log</h1><p>只需要一行输出函数，即可看到各个方法的执行顺序，知道输入、输出值，但是对代码入侵性太强，并且频繁修改消耗过多编译的时间。</p>
+<h1 id="二-问写代码的人"><a href="#二-问写代码的人" class="headerlink" title="二 问写代码的人"></a>二 问写代码的人</h1><p>最直接最高效。但是如果不经过思考，就直接问，下次遇到类似的问题还是不会。因此我认为最好先自己调试，如果几个小时还无法解决，再请教。<br>对于遇到的问题，不能仅仅当成一种需要完成的任务，而应该把它当成一种成长的机会，拥有一颗成长型的心态。解决问题的同时，自己也获得了成长，这样就不仅仅是自己在跑步，而是借助公司这辆汽车，达到远超跑步的速度。</p>
+<h1 id="三-控制台调试"><a href="#三-控制台调试" class="headerlink" title="三 控制台调试"></a>三 控制台调试</h1><p>控制台调试最核心的就是LLDB命令，LLDB是Xcode的默认调试器，它高度利用LLVM项目中的现有库，例如Clang表达式解析器和LLVM反汇编程序。</p>
+<h2 id="3-1-执行命令："><a href="#3-1-执行命令：" class="headerlink" title="3.1 执行命令："></a>3.1 执行命令：</h2><p>expression命令，简写e，最基本的命令。</p>
+<h3 id="运用实例：修改View的颜色"><a href="#运用实例：修改View的颜色" class="headerlink" title="运用实例：修改View的颜色"></a>运用实例：修改View的颜色</h3><p>有时候我们需要找某个控件，或改某个控件的颜色，但是可能因为层级较多而不是非常明显的情况下，可以先在LLDB尝试修改，看一下预览的效果。</p>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462685481382.jpg"></p>
+<p>操作步骤如下：<br>1.先执行<br> (lldb) p self.view<br>查看self.view存储在变量 $0变量<br>2.将 $0强转为UIView类型，<br> (lldb) e (UIView *)$0<br>转存到了 $1<br>3.使用 $1的layer改变颜色<br> (lldb) e $1.layer.backgroundColor&#x3D;[UIColor redColor].CGColor<br>4.执行刷新，可以看到对应的UIView立刻生效了。因为断点会终止UI线程，所以这个命令是为了渲染修改后的界面。<br> (lldb) e [CATransaction flush]</p>
+<h4 id="实际运用-暗黑适配"><a href="#实际运用-暗黑适配" class="headerlink" title="实际运用 暗黑适配"></a>实际运用 暗黑适配</h4><p>我们团队今年进行了暗黑模式适配，在改别人的代码时，尤其是层级非常多的时候，用此来调整、预览，可以快速定位需要修改的控件。</p>
+<h2 id="3-2-打印命令"><a href="#3-2-打印命令" class="headerlink" title="3.2 打印命令"></a>3.2 打印命令</h2><p>1）print：简写pri或p，其实print是”expression –”的简写（’print’ is an abbreviation for ‘expression –’)。<br>2）po：用来打印对象<br>3）call：调用方法。在调试时，想要额外调用一下某个方法，可以使用call命令，如图<br>call  [self callMethod]</p>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462685556863.jpg"></p>
+<h2 id="3-3-线程"><a href="#3-3-线程" class="headerlink" title="3.3 线程"></a>3.3 线程</h2><p>1）thread jump –by N<br>功能：在某处断点，跳过之后的N行代码。其效果等同于注释了N行代码。<br>使用场景：有时候需要注释几行代码，使用此命令，不用重新编译即可立刻看到效果。<br>2）thread backtrace 查看线程堆栈信息，简写为bt。<br>3）thread return X<br>令某个方法直接返回X。</p>
+<h3 id="运用实例："><a href="#运用实例：" class="headerlink" title="运用实例："></a>运用实例：</h3><p>(lldb) thread return XXX</p>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462685633461.jpg"></p>
+<p>如图，在25行执行了<br>(lldb) thread return @”changeReturn”<br>可以看到- (NSString *)threadReturn 返回的值就变成了@”changeReturn”。</p>
+<h2 id="3-4-观察点-watchpoint"><a href="#3-4-观察点-watchpoint" class="headerlink" title="3.4 观察点 watchpoint"></a>3.4 观察点 watchpoint</h2><p>作用：可以观察某个变量，在变化时其会自动暂停断点至其相应位置。<br>使用方式：(lldb) watchpoint set variable name<br>或者右键其，点击watch variable<br>注意：如果需要观测self.name，则要写成self-&gt;_name。对于观测普通类型的变量，比如button的 state值，_state不存在。在LLDB调试框可以右键这个值。</p>
+<p>使用场景：当某个变量值突然被改变，但是又找不到是在哪里改变。使用此即可跟踪其变化。<br>如果不使用变量观测，就需要重写某个类的某个setter方法。</p>
+<h1 id="四、断点调试"><a href="#四、断点调试" class="headerlink" title="四、断点调试"></a>四、断点调试</h1><p>先来介绍一下基本的界面：</p>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462685721436.jpg"></p>
+<p>这5个按钮，分别是：<br>1 启动&#x2F;禁用断点<br>2 继续执行程序<br>3 执行下一步<br>4 进入方法<br>5 跳出方法<br>这几个可视化的按钮，在LLDB中都有相应的命令，<br>1 breakpoint enable&#x2F;disabled<br>2 continue<br>3 next<br>4 step<br>5 finish<br>但是因为按钮更方便，所以通常也不用命令。</p>
+<h2 id="4-1-异常断点"><a href="#4-1-异常断点" class="headerlink" title="4.1 异常断点"></a>4.1 异常断点</h2><p>异常断点是为了抛出异常时，crash显示到具体的行，而不是main.m中。加上如图的断点即可。</p>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462685792296.jpg"></p>
+<h2 id="4-2-符号断点"><a href="#4-2-符号断点" class="headerlink" title="4.2 符号断点"></a>4.2 符号断点</h2><p>符号断点是针对某个方法执行的断点，<br>实际开发中，当我们操作了某个路径会执行A方法，但是A方法用于很多个地方，并不知道具体是在哪里执行的，如果是传统的方法，就全局搜索A方法，全部打上断点。实际上可以用符号断点来解决这个问题。<br>只要对某个方法打上符号断点，那么所有调用它的地方，都会暂停。</p>
+<p>注意：+，-方法写清楚。:之后不能有空格</p>
+<p>另外。对于写得比较标准的代码，几个类似的方法，最终应该调用一个统一的方法，叫做全能初始化方法，用NS_DESIGNATED_INITIALIZER标识。只需要对全能初始化方法打符号断点即可。</p>
+<h2 id="4-3-编辑断点"><a href="#4-3-编辑断点" class="headerlink" title="4.3 编辑断点"></a>4.3 编辑断点</h2><p><img src="http://cdn.kangqingyu.com/mweb/16462685893437.jpg"></p>
+<p>右键点击某一行，即可打开：</p>
+<p><img src="http://cdn.kangqingyu.com/mweb/16462685948804.jpg"></p>
+<h3 id="1）Condition"><a href="#1）Condition" class="headerlink" title="1）Condition"></a>1）Condition</h3><p>条件断点，对于循环次数非常多的for循环，有时我们需要其在指定的i值时才暂停，或者某两个变量相等时才暂停。</p>
+<h3 id="2）Ignore"><a href="#2）Ignore" class="headerlink" title="2）Ignore"></a>2）Ignore</h3><p>忽视次数N，即N次之后才会暂停。</p>
+<h3 id="3）Action"><a href="#3）Action" class="headerlink" title="3）Action"></a>3）Action</h3><p>有些问题通过断点无法解决，因为断点操作需要几秒的操作时间。而轮询类的逻辑，几秒之后其值就变化了。这类问题通常是需要打Log的，但是打Log重新编译消耗过多的时间，如何在不改变代码、重新编译的前提下打Log呢？这时Action就起了很大的作用。</p>
+<p>（1）Debugger Command<br>这个功能相当强大，可以在某一行直接插入新的代码并且不用重新编译。<br>（2）Log Message<br>打Log，格式：@exp@，exp指的是变量名。%B:指的是此行所在的方法名。%H：计数器。<br>缺点：Log Message 适合低频的打印。如果是秒级更新的Log。不适用，每秒打印一次会非常卡。<br>（3）Sound:当断点到这里时，发出声音，作用和Log一样，只不过从文字变成了声音。<br>（4）AppleScript，可以执行苹果原生的脚本。<br>（5）Shell Command，可以执行shell脚本。</p>
+<h1 id="五-视图查看"><a href="#五-视图查看" class="headerlink" title="五 视图查看"></a>五 视图查看</h1><p>有时候需要对可视的某个控件进行需求，这种情况可以通过视图结构，直接找到对应的类名。虽然不能直接解决问题，但是对于找到问题根源所在，有一定帮助。</p>
+<h3 id="5-1原生的Debug-View-Hierarchy"><a href="#5-1原生的Debug-View-Hierarchy" class="headerlink" title="5.1原生的Debug View Hierarchy"></a>5.1原生的Debug View Hierarchy</h3><p> Debug View Hierarchy，无论是性能性，还是操作方便度上，都比较差。</p>
+<h3 id="5-2-Reveal"><a href="#5-2-Reveal" class="headerlink" title="5.2 Reveal"></a>5.2 Reveal</h3><p>reveal这是一个专业的团队做的软件，非常好用，只不过需要一些配置。<br>详见<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ced27bec87b4">https://www.jianshu.com/p/ced27bec87b4</a></p>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462686015249.jpg"></p>
+<h3 id="5-3-Chisel"><a href="#5-3-Chisel" class="headerlink" title="5.3 Chisel"></a>5.3 Chisel</h3><p>Chisel的visualize，facebook出的一个开源LLDB框架，可以在断点的时候查看某个类的视图。</p>
+<h1 id="六-LLDB扩展"><a href="#六-LLDB扩展" class="headerlink" title="六 LLDB扩展"></a>六 LLDB扩展</h1><p>facebook开源了chisel，可以添加脚本到LLDB。<br>源码：<a target="_blank" rel="noopener" href="https://github.com/facebook/chisel">https://github.com/facebook/chisel</a><br>chisel提供了几个命令，对LLDB的功能进一步加强。</p>
+<p>1）visualize：预览整个view的图。<br>相比原生的命令，看到的不仅仅是一个控件的图像，而可以是多个view的组合。</p>
+<h1 id="七-网络请求的抓包"><a href="#七-网络请求的抓包" class="headerlink" title="七 网络请求的抓包"></a>七 网络请求的抓包</h1><p>对于网络请求，可以在请求的回调中打断点、Log，查看返回的结果。但是对于轮询的请求，打断点太慢，打Log在调试框中展示的内容又太多，会刷屏。因此可以用抓包工具，对所有的请求都进行了整理。<br>1 charles：古老的抓包工具，不想买软件的话可以免费使用。<br>2 proxyman，新起之秀，个人认为无论是基础功能，还是界面，都已经超越了Charles。</p>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462686084992.jpg"></p>
+<p>3 wireshark，适用于基于TCP&#x2F;UDP或蓝牙协议的硬件的抓包。</p>
+<h1 id="八-静态分析"><a href="#八-静态分析" class="headerlink" title="八 静态分析"></a>八 静态分析</h1><p>静态分析，可以在编码的阶段就能检测出一些潜在的问题。<br>原生的Analyze，以及三方的Clang，Infer，OCLint。</p>
+<h1 id="九-参考文献"><a href="#九-参考文献" class="headerlink" title="九 参考文献"></a>九 参考文献</h1><p><a target="_blank" rel="noopener" href="http://lldb.llvm.org/">http://lldb.llvm.org/</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d0b9fd8ffadc">https://www.jianshu.com/p/d0b9fd8ffadc</a><br> <a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2018/412/?time=182">https://developer.apple.com/videos/play/wwdc2018/412/?time=182</a></p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>Author：</strong>KangQingYu<br>
+        <strong>Link：</strong><a href="http://example.com/2020/12/04/iOS%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" title="http:&#x2F;&#x2F;example.com&#x2F;2020&#x2F;12&#x2F;04&#x2F;iOS%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2020&#x2F;12&#x2F;04&#x2F;iOS%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/iOS%E5%BC%80%E5%8F%91/">iOS开发</a>
+    
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '80b2453b6d5f37ad6225',
+        clientSecret: '43e99fa852795c9a7b3eb924b2558c64b84bbdeb',
+        id: window.location.pathname,
+        repo: 'kangqingyu.github.io',
+        owner: 'kangqingyu',
+        admin: 'kangqingyu'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+    <div id="nexmoe-search-space">
+        <div class="search-container">
+            <div class="search-header">
+                <div class="search-input-container">
+                    <input class="search-input" type="text" placeholder="Search" oninput="sinput();">
+                </div>
+                <a class="search-close" onclick="sclose();">×</a>
+            </div>
+            <div class="search-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+ 
+
+<script async src="/js/app.js?v=1646269449053"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+
+
+
+
+
+</body>
+
+</html>
