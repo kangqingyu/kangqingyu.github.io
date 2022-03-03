@@ -11,7 +11,7 @@
     
     
 
-    <link rel="shortcut icon" href="image/redIcon.png" type="image/redIcon.png" />
+    <link rel="shortcut icon" href="images/web.ico" type="image/x-icon" />
     <meta name="description" content="工作需要，将一条Log写在文件中，然后拿到此Log，这就需要查看沙盒，通过拿到ipa来查看log文件，其写入在沙盒Document目录下的日志文件。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iPhone如何拿到ipa?iPhone如何查看沙盒 iOS12">
@@ -30,11 +30,11 @@
 <meta property="article:tag" content="开发调试">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://cdn.kangqingyu.com/mweb/16462329837732.jpg">
-    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1646314488658">
+    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1646341741214">
     
-    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1646314488658">
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1646314488658">
-    <link rel="stylesheet" href="/css/style.css?v=1646314488658">
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1646341741214">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1646341741214">
+    <link rel="stylesheet" href="/css/style.css?v=1646341741214">
      
     
 <meta name="generator" content="Hexo 6.0.0"></head>
@@ -179,7 +179,7 @@
     <div class="nexmoe-widget-wrap">
     <div class="nexmoe-widget nexmoe-social">
         <a class="mdui-ripple" href="https://book.douban.com/people/kangqingyu/collect" target="_blank" mdui-tooltip="{content: '豆瓣'}" style="color: rgb(00, 77, 11);background-color: rgba(00, 77, 11, .1);">
-            <i class="nexmoefont douban-fill"></i>
+            <i class="nexmoefont icon-douban-fill"></i>
         </a><a class="mdui-ripple" href="https://space.bilibili.com/552775698" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
             <i class="nexmoefont icon-bilibili"></i>
         </a><a class="mdui-ripple" href="https://github.com/kangqingyu/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
@@ -326,7 +326,7 @@
 
  
 
-<script async src="/js/app.js?v=1646314488659"></script>
+<script async src="/js/app.js?v=1646341741215"></script>
 
 
 
