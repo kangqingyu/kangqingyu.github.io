@@ -11,7 +11,7 @@
     
     
 
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="image/redIcon.png" type="image/redIcon.png" />
     <meta name="description" content="如何用脚本生成在指定时间需要复习的任务？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="appleScript脚本应用-记忆曲线复习">
@@ -21,17 +21,17 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://cdn.kangqingyu.com/mweb/appleScript_202104.png">
 <meta property="article:published_time" content="2021-04-04T07:58:32.000Z">
-<meta property="article:modified_time" content="2022-03-01T22:39:51.108Z">
+<meta property="article:modified_time" content="2022-03-03T05:18:33.000Z">
 <meta property="article:author" content="KangQingYu">
-<meta property="article:tag" content="脚本">
-<meta property="article:tag" content="效率">
+<meta property="article:tag" content="艾宾浩斯记忆曲线">
+<meta property="article:tag" content="appleScript">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://cdn.kangqingyu.com/mweb/appleScript_202104.png">
-    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1646269449040">
+    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1646314488634">
     
-    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1646269449040">
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1646269449040">
-    <link rel="stylesheet" href="/css/style.css?v=1646269449040">
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1646314488634">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1646314488634">
+    <link rel="stylesheet" href="/css/style.css?v=1646314488634">
      
     
 <meta name="generator" content="Hexo 6.0.0"></head>
@@ -57,9 +57,9 @@
         </a>
     </div>
     <div class="nexmoe-count">
-        <div><span>Articles</span>21</div>
-        <div><span>Tags</span>13</div>
-        <div><span>Categories</span>5</div>
+        <div><span>Articles</span>22</div>
+        <div><span>Tags</span>11</div>
+        <div><span>Categories</span>7</div>
     </div>
     <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
         
@@ -94,28 +94,6 @@
     </div>
     <aside id="nexmoe-sidebar">
     
-    <div class="nexmoe-widget-wrap">
-    <div class="nexmoe-widget nexmoe-search">
-         
-            <form id="search_form" action_e="https://cn.bing.com/search?q=site:nexmoe.com" onsubmit="return search();">
-                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
-            </form>
-         
-    </div>
-</div>
-    
-    <div class="nexmoe-widget-wrap">
-    <div class="nexmoe-widget nexmoe-social">
-        <a class="mdui-ripple" href="https://space.bilibili.com/552775698" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
-            <i class="nexmoefont icon-bilibili"></i>
-        </a><a class="mdui-ripple" href="https://github.com/kangqingyu/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
-            <i class="nexmoefont icon-github"></i>
-        </a><a class="mdui-ripple" href="mailto:kangqingyu@gmail.com" target="_blank" mdui-tooltip="{content: 'mail'}" style="color: rgb(249,8,8);background-color: rgba(249,8,8,.1);">
-            <i class="nexmoefont icon-mail-fill"></i>
-        </a>
-    </div>
-</div>
-    
     
   <div class="nexmoe-widget-wrap">
     <h3 class="nexmoe-widget-title">Categories</h3>
@@ -131,22 +109,36 @@
         
 
         <li class="category-list-item">
+          <a class="category-list-link" href="/categories/DIY/">DIY</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
           <a class="category-list-link" href="/categories/iOS/">iOS</a>
-          <span class="category-list-count">3</span>
+          <span class="category-list-count">1</span>
         </li>
 
         
 
         <li class="category-list-item">
           <a class="category-list-link" href="/categories/iOS开发/">iOS开发</a>
-          <span class="category-list-count">3</span>
+          <span class="category-list-count">6</span>
         </li>
 
         
 
         <li class="category-list-item">
-          <a class="category-list-link" href="/categories/动手实践/">动手实践</a>
+          <a class="category-list-link" href="/categories/投资理财/">投资理财</a>
           <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/知行合一/">知行合一</a>
+          <span class="category-list-count">8</span>
         </li>
 
         
@@ -159,8 +151,8 @@
         
 
         <li class="category-list-item">
-          <a class="category-list-link" href="/categories/读书感悟/">读书感悟</a>
-          <span class="category-list-count">7</span>
+          <a class="category-list-link" href="/categories/软件使用/">软件使用</a>
+          <span class="category-list-count">1</span>
         </li>
 
         
@@ -171,10 +163,34 @@
 
 
     
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:nexmoe.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://book.douban.com/people/kangqingyu/collect" target="_blank" mdui-tooltip="{content: '豆瓣'}" style="color: rgb(00, 77, 11);background-color: rgba(00, 77, 11, .1);">
+            <i class="nexmoefont douban-fill"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/552775698" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/kangqingyu/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="mailto:kangqingyu@gmail.com" target="_blank" mdui-tooltip="{content: 'mail'}" style="color: rgb(249,8,8);background-color: rgba(249,8,8,.1);">
+            <i class="nexmoefont icon-mail-fill"></i>
+        </a>
+    </div>
+</div>
+    
     
   <div class="nexmoe-widget-wrap">
     <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
-      <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iOS%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" style="font-size: 10px;">iOS环境配置</a> <a href="/tags/iOS%E8%B0%83%E8%AF%95/" style="font-size: 10px;">iOS调试</a> <a href="/tags/%E5%AE%9E%E8%B7%B5%EF%BC%9F/" style="font-size: 10px;">实践？</a> <a href="/tags/%E5%B7%A5%E4%BD%9C/" style="font-size: 10px;">工作</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">性能优化</a> <a href="/tags/%E6%8B%86%E6%9C%BA/" style="font-size: 10px;">拆机</a> <a href="/tags/%E6%95%88%E7%8E%87/" style="font-size: 20px;">效率</a> <a href="/tags/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/" style="font-size: 10px;">时间管理</a> <a href="/tags/%E7%90%86%E8%B4%A2/" style="font-size: 10px;">理财</a> <a href="/tags/%E8%84%9A%E6%9C%AC/" style="font-size: 20px;">脚本</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E6%84%9F%E6%82%9F/" style="font-size: 10px;">读书感悟</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E6%84%9F%E6%82%9F%E5%AE%9E%E8%B7%B5/" style="font-size: 10px;">读书感悟实践</a>
+      <a href="/tags/Omni-Automation/" style="font-size: 10px;">Omni Automation</a> <a href="/tags/appleScript/" style="font-size: 10px;">appleScript</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%95%88%E7%8E%87/" style="font-size: 13.33px;">学习效率</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87/" style="font-size: 13.33px;">工作效率</a> <a href="/tags/%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95/" style="font-size: 16.67px;">开发调试</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 13.33px;">性能优化</a> <a href="/tags/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/" style="font-size: 13.33px;">时间管理</a> <a href="/tags/%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81/" style="font-size: 10px;">电子产品</a> <a href="/tags/%E8%89%BE%E5%AE%BE%E6%B5%A9%E6%96%AF%E8%AE%B0%E5%BF%86%E6%9B%B2%E7%BA%BF/" style="font-size: 13.33px;">艾宾浩斯记忆曲线</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E6%84%9F%E6%82%9F/" style="font-size: 20px;">读书感悟</a>
     </div>
     
   </div>
@@ -221,7 +237,8 @@
 <p>因此决定用AppleScript尝试一下。</p>
 <h1 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h1><p>首次复习设为当天晚上8点。</p>
 <h1 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">tell application &quot;Reminders&quot;</span><br><span class="line">	#选择默认的list</span><br><span class="line">	tell default list</span><br><span class="line">		# 获取当前时间</span><br><span class="line">		set theCurrentDate to current date</span><br><span class="line">		# 把初始时间改为当天晚上8点左右</span><br><span class="line">		set fromDate to theCurrentDate + 0 * days + 1 * minutes + 3 * hours</span><br><span class="line">		set endDate to fromDate + 5 * minutes</span><br><span class="line">		# 第一次间隔1天</span><br><span class="line">		set from2 to fromDate + 1 * days</span><br><span class="line">		</span><br><span class="line">		# 第2次间隔2天</span><br><span class="line">		set from3 to fromDate + (1 + 2) * days</span><br><span class="line">		</span><br><span class="line">		# 第3次间隔4天</span><br><span class="line">		set from4 to fromDate + (1 + 2 + 4) * days</span><br><span class="line">		</span><br><span class="line">		set from5 to fromDate + (1 + 2 + 4 + 7) * days</span><br><span class="line">		</span><br><span class="line">		set from6 to fromDate + (1 + 2 + 4 + 7 + 15) * days</span><br><span class="line">		</span><br><span class="line">		set descript to &quot;oc04-arc&quot;</span><br><span class="line">		# 字符串拼接使用&amp;</span><br><span class="line">		set descript15 to descript &amp; &quot;15&quot;</span><br><span class="line">		</span><br><span class="line">		make new reminder with properties &#123;name:descript, due date:fromDate&#125;</span><br><span class="line">		make new reminder with properties &#123;name:descript, due date:from2&#125;</span><br><span class="line">		make new reminder with properties &#123;name:descript, due date:from3&#125;</span><br><span class="line">		make new reminder with properties &#123;name:descript, due date:from4&#125;</span><br><span class="line">		make new reminder with properties &#123;name:descript, due date:from5&#125;</span><br><span class="line">		make new reminder with properties &#123;name:descript15, due date:from6&#125;</span><br><span class="line">		</span><br><span class="line">	end tell</span><br><span class="line">end tell</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>#效果<br>如图是执行脚本之后，自动生成的计划。<br>图中的oc01, jz01是我上个月手动加的。</p>
+
+<h1 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h1><p>如图是执行脚本之后，自动生成的计划。<br>图中的oc01, jz01是我上个月手动加的。</p>
 <p><img data-fancybox="gallery" data-sizes="auto" data-src="http://cdn.kangqingyu.com/mweb/appleScript_202104.png" alt="image.png" class="lazyload"></p>
 <h1 id="todo"><a href="#todo" class="headerlink" title="todo"></a>todo</h1><p>首次复习设为当天晚上8点。期望是取今天的日期，并设时间为20：00。<br>但是目前只能用 current date。包含了时分秒，不知道怎么把时、分删除。<br>查了script的语法，只能取其字符串，但是这样就无法+1天操作了。<br>于是就用当前的时间，计算+几个小时，获得当天晚上8点的时间。</p>
 
@@ -245,7 +262,7 @@
         <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E8%84%9A%E6%9C%AC/">脚本</a>
     
     
-        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E6%95%88%E7%8E%87/" rel="tag">效率</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag">脚本</a>
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/appleScript/" rel="tag">appleScript</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E8%89%BE%E5%AE%BE%E6%B5%A9%E6%96%AF%E8%AE%B0%E5%BF%86%E6%9B%B2%E7%BA%BF/" rel="tag">艾宾浩斯记忆曲线</a>
     
 </div>
 
@@ -257,8 +274,8 @@
 <script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
 <script type="text/javascript">
     var gitalk = new Gitalk({
-        clientID: '80b2453b6d5f37ad6225',
-        clientSecret: '43e99fa852795c9a7b3eb924b2558c64b84bbdeb',
+        clientID: '2164cca1a9c9effa7fde',
+        clientSecret: '22c7bbf0da70c945b4f9772805d0ce05d563dfb2',
         id: window.location.pathname,
         repo: 'kangqingyu.github.io',
         owner: 'kangqingyu',
@@ -301,7 +318,7 @@
 
  
 
-<script async src="/js/app.js?v=1646269449041"></script>
+<script async src="/js/app.js?v=1646314488635"></script>
 
 
 
@@ -315,10 +332,28 @@
 
 
     
+    <!-- Google Analytics -->
+<script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'G-R4DSD88YCM', 'auto');
+    ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
 
 
 
 
+
+
+    <!-- baidu Analytics -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?eef3d100bb564c2ac2c53dca022a5a3e';
+    var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
 </body>
 
