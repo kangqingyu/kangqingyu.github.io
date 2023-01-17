@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    
+    <title>防御式编程思想的原则 - KangQingYu</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="images/web.ico" type="image/x-icon" />
+    <meta name="description" content="在分析若干线上问题之后，就会发现很多问题并不是非常罕见的难题，而是由一个个较为明显的小错误积累而来，为什么会犯小错误？或许是因为侥幸，或许是因为只看到了局部的利益。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="防御式编程思想的原则">
+<meta property="og:url" content="http://example.com/2022/11/17/20221117_%E9%98%B2%E5%BE%A1%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E7%9A%84%E5%8E%9F%E5%88%99/index.html">
+<meta property="og:site_name" content="KangQingYu">
+<meta property="og:description" content="在分析若干线上问题之后，就会发现很多问题并不是非常罕见的难题，而是由一个个较为明显的小错误积累而来，为什么会犯小错误？或许是因为侥幸，或许是因为只看到了局部的利益。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-17T13:22:35.000Z">
+<meta property="article:modified_time" content="2023-01-17T04:31:45.034Z">
+<meta property="article:author" content="KangQingYu">
+<meta property="article:tag" content="开发调试">
+<meta property="article:tag" content="编程思维">
+<meta name="twitter:card" content="summary">
+    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1673929949619">
+    
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1673929949619">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1673929949619">
+    <link rel="stylesheet" href="/css/style.css?v=1673929949619">
+     
+    
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(http://cdn.kangqingyu.com/mweb/1920-213.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="KangQingYu" class="mdui-btn mdui-btn-icon"><img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="KangQingYu">
+            <img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu" alt="KangQingYu">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>Articles</span>30</div>
+        <div><span>Tags</span>12</div>
+        <div><span>Categories</span>7</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="个人简介">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                个人简介
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/iOS开发/">iOS开发</a>
+          <span class="category-list-count">7</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/投资理财/">投资理财</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/拆机/">拆机</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/知行合一/">知行合一</a>
+          <span class="category-list-count">12</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/编程/">编程</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/脚本/">脚本</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/软件使用/">软件使用</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:kangqingyu.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://book.douban.com/people/kangqingyu/collect" target="_blank" mdui-tooltip="{content: '豆瓣'}" style="color: rgb(00, 77, 11);background-color: rgba(00, 77, 11, .1);">
+            <i class="nexmoefont icon-douban-fill"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/552775698" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/kangqingyu/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="mailto:kangqingyu@gmail.com" target="_blank" mdui-tooltip="{content: 'mail'}" style="color: rgb(249,8,8);background-color: rgba(249,8,8,.1);">
+            <i class="nexmoefont icon-mail-fill"></i>
+        </a>
+    </div>
+</div>
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/Omni-Automation/" style="font-size: 10px;">Omni Automation</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/appleScript/" style="font-size: 12px;">appleScript</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%95%88%E7%8E%87/" style="font-size: 14px;">学习效率</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87/" style="font-size: 12px;">工作效率</a> <a href="/tags/%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95/" style="font-size: 18px;">开发调试</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">性能优化</a> <a href="/tags/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/" style="font-size: 16px;">时间管理</a> <a href="/tags/%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81/" style="font-size: 12px;">电子产品</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E6%80%9D%E7%BB%B4/" style="font-size: 10px;">编程思维</a> <a href="/tags/%E8%89%BE%E5%AE%BE%E6%B5%A9%E6%96%AF%E8%AE%B0%E5%BF%86%E6%9B%B2%E7%BA%BF/" style="font-size: 14px;">艾宾浩斯记忆曲线</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E6%84%9F%E6%82%9F/" style="font-size: 20px;">读书感悟</a>
+    </div>
+    
+  </div>
+
+    
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2023 KangQingYu
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 16.302083333333332%;"> 
+              <img data-src="http://cdn.kangqingyu.com/mweb/1920-213.png" data-sizes="auto" alt="防御式编程思想的原则" class="lazyload">
+              <h1>防御式编程思想的原则</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2022年11月17日</a>
+</div>
+
+      
+
+      <p>在分析若干线上问题之后，就会发现很多问题并不是非常罕见的难题，而是由一个个较为明显的小错误积累而来，为什么会犯小错误？或许是因为侥幸，或许是因为只看到了局部的利益。</p>
+<span id="more"></span> 
+<p>从某一个例子来看，确实会有“偶因一着错，便为人上人的”的侥幸。但是统计大量案例可以发现，大部分情况并不会有正向的结果。</p>
+<p>本文汇编我在需求评审、编码、项目上线几个阶段总结的原则。这些原则虽然不能直接解决问题，但是可以尽可能得优化每一步行为，从防御式编程思维方式、行为习惯层面尽量避免错误的发生。</p>
+<ul>
+<li><a href="#%E9%98%B2%E5%BE%A1%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E7%9A%84%E5%8E%9F%E5%88%99">防御式编程思想的原则</a></li>
+<li><a href="#%E4%B8%80%E4%BA%A4%E6%B5%81%E6%B2%9F%E9%80%9A%E6%97%B6%E7%9A%84%E5%8E%9F%E5%88%99">一 交流沟通时的原则</a><ul>
+<li><a href="#11%E6%89%93%E5%AD%97%E6%B2%9F%E9%80%9A-3%E5%88%86%E9%92%9F%E8%BF%98%E6%B2%A1%E6%9C%89%E8%BF%9B%E5%B1%95%EF%BC%8C%E7%AB%8B%E5%88%BB%E6%9B%B4%E6%8D%A2%E6%B2%9F%E9%80%9A%E6%96%B9%E5%BC%8F">11 打字沟通3分钟还没有进展，立刻更换沟通方式</a></li>
+<li><a href="#12%E9%81%BF%E5%85%8D%E7%A1%AE%E8%AE%A4%E5%81%8F%E8%AF%AF%EF%BC%8C%E5%8F%8D%E5%AF%B9%E7%9A%84%E8%A7%82%E7%82%B9%E5%8F%AF%E8%83%BD%E6%9C%89%E6%9B%B4%E5%A4%A7%E7%9A%84%E5%90%AF%E5%8F%91">12 避免确认偏误，反对的观点可能有更大的启发</a></li>
+<li><a href="#13%E4%B8%BE%E4%BE%8B%E8%AE%BA%E8%AF%81%EF%BC%8C%E5%8F%AA%E8%83%BD%E4%BD%9C%E4%B8%BA%E5%86%B3%E7%AD%96%E7%9A%84%E5%8F%82%E8%80%83%E6%84%8F%E8%A7%81">13 举例论证，只能作为决策的参考意见</a></li>
+<li><a href="#14%E5%88%9B%E6%84%8F%E6%8B%A9%E4%BC%98%EF%BC%8C%E8%87%AA%E5%B7%B1%E8%B0%83%E6%95%B4%E6%9D%83%E9%87%8D%E5%86%8D%E5%81%9A%E5%86%B3%E7%AD%96">14 创意择优，自己调整权重再做决策</a></li>
+<li><a href="#15%E6%89%93%E5%AD%97%E6%B2%9F%E9%80%9A%E6%97%B6%EF%BC%8C%E9%87%8D%E8%A6%81%E7%9A%84%E5%86%85%E5%AE%B9%E5%8D%95%E7%8B%AC%E5%8F%91%E4%B8%80%E6%9D%A1%E6%B6%88%E6%81%AF">15 打字沟通时，重要的内容单独发一条消息</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C%E9%9C%80%E6%B1%82%E8%AF%84%E5%AE%A1%E9%98%B6%E6%AE%B5%E7%9A%84%E5%8E%9F%E5%88%99">二 需求评审阶段的原则</a><ul>
+<li><a href="#21%E4%BA%BA%E4%BA%BA%E9%83%BD%E6%98%AF%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%EF%BC%8C%E9%9C%80%E6%B1%82%E5%86%B3%E5%AE%9A%E6%96%B9%E5%90%91">21 人人都是产品经理，需求决定方向</a></li>
+<li><a href="#22%E6%8A%80%E6%9C%AF%E6%98%AF%E6%89%8B%E6%AE%B5%EF%BC%8C%E8%80%8C%E9%9D%9E%E7%9B%AE%E7%9A%84%E3%80%82">22 技术是手段，而非目的。</a></li>
+<li><a href="#23%E7%AE%80%E5%8C%96%E6%AD%A5%E9%AA%A4%E7%9A%84%E4%BA%A7%E5%93%81%EF%BC%8C%E6%9C%89%E6%9B%B4%E5%A4%A7%E7%9A%84%E4%BB%B7%E5%80%BC">23 简化步骤的产品，有更大的价值</a></li>
+<li><a href="#24%E8%B7%A8%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C%EF%BC%8C%E5%86%85%E9%83%A8%E6%8E%92%E6%9C%9F%E5%85%A8%E9%83%A8%E5%AF%B9%E9%BD%90%E4%B9%8B%E5%90%8E%E5%86%8D%E4%B8%8E%E5%A4%96%E9%83%A8%E6%B2%9F%E9%80%9A">24 跨团队合作，内部排期全部对齐之后再与外部沟通</a></li>
+<li><a href="#25%E5%80%92%E6%8E%92%E6%8E%92%E6%9C%9F%E7%9A%84%E9%9C%80%E6%B1%82%EF%BC%8C%E5%8E%8B%E7%BC%A9%E5%BC%80%E5%8F%91%E6%97%B6%E9%97%B4%E8%80%8C%E4%B8%8D%E6%98%AF%E8%81%94%E8%B0%83%E6%97%B6%E9%97%B4">25 倒排排期的需求，压缩开发时间而不是联调时间</a></li>
+<li><a href="#26%E8%B7%A8%E8%B6%8A%E8%8A%82%E5%81%87%E6%97%A5%E7%9A%84%E9%A1%B9%E7%9B%AE%EF%BC%8C%E6%B3%A8%E6%84%8F%E5%B0%81%E7%BA%BF%E4%B8%8E%E8%81%94%E8%B0%83%E6%97%B6%E9%97%B4">26 跨越节假日的项目，注意封线与联调时间</a></li>
+<li><a href="#27%E4%B8%8D%E8%A6%81%E4%BB%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E8%A7%92%E5%BA%A6%EF%BC%8C%E7%BB%99%E5%90%88%E4%BD%9C%E6%96%B9%E8%AF%84%E4%BC%B0%E5%B7%A5%E4%BD%9C%E9%87%8F">27 不要从自己的角度，给合作方评估工作量</a></li>
+<li><a href="#28%E8%B7%A8%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C%EF%BC%8C%E8%AE%B0%E5%BD%95%E4%BC%9A%E8%AE%AE%E8%AE%B0%E8%A6%81%E5%8F%8A%E5%BE%85%E5%8A%9E%E4%BA%8B%E9%A1%B9">28 跨团队合作，记录会议记要及待办事项</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89%E5%BC%80%E5%8F%91%E9%98%B6%E6%AE%B5%E7%9A%84%E5%8E%9F%E5%88%99">三 开发阶段的原则</a><ul>
+<li><a href="#31%E6%B2%A1%E6%9C%89%E6%96%87%E6%A1%A3%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%98%AF%E4%B8%8D%E5%AE%8C%E6%95%B4%E7%9A%84%E8%AE%BE%E8%AE%A1">31 没有文档的设计是不完整的设计</a></li>
+<li><a href="#32%E7%BB%B4%E6%8A%A4%E6%96%87%E6%A1%A3%E7%9A%84%E5%90%8C%E6%97%B6%EF%BC%8C%E4%B9%9F%E8%A6%81%E7%BB%B4%E6%8A%A4%E6%96%87%E6%A1%A3%E7%B4%A2%E5%BC%95">32 维护文档的同时，也要维护文档索引</a></li>
+<li><a href="#33%E7%BC%96%E7%A0%81%E6%97%B6%E9%97%B4%E5%8D%A0%E6%AF%94%E5%BA%94%E4%BD%8E%E4%BA%8E-30">33 编码时间占比应低于30%</a></li>
+<li><a href="#34%E4%BB%A3%E7%A0%81%E9%9C%80%E8%A6%81%E5%88%AB%E4%BA%BA%E8%83%BD%E7%9C%8B%E6%87%82%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E8%83%BD%E6%AD%A3%E5%B8%B8%E8%BF%90%E8%A1%8C">34 代码需要别人能看懂，而不仅仅能正常运行</a></li>
+<li><a href="#35%E5%85%88%E5%86%99%E6%B3%A8%E9%87%8A%EF%BC%8C%E5%86%8D%E5%86%99%E4%BB%A3%E7%A0%81">35 先写注释，再写代码</a></li>
+<li><a href="#36%E5%A4%96%E4%BA%A4%E6%97%A0%E5%B0%8F%E4%BA%8B%EF%BC%8C%E5%AF%B9%E5%A4%96%E7%9A%84%E6%8E%A5%E5%8F%A3%EF%BC%8C%E5%8F%98%E9%87%8F%E7%9A%84%E6%9B%B4%E6%94%B9%E3%80%82%E8%A6%81%E5%B0%BD%E6%97%A9%E5%90%8C%E6%AD%A5">36 外交无小事，对外的接口，变量的更改。要尽早同步</a></li>
+<li><a href="#37%E6%A8%A1%E5%9D%97%E3%80%81%E5%87%BD%E6%95%B0%E9%81%B5%E5%BE%AA%E5%8D%95%E4%B8%80%E7%9B%AE%E7%9A%84%E7%9A%84%E5%8E%9F%E5%88%99">37 模块、函数遵循单一目的的原则</a></li>
+<li><a href="#38%E5%91%BD%E5%90%8D%E8%A6%81%E8%A1%A8%E9%87%8C%E5%A6%82%E4%B8%80%EF%BC%8C%E8%A7%81%E5%90%8D%E7%9F%A5%E6%84%8F">38 命名要表里如一，见名知意</a></li>
+<li><a href="#39%E5%85%AC%E5%8F%82%E4%BF%9D%E6%8C%81%E4%B8%80%E8%87%B4%EF%BC%8C%E4%B8%8D%E8%A6%81%E9%87%8D%E5%A4%8D%E5%91%BD%E5%90%8D">39 公参保持一致，不要重复命名</a></li>
+<li><a href="#310%E7%BC%96%E7%A0%81%EF%BC%9A%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E7%89%B9%E6%AE%8A%E6%8A%80%E5%B7%A7">310 编码：不要使用特殊技巧</a></li>
+<li><a href="#311-commit-message%E8%99%BD%E4%B8%8D%E8%B5%B7%E7%9C%BC%EF%BC%8C%E4%BD%86%E8%95%B4%E8%97%8F%E5%A4%A7%E4%BF%A1%E6%81%AF">311 Commit message虽不起眼，但蕴藏大信息</a></li>
+<li><a href="#312%E8%A7%A3%E5%86%B3%E6%89%80%E6%9C%89%E8%AD%A6%E5%91%8A">312 解决所有警告</a></li>
+<li><a href="#313%E4%BB%A3%E7%A0%81%E8%AF%84%E5%AE%A1%EF%BC%8C%E6%98%AF%E8%BE%93%E5%85%A5%E3%80%81%E8%BE%93%E5%87%BA%E4%B9%8B%E5%90%8E%E7%9A%84%E5%8F%8D%E9%A6%88%EF%BC%8C%E6%98%AF%E8%BF%9B%E6%AD%A5%E6%9C%80%E5%BF%AB%E7%9A%84%E6%96%B9%E5%BC%8F%E4%B9%8B%E4%B8%80">313 代码评审，是输入、输出之后的反馈，是进步最快的方式之一</a></li>
+<li><a href="#314-if-else%E5%B9%B3%E8%A1%A1%EF%BC%8C%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B9%9F%E9%9C%80%E8%A6%81">314 if else平衡，失败的数据也需要</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B%E6%B5%8B%E8%AF%95%E9%98%B6%E6%AE%B5%E7%9A%84%E5%8E%9F%E5%88%99">四 测试阶段的原则</a><ul>
+<li><a href="#41%E6%B6%89%E5%8F%8A%E7%94%A8%E6%88%B7%E6%93%8D%E4%BD%9C%E7%9A%84%E4%BA%A7%E5%93%81%E5%8A%9F%E8%83%BD%EF%BC%8C%E4%BA%A4%E5%8F%89%E6%B5%8B%E8%AF%95%E6%9B%B4%E5%AE%B9%E6%98%93%E5%8F%91%E7%8E%B0%E9%97%AE%E9%A2%98">41 涉及用户操作的产品功能，交叉测试更容易发现问题</a></li>
+<li><a href="#42%E6%97%A0%E6%B3%95%E8%A7%A3%E5%86%B3%E7%9A%84%E5%9B%B0%E9%9A%BE%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%8C%E8%AF%95%E8%AF%95%E7%A0%94%E7%A9%B6%E7%9A%84%E6%80%9D%E8%B7%AF">42 无法解决的困难的问题，试试研究的思路</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%94%E4%B8%8A%E7%BA%BF%E4%B9%8B%E5%90%8E%E7%9A%84%E5%8E%9F%E5%88%99">五 上线之后的原则</a><ul>
+<li><a href="#51%E4%BB%A5%E6%AD%A3%E5%90%88%EF%BC%8C%E4%BB%A5%E5%A5%87%E8%83%9C">51 以正合，以奇胜</a></li>
+<li><a href="#52%E5%9C%A8%E5%85%AC%E5%8F%B8%E5%85%89%E7%8E%AF%E4%B9%8B%E4%B8%8B%E6%88%90%E9%95%BF%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E5%8D%95%E6%89%93%E7%8B%AC%E6%96%97">52 在公司光环之下成长，而不是单打独斗</a></li>
+<li><a href="#53%E9%9D%A2%E5%AF%B9%E7%BA%BF%E4%B8%8A%E9%97%AE%E9%A2%98%EF%BC%8C%E6%8B%85%E5%BF%A7%E8%BF%87%E5%8E%BB%E6%88%96%E7%84%A6%E8%99%91%E6%9C%AA%E6%9D%A5%E9%83%BD%E6%B2%A1%E6%9C%89%E7%94%A8%E3%80%82%E5%85%B3%E6%B3%A8%E5%BD%93%E4%B8%8B%EF%BC%8C%E5%9C%A8%E5%B9%B3%E9%9D%99%E4%B8%AD%E7%A7%AF%E6%9E%81%E5%9C%B0%E5%AF%BB%E6%B1%82%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">53 面对线上问题，担忧过去或焦虑未来都没有用。关注当下，在平静中积极地寻求解决方案</a></li>
+<li><a href="#54%E8%B0%8B%E4%BA%8B%E5%9C%A8%E4%BA%BA%EF%BC%8C%E6%88%90%E4%BA%8B%E5%9C%A8%E5%A4%A9%E3%80%82%E5%B0%86%E4%BB%98%E5%87%BA%E7%9A%84%E5%8A%AA%E5%8A%9B%E4%B8%8E%E7%BB%93%E6%9E%9C%E8%AF%BE%E9%A2%98%E5%88%86%E7%A6%BB%EF%BC%8C%E5%AE%83%E4%BB%AC%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB%E7%B1%BB%E4%BC%BC%E8%BF%BD%E6%B1%82%E7%9A%84%E7%9B%AE%E6%A0%87%E4%B8%8E%E9%99%84%E5%B1%9E%E5%93%81">54 谋事在人，成事在天。将付出的努力与结果课题分离，它们之间的关系类似追求的目标与附属品</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="一-交流沟通时的原则"><a href="#一-交流沟通时的原则" class="headerlink" title="一 交流沟通时的原则"></a>一 交流沟通时的原则</h1><h2 id="11-打字沟通3分钟还没有进展，立刻更换沟通方式"><a href="#11-打字沟通3分钟还没有进展，立刻更换沟通方式" class="headerlink" title="11 打字沟通3分钟还没有进展，立刻更换沟通方式"></a>11 打字沟通3分钟还没有进展，立刻更换沟通方式</h2><p>通过DC沟通是常见的沟通方式，成本低，适合简单问题的沟通。<br>如果一个复杂的问题，打字3分钟或10句话还说不清楚、无任何进展，应该立刻换一种更高效的沟通方式，比如语音或见面谈。</p>
+<p>有时会看到两个人在群里一人一句，讨论了10分钟，结果发现说的不是一件事情。</p>
+<h2 id="12-避免确认偏误，反对的观点可能有更大的启发"><a href="#12-避免确认偏误，反对的观点可能有更大的启发" class="headerlink" title="12 避免确认偏误，反对的观点可能有更大的启发"></a>12 避免确认偏误，反对的观点可能有更大的启发</h2><p>确认偏误，指的是只听“好”消息——即能印证自己观念的消息，而对“坏”消息赶尽杀绝——即拒绝接受与自己观念不同的消息、想法。<br>这种现象会导致自己无法接受一个长远有益的反对意见。</p>
+<p>这是因为大脑的结构非常复杂，由理性的我和感性的我组成，对于别人的反对意见，感性的我会默认把别人的反对意见当成攻击。</p>
+<p>所以我们就要训练感性的我，对于别人的观点，要仔细思考，再做回复。反对的观点，可能道出了自己想法中潜在的风险，甚至是一个更好方案的启蒙。</p>
+<h2 id="13-举例论证，只能作为决策的参考意见"><a href="#13-举例论证，只能作为决策的参考意见" class="headerlink" title="13 举例论证，只能作为决策的参考意见"></a>13 举例论证，只能作为决策的参考意见</h2><p>无论是自己思考问题，还是讨论问题的时候，经常会出现以下两种观点。</p>
+<ul>
+<li>上一个项目，我使用了技术方案A，效果非常好。所以这个项目也使用技术方案A吧。</li>
+<li>我有一个朋友，遇到这样的问题，他就是这样解决的。所以我们也可以这样做。</li>
+</ul>
+<p>把一次偶然的成功，当成必然的结论的现象。既可能出现在讨论中，也可能出现在自己的经验中。<br>这些经验可以当成决策的一个参考案例，但不能直接当成必然的结论。<br>科学的方法应该根据不同的场景，不同背景，做大规模的统计，这样才能根据不同场景做更好的决策。</p>
+<h2 id="14-创意择优，自己调整权重再做决策"><a href="#14-创意择优，自己调整权重再做决策" class="headerlink" title="14 创意择优，自己调整权重再做决策"></a>14 创意择优，自己调整权重再做决策</h2><p>无论是技术方案的讨论，还是一个有争论问题的交流。大家都会从自己的角度有不同的观点。每个人都有自己更关注的点，所处位置不同，关注点则不同。<br>如果需要自己做决策，那么在讨论的过程中，要理解每一个想法背后的原因。这样才能明白其底层逻辑，从自己的角度判断其权重。综合考虑不同角度的想法，这样才能站在自己的角度，更全面得考虑、决策问题。</p>
+<p>李开复在选择毕业论文课题时，就涉及风险与稳定两类课题的决择。</p>
+<ul>
+<li>如果选择深度学习，可能会延期毕业，风险高，但是如果成功了则一举成名。</li>
+<li>如果选择普通的课题，能按时毕业，无风险，但是不会取得非常大的成就。</li>
+</ul>
+<p>对于不同人，承受的风险是不同的，那么他们的选择也会不同，当然了，其长远收益也不同。</p>
+<h2 id="15-打字沟通时，重要的内容单独发一条消息"><a href="#15-打字沟通时，重要的内容单独发一条消息" class="headerlink" title="15 打字沟通时，重要的内容单独发一条消息"></a>15 打字沟通时，重要的内容单独发一条消息</h2><p>对于大段的文字内容，对方不一定会仔细看每一句。重要的问题，单独发一句，不和其他内容合并在一起。</p>
+<p>实例（1）<br>在排查一个问题时，一句话问了2个问题：</p>
+<blockquote>
+<blockquote>
+<p>问题A现在的情况是A1吧？问题B现在的情况是B1吧？</p>
+</blockquote>
+</blockquote>
+<p>对方回答是，根据对方的结论，我继续排查问题。<br>排期了一天，我感觉问题B的情况不应该是B1，再次找对方确认，结果对方说他只看到我说的前一句，并没有看到后一句”问题B的情况是B1吧？”。</p>
+<p>实例（2）<br>有一次项目上线之后，我给合作方发了一句话以表示感谢：</p>
+<blockquote>
+<blockquote>
+<p>这个功能用长链接，抓包困难，涉及五个团队，排查问题非常困难。<br>感谢你帮忙排查问题，提供了很好的解决思路。<br>现在已经上线了。</p>
+</blockquote>
+</blockquote>
+<p>对方回了我一句：“需要我配合要排查什么问题？”</p>
+<h1 id="二-需求评审阶段的原则"><a href="#二-需求评审阶段的原则" class="headerlink" title="二 需求评审阶段的原则"></a>二 需求评审阶段的原则</h1><h2 id="21-人人都是产品经理，需求决定方向"><a href="#21-人人都是产品经理，需求决定方向" class="headerlink" title="21 人人都是产品经理，需求决定方向"></a>21 人人都是产品经理，需求决定方向</h2><p>软件开发，是为了满足真正的需求，解决真正的问题。并不仅仅是完成被安排的一个需求任务。<br>研发不仅是按照产品经理的需求写代码，也要思考与批判其合理性。只有身处一名用户的角度，仔细分析产品的合理性，才能写出更有价值的代码，而不仅仅是把写代码当成一种体力劳动的交换。</p>
+<h2 id="22-技术是手段，而非目的。"><a href="#22-技术是手段，而非目的。" class="headerlink" title="22 技术是手段，而非目的。"></a>22 技术是手段，而非目的。</h2><p>需求分析与系统设计是两个递进的步骤。在需求分析阶段，不应该考虑详细的技术细节。否则就会出现“因为技术太困难，所以这个需求做不了”的现象，导致一个优秀想法的流产。刚开始就从技术的角度，而不是从用户真实需求的角度来实现一个更有价值的产品。<br>产品的价值应该根据用户的需求来决定，而不是技术的难易。当然并不是不考虑技术实现的成本，而是应该有先后顺序，确定需求之后再确认技术实现的成本。毕竟即使技术成本很高，其ROI也可能更高。</p>
+<p>虽然有些需求，用某些技术方案，成本非常低。几个小时就做完一个需求，但如果是无意义的需求与无意义的技术方案，做再多又有什么用呢？</p>
+<h2 id="23-简化步骤的产品，有更大的价值"><a href="#23-简化步骤的产品，有更大的价值" class="headerlink" title="23 简化步骤的产品，有更大的价值"></a>23 简化步骤的产品，有更大的价值</h2><p>对于需要用户交互的产品，用户操作成本越低，时间成本越低，价值越高。这就需要在考虑产品的时候能在保证功能不变的前提下，尽量多的删除冗余功能，而不是增加功能。虽然增加功能更容易。</p>
+<h2 id="24-跨团队合作，内部排期全部对齐之后再与外部沟通"><a href="#24-跨团队合作，内部排期全部对齐之后再与外部沟通" class="headerlink" title="24 跨团队合作，内部排期全部对齐之后再与外部沟通"></a>24 跨团队合作，内部排期全部对齐之后再与外部沟通</h2><p>排期时间，先确认内部各个方向都同意排期，再与外部沟通。避免先和外部沟通，外部同意了，结果内部有一方时间不合适，再频繁与外部团队调整时间的尴尬。</p>
+<h2 id="25-倒排排期的需求，压缩开发时间而不是联调时间"><a href="#25-倒排排期的需求，压缩开发时间而不是联调时间" class="headerlink" title="25 倒排排期的需求，压缩开发时间而不是联调时间"></a>25 倒排排期的需求，压缩开发时间而不是联调时间</h2><p>有时候难免会遇到非常紧急的需求，需要倒排排期。如果一定要压缩时间，那就压缩开发时间，要保证联调时间足够。因为联调才能更快的暴露问题。提前暴露问题，才能尽早得协调资源，解决问题。</p>
+<h2 id="26-跨越节假日的项目，注意封线与联调时间"><a href="#26-跨越节假日的项目，注意封线与联调时间" class="headerlink" title="26 跨越节假日的项目，注意封线与联调时间"></a>26 跨越节假日的项目，注意封线与联调时间</h2><p>开始联调的日期尽量不要定在大型节假日前1天，特别是涉及多团队的大项目，因为一个人休假导致无法联调，最终导致整个流程都无法及时开始联调。</p>
+<h2 id="27-不要从自己的角度，给合作方评估工作量"><a href="#27-不要从自己的角度，给合作方评估工作量" class="headerlink" title="27 不要从自己的角度，给合作方评估工作量"></a>27 不要从自己的角度，给合作方评估工作量</h2><p>涉及到团队合作，特别是外部团队合作，即使是自认为1分钟可以改完的代码，也不要认为对方很快可以修改。因为整流研发流程不仅仅是改代码，还包括从产品的角度进行需求分析，研发与测试排期，边际交付成本并不会很低。</p>
+<h2 id="28-跨团队合作，记录会议记要及待办事项"><a href="#28-跨团队合作，记录会议记要及待办事项" class="headerlink" title="28 跨团队合作，记录会议记要及待办事项"></a>28 跨团队合作，记录会议记要及待办事项</h2><p>跨团队合作要明确会议的结论，以及谁下一步要做什么。<br>特别是跨公司的合作，和自己对接的不是研发的话，可以通过发邮件等更正式的方式。</p>
+<h1 id="三-开发阶段的原则"><a href="#三-开发阶段的原则" class="headerlink" title="三 开发阶段的原则"></a>三 开发阶段的原则</h1><h2 id="31-没有文档的设计是不完整的设计"><a href="#31-没有文档的设计是不完整的设计" class="headerlink" title="31 没有文档的设计是不完整的设计"></a>31 没有文档的设计是不完整的设计</h2><blockquote>
+<blockquote>
+<p>“我已完成了技术方案的设计，只剩下写文档了”<br>研发说这句话就像是一位作家说：<br>“我已经完成了小说的创作，只剩下它这部作品写下来了”。</p>
+</blockquote>
+</blockquote>
+<p>虽然在维护他人项目的时候，可以看代码或注释来了解整个项目。但是一些复杂的项目，较复杂的逻辑，很难从代码中看出来整体结构。这时候文档的重要性就显示出来了。<br>文档的维护确实需要成本，但这是一个短期的成本。长期来看，有了文档，可以避免以后更多的沟通交流成本，避免花更多时间看一个陌生的逻辑的时间。相比编码完成之后推倒重来，文档的修改成本并不高。</p>
+<p>大家都讨厌“口口相传”，讨厌别人不写文档。那不如从我做起，完善每一个项目的文档。<br>把可能涉及项目的整个团队当成一个共同体，而不仅仅是自己一个人。相比于自己写一次文档的局部视野，可以从更全局的视野来看长远收益。</p>
+<h2 id="32-维护文档的同时，也要维护文档索引"><a href="#32-维护文档的同时，也要维护文档索引" class="headerlink" title="32 维护文档的同时，也要维护文档索引"></a>32 维护文档的同时，也要维护文档索引</h2><p>如果是单独一个项目的文档，其结构比较单一。即使迭代多个版本，其整体结构也比较清晰。<br>但如果是一个团队大家一起记录，对于一个新主题页面的添加，不同的人会添加到不同的层级，下次在查找的时候非常困难。<br>此时索引的重要性就很明显了，即文档的添加，不仅仅是单独一篇文档的添加，还需要有相应索引的维护。</p>
+<h2 id="33-编码时间占比应低于30"><a href="#33-编码时间占比应低于30" class="headerlink" title="33 编码时间占比应低于30%"></a>33 编码时间占比应低于30%</h2><p>一个项目从需求评审、技术方案调研、书写文档、编写代码、测试、上线。纯粹编码的时间占比并不大。特别是在设计完美，一气呵成写完代码的情况下。<br>如果编码时间占比很大，大概率是因为在编码的过程中写了一半、突然不知道后面怎么写了。或者写完之后，才发现设计有严重缺陷，需要推倒重来。</p>
+<h2 id="34-代码需要别人能看懂，而不仅仅能正常运行"><a href="#34-代码需要别人能看懂，而不仅仅能正常运行" class="headerlink" title="34 代码需要别人能看懂，而不仅仅能正常运行"></a>34 代码需要别人能看懂，而不仅仅能正常运行</h2><p>上学时期，一个课程设计的项目，只要能正常运行即可。至于老师能不能看懂我们变量命名是什么意思，并不重要。因为这个项目，以后再也不会有人关注了。</p>
+<p>但是在企业项目中，一个项目不仅仅是要自己维护，还涉及到团队内其他同学来维护。因此代码的要求就不仅仅是能运行了，还要能让别人看懂。</p>
+<h2 id="35-先写注释，再写代码"><a href="#35-先写注释，再写代码" class="headerlink" title="35 先写注释，再写代码"></a>35 先写注释，再写代码</h2><p>注释不是补出来的，而是在编码的时候就应该写好的。代码和注释是密不可分的统一体，类似知行合一的思想，知和行是密切结合在一起的，两者不可分割。<br>几秒钟打几个字写一些注释，会为以后查看会节省更多的时间。<br>有人可能说我能看懂就行，以后看不懂也是别人看不懂，和我没关系。即使只从自己的角度来看，这个还真不一定，不信可以看看自己2个月之前写的代码。况且从更大的共同体利益来看，写注释并不是为了自己，而是为了整体团体的利益。<br>如果刚开始不习惯写代码的同时写注释，可以在写代码之前先写注释。</p>
+<h2 id="36-外交无小事，对外的接口，变量的更改。要尽早同步"><a href="#36-外交无小事，对外的接口，变量的更改。要尽早同步" class="headerlink" title="36 外交无小事，对外的接口，变量的更改。要尽早同步"></a>36 外交无小事，对外的接口，变量的更改。要尽早同步</h2><p>对外的接口协议，要慎重，确定之后不应该修改了。但是如果因为早期考虑不全面，必须修改，那就尽早修改。虽然自己全局搜索替换成本很低，但是如果涉及合作方的修改，特别是在测试后期，沟通成本可能要再高一个量级。周知上下游，越早改，大家的成本越小。</p>
+<h2 id="37-模块、函数遵循单一目的的原则"><a href="#37-模块、函数遵循单一目的的原则" class="headerlink" title="37 模块、函数遵循单一目的的原则"></a>37 模块、函数遵循单一目的的原则</h2><p>每个函数只做一件事，每个模块功能尽量单一。每个模块对外暴露相应的接口，做到“高内聚，低耦合”。<br>说起来似乎很简单，但是如果在需求第一个版本就写出高耦合的代码，就会导致后续维护不可控，出现一个类上千行的现象。后期想要再改，成本呈指数级上升。</p>
+<h2 id="38-命名要表里如一，见名知意"><a href="#38-命名要表里如一，见名知意" class="headerlink" title="38 命名要表里如一，见名知意"></a>38 命名要表里如一，见名知意</h2><p>变量是代码中最小的单位，命名的好坏与可读性好坏有较大关系。<br>比如命名是keyString，看意思应该是key值的字符串，如果在使用的时候用的是value，这会给别人阅读造成很大的障碍。</p>
+<h2 id="39-公参保持一致，不要重复命名"><a href="#39-公参保持一致，不要重复命名" class="headerlink" title="39 公参保持一致，不要重复命名"></a>39 公参保持一致，不要重复命名</h2><p>在项目迭代版本很多的时候，新需求如果添加参数，要注意公参是否已存在。避免多个key不同，但value一样的公参。</p>
+<h2 id="310-编码：不要使用特殊技巧"><a href="#310-编码：不要使用特殊技巧" class="headerlink" title="310 编码：不要使用特殊技巧"></a>310 编码：不要使用特殊技巧</h2><p>非常复杂的炫技代码，其价值在可读性面前不值一提。</p>
+<h2 id="311-Commit-message虽不起眼，但蕴藏大信息"><a href="#311-Commit-message虽不起眼，但蕴藏大信息" class="headerlink" title="311 Commit message虽不起眼，但蕴藏大信息"></a>311 Commit message虽不起眼，但蕴藏大信息</h2><p>Commit message可以当成一个索引，不仅方便回顾迭代的流程，还方便回滚。<br>每一个commit message，都应该和模块、函数的单一目的类似，尽量只有一个功能的修改。<br>并且commit message最好有固定的格式，比如[分支名][修改的内容]。想要更详细的话，可以再加上[代码类型]，区分是功能，还是bug的修复。甚至可以再加上[bugId]，可以链接到相应的bug空间。<br>这种习惯在集成，回滚时就体会到价值。</p>
+<h2 id="312-解决所有警告"><a href="#312-解决所有警告" class="headerlink" title="312 解决所有警告"></a>312 解决所有警告</h2><p>看似IDE中影响不大的警告，正如同一个个小错误。等到积累到一定量之后，就会增加崩溃的概率。</p>
+<h2 id="313-代码评审，是输入、输出之后的反馈，是进步最快的方式之一"><a href="#313-代码评审，是输入、输出之后的反馈，是进步最快的方式之一" class="headerlink" title="313 代码评审，是输入、输出之后的反馈，是进步最快的方式之一"></a>313 代码评审，是输入、输出之后的反馈，是进步最快的方式之一</h2><p>代码评审：别人发现我的错误时，应该心存感激，而不是试图辩解。<br>类似于健身的时候，先看书中的理论，再实践，最后找教练反馈。<br>有时候我们认为自己做的动作是对的，但是在输出之后找教练反馈，可以纠正很多细节。<br>代码评审也是如此，有时候认为自己写得完美无缺，但实际可能漏洞百出。</p>
+<h2 id="314-if-else平衡，失败的数据也需要"><a href="#314-if-else平衡，失败的数据也需要" class="headerlink" title="314 if else平衡，失败的数据也需要"></a>314 if else平衡，失败的数据也需要</h2><p>对于一些逻辑的处理，输出成功结果进行透传。虽然只需要处理成功的情况，但是失败的情况也要处理。失败的数据虽然暂时没用，但可以统计失败率，以及分析问题。</p>
+<h1 id="四-测试阶段的原则"><a href="#四-测试阶段的原则" class="headerlink" title="四 测试阶段的原则"></a>四 测试阶段的原则</h1><h2 id="41-涉及用户操作的产品功能，交叉测试更容易发现问题"><a href="#41-涉及用户操作的产品功能，交叉测试更容易发现问题" class="headerlink" title="41 涉及用户操作的产品功能，交叉测试更容易发现问题"></a>41 涉及用户操作的产品功能，交叉测试更容易发现问题</h2><p>每个用户都有不同的操作习惯，对于涉及用户操作的产品功能，如果一直是同一名QA测试，可能因为其固定的操作习惯，导致不容易发现一些隐藏的bug。<br>这个时候尽可量多的“用户”亲自操作，从不同的操作习惯来体验，则更容易发现问题。<br>如果能进一步扩大范围，不同岗位的同学一起使用、体验、吐槽，则能更早的发现真实用户的体验问题。</p>
+<h2 id="42-无法解决的困难的问题，试试研究的思路"><a href="#42-无法解决的困难的问题，试试研究的思路" class="headerlink" title="42 无法解决的困难的问题，试试研究的思路"></a>42 无法解决的困难的问题，试试研究的思路</h2><p>有时候会遇到一个很困难的问题，一天都解决不了。主要是两种情况</p>
+<ul>
+<li>思路错了。</li>
+<li>未知的知识太多了。</li>
+</ul>
+<p>如果是思路错了，这个时候不妨以退为退，想一想为什么要开发这个功能，甚至退回到需求层面，是不是可以有其他更简单的解决思路。从更高的视野来看，可以避免陷入局部细节而无法自拨。</p>
+<p>如果是未知的知识太多，那就不要直接解决这个问题，而是带着研究的想法，把相关的知识全部学一遍，这样这个困难可能就迎刃而解了。</p>
+<h1 id="五-上线之后的原则"><a href="#五-上线之后的原则" class="headerlink" title="五 上线之后的原则"></a>五 上线之后的原则</h1><h2 id="51-以正合，以奇胜"><a href="#51-以正合，以奇胜" class="headerlink" title="51 以正合，以奇胜"></a>51 以正合，以奇胜</h2><p>几乎没有靠运气的出奇制胜。只有以拥有足够正面实力为前提，并且有一些额外的力量，才能取得最终的胜利。<br>在做项目时也是如此。要想更快，更高效的完成一个项目，离不开日常的积累。项目上线不是结束，而是成长的开始。一个项目可以提供很多经验与素材，当成自己输入、输出的一种反馈，找到不足之处，避免下次犯同样的错误。</p>
+<h2 id="52-在公司光环之下成长，而不是单打独斗"><a href="#52-在公司光环之下成长，而不是单打独斗" class="headerlink" title="52 在公司光环之下成长，而不是单打独斗"></a>52 在公司光环之下成长，而不是单打独斗</h2><p>闲暇时间干什么，找个副业？短期来看，确实能有一些额外的收入。<br>但是长远来看，即使多出来30%的收入，也不会有本质的变化。无非是能更换一些更高档的电子产品、服饰、日用品。自己一个人的力量太弱小。单打独斗不如在公司的光环之下，更高效的完成项目的前提下获得个人的成长。</p>
+<h2 id="53-面对线上问题，担忧过去或焦虑未来都没有用。关注当下，在平静中积极地寻求解决方案"><a href="#53-面对线上问题，担忧过去或焦虑未来都没有用。关注当下，在平静中积极地寻求解决方案" class="headerlink" title="53 面对线上问题，担忧过去或焦虑未来都没有用。关注当下，在平静中积极地寻求解决方案"></a>53 面对线上问题，担忧过去或焦虑未来都没有用。关注当下，在平静中积极地寻求解决方案</h2><p>失败既能化为动力，驱动个人进化，也能毁掉自己，这取决自己如何应对失败。<br>出了线上问题，有两件事。</p>
+<ul>
+<li>分析原因，是谁的问题。</li>
+<li>针对现状，如何解决。</li>
+</ul>
+<p>针对”线上已出现了事故”的现状，需要立刻寻找解决方案。这是遇到线上事故时优先级最高的事情。止损非常重要，特别是损失在不停的扩大时，此时每一步操作都非常重要，如果问题非常复杂，记得多喊人。把老板，经验丰富的同学都拉到群里，如果大家有事都没看到消息，就直接打电话。毕竟在慌忙之中，自己考虑的可能不全面。</p>
+<p>分析原因的时候，如果是复杂、涉及非常多团队合作的项目，其实有非常多的原因，从不同的角度分析会有不同的结果。在分析总结会上，要尽量多的表达客观的实际情况，而不是害怕，特别是对于内向的同学。避免在会上不说话，会后又感到后悔。该表达的时候不要吝啬表达。</p>
+<p>从自己的角度来说，并不是“只要这个线上问题，和我无关”，我就不用关注了。这类问题正是非常好的反面教材，即使和自己无关，也可以成为避免下次自己犯错的素材。比如本文的各个原则，有些和我没有关系，但是在见到这些问题的时候，我做了总结，避免自己也犯同样的错误。</p>
+<h2 id="54-谋事在人，成事在天。将付出的努力与结果课题分离，它们之间的关系类似追求的目标与附属品"><a href="#54-谋事在人，成事在天。将付出的努力与结果课题分离，它们之间的关系类似追求的目标与附属品" class="headerlink" title="54 谋事在人，成事在天。将付出的努力与结果课题分离，它们之间的关系类似追求的目标与附属品"></a>54 谋事在人，成事在天。将付出的努力与结果课题分离，它们之间的关系类似追求的目标与附属品</h2><p>有时候我们付出了很多，但是结果却非常悲伤。<br>这个时候就要用上阿德勒的课题分离了。付出是我们能掌控的，但结果不是，所以要把付出的努力与结果分离。<br>从另一个角度，也可以从目标与附属品的角度来考虑。如果我们追求的是结果，那一旦失败确实会非常悲伤。但如果结果是附属品，而过程是追求的目标，那其实结果如何已经不重要了。</p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>Author：</strong>KangQingYu<br>
+        <strong>Link：</strong><a href="http://example.com/2022/11/17/20221117_%E9%98%B2%E5%BE%A1%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E7%9A%84%E5%8E%9F%E5%88%99/" title="http:&#x2F;&#x2F;example.com&#x2F;2022&#x2F;11&#x2F;17&#x2F;20221117_%E9%98%B2%E5%BE%A1%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E7%9A%84%E5%8E%9F%E5%88%99&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2022&#x2F;11&#x2F;17&#x2F;20221117_%E9%98%B2%E5%BE%A1%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E7%9A%84%E5%8E%9F%E5%88%99&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95/" rel="tag">开发调试</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E7%BC%96%E7%A8%8B%E6%80%9D%E7%BB%B4/" rel="tag">编程思维</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '2164cca1a9c9effa7fde',
+        clientSecret: '22c7bbf0da70c945b4f9772805d0ce05d563dfb2',
+        id: window.location.pathname,
+        repo: 'kangqingyu.github.io',
+        owner: 'kangqingyu',
+        admin: 'kangqingyu'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+    <div id="nexmoe-search-space">
+        <div class="search-container">
+            <div class="search-header">
+                <div class="search-input-container">
+                    <input class="search-input" type="text" placeholder="Search" oninput="sinput();">
+                </div>
+                <a class="search-close" onclick="sclose();">×</a>
+            </div>
+            <div class="search-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+ 
+
+<script async src="/js/app.js?v=1673929949620"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+    <!-- Google Analytics -->
+<script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'G-R4DSD88YCM', 'auto');
+    ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
+
+
+
+
+    <!-- baidu Analytics -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?eef3d100bb564c2ac2c53dca022a5a3e';
+    var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</body>
+
+</html>
