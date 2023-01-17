@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    
+    <title>APP启动优化——二进制重排，从入门到精通 - KangQingYu</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="images/web.ico" type="image/x-icon" />
+    <meta name="description" content="一 理论介绍 1.1缺页中断 1.2 Linkmap 1.3 看二进制文件布局   二 探索重排方案 静态扫描+运行时trace。 思维方式，自顶向下的思维方式 Clang SanitizerCoverage 的方案   三 Clang SanitizerCoverage操作步骤 1 打开选项 2 收集order file 3 写入order file文件   四 效果验证 指标1：缺页中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="APP启动优化——二进制重排，从入门到精通">
+<meta property="og:url" content="http://example.com/2021/12/29/20211229_APP%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%87%8D%E6%8E%92%EF%BC%8C%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">
+<meta property="og:site_name" content="KangQingYu">
+<meta property="og:description" content="一 理论介绍 1.1缺页中断 1.2 Linkmap 1.3 看二进制文件布局   二 探索重排方案 静态扫描+运行时trace。 思维方式，自顶向下的思维方式 Clang SanitizerCoverage 的方案   三 Clang SanitizerCoverage操作步骤 1 打开选项 2 收集order file 3 写入order file文件   四 效果验证 指标1：缺页中">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462689057590.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462689139006.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462689201881.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462689288252.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462689373197.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462689139006.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462689514231.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462689601279.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462689637965.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462689704743.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462689773668.jpg">
+<meta property="article:published_time" content="2021-12-29T11:36:32.000Z">
+<meta property="article:modified_time" content="2023-01-17T05:31:33.320Z">
+<meta property="article:author" content="KangQingYu">
+<meta property="article:tag" content="性能优化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.kangqingyu.com/mweb/16462689057590.jpg">
+    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1673933545627">
+    
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1673933545627">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1673933545627">
+    <link rel="stylesheet" href="/css/style.css?v=1673933545627">
+     
+    
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(http://cdn.kangqingyu.com/mweb/1920-213.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="KangQingYu" class="mdui-btn mdui-btn-icon"><img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="KangQingYu">
+            <img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu" alt="KangQingYu">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>Articles</span>30</div>
+        <div><span>Tags</span>13</div>
+        <div><span>Categories</span>6</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="个人简介">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                个人简介
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/投资理财/">投资理财</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/拆机/">拆机</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/知行合一/">知行合一</a>
+          <span class="category-list-count">12</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/编程/">编程</a>
+          <span class="category-list-count">8</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/脚本/">脚本</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/软件使用/">软件使用</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:kangqingyu.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://book.douban.com/people/kangqingyu/collect" target="_blank" mdui-tooltip="{content: '豆瓣'}" style="color: rgb(00, 77, 11);background-color: rgba(00, 77, 11, .1);">
+            <i class="nexmoefont icon-douban-fill"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/552775698" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/kangqingyu/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="mailto:kangqingyu@gmail.com" target="_blank" mdui-tooltip="{content: 'mail'}" style="color: rgb(249,8,8);background-color: rgba(249,8,8,.1);">
+            <i class="nexmoefont icon-mail-fill"></i>
+        </a>
+    </div>
+</div>
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/Omni-Automation/" style="font-size: 10px;">Omni Automation</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/appleScript/" style="font-size: 10px;">appleScript</a> <a href="/tags/script/" style="font-size: 10px;">script</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%95%88%E7%8E%87/" style="font-size: 14px;">学习效率</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87/" style="font-size: 12px;">工作效率</a> <a href="/tags/%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95/" style="font-size: 18px;">开发调试</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">性能优化</a> <a href="/tags/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/" style="font-size: 16px;">时间管理</a> <a href="/tags/%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81/" style="font-size: 12px;">电子产品</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E6%80%9D%E7%BB%B4/" style="font-size: 10px;">编程思维</a> <a href="/tags/%E8%89%BE%E5%AE%BE%E6%B5%A9%E6%96%AF%E8%AE%B0%E5%BF%86%E6%9B%B2%E7%BA%BF/" style="font-size: 14px;">艾宾浩斯记忆曲线</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E6%84%9F%E6%82%9F/" style="font-size: 20px;">读书感悟</a>
+    </div>
+    
+  </div>
+
+    
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2023 KangQingYu
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 16.302083333333332%;"> 
+              <img data-src="http://cdn.kangqingyu.com/mweb/1920-213.png" data-sizes="auto" alt="APP启动优化——二进制重排，从入门到精通" class="lazyload">
+              <h1>APP启动优化——二进制重排，从入门到精通</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2021年12月29日</a>
+</div>
+
+      
+
+      <span id="more"></span> 
+
+<ul>
+<li><a href="#%E4%B8%80%E7%90%86%E8%AE%BA%E4%BB%8B%E7%BB%8D">一 理论介绍</a><ul>
+<li><a href="#1-1%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD">1.1缺页中断</a></li>
+<li><a href="#1-2-linkmap">1.2 Linkmap</a></li>
+<li><a href="#1-3%E7%9C%8B%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%B8%83%E5%B1%80">1.3 看二进制文件布局</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C%E6%8E%A2%E7%B4%A2%E9%87%8D%E6%8E%92%E6%96%B9%E6%A1%88">二 探索重排方案</a><ul>
+<li><a href="#%E9%9D%99%E6%80%81%E6%89%AB%E6%8F%8F%E8%BF%90%E8%A1%8C%E6%97%B6trace%E3%80%82">静态扫描+运行时trace。</a></li>
+<li><a href="#%E6%80%9D%E7%BB%B4%E6%96%B9%E5%BC%8F%EF%BC%8C%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E7%9A%84%E6%80%9D%E7%BB%B4%E6%96%B9%E5%BC%8F">思维方式，自顶向下的思维方式</a></li>
+<li><a href="#clang-sanitizercoverage%E7%9A%84%E6%96%B9%E6%A1%88">Clang SanitizerCoverage 的方案</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89clang-sanitizercoverage%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4">三 Clang SanitizerCoverage操作步骤</a><ul>
+<li><a href="#1%E6%89%93%E5%BC%80%E9%80%89%E9%A1%B9">1 打开选项</a></li>
+<li><a href="#2%E6%94%B6%E9%9B%86-order-file">2 收集order file</a></li>
+<li><a href="#3%E5%86%99%E5%85%A5-order-file%E6%96%87%E4%BB%B6">3 写入order file文件</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B%E6%95%88%E6%9E%9C%E9%AA%8C%E8%AF%81">四 效果验证</a><ul>
+<li><a href="#%E6%8C%87%E6%A0%871%EF%BC%9A%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E4%B8%AA%E6%95%B0">指标1：缺页中断个数</a></li>
+<li><a href="#%E6%8C%87%E6%A0%872%EF%BC%9A%E5%90%AF%E5%8A%A8%E6%97%B6%E9%97%B4">指标2：启动时间</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E6%95%B0%E6%8D%AE">如何分析数据</a><ul>
+<li><a href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B9%B3%E5%8F%B0">自动化平台</a></li>
+<li><a href="#%E6%89%8B%E5%8A%A8">手动</a><ul>
+<li><a href="#%E5%86%B7%E5%90%AF%E5%8A%A8%E4%B8%8E%E6%9D%80%E8%BF%9B%E7%A8%8B">冷启动与杀进程</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%BA%94%E9%A3%8E%E9%99%A9">五 风险</a><ul>
+<li><a href="#order%E6%96%87%E4%BB%B6%E9%87%8C%E7%AC%A6%E5%8F%B7%E5%86%99%E9%94%99%E4%BA%86%E6%88%96%E4%B8%8D%E5%AD%98%E5%9C%A8%E4%BC%9A%E4%B8%8D%E4%BC%9A%E6%9C%89%E9%97%AE%E9%A2%98">order 文件里符号写错了或不存在会不会有问题</a></li>
+<li><a href="#%E4%BC%9A%E4%B8%8D%E4%BC%9A%E5%BD%B1%E5%93%8D%E4%B8%8A%E6%9E%B6">会不会影响上架</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ul>
+<h1 id="一-理论介绍"><a href="#一-理论介绍" class="headerlink" title="一 理论介绍"></a>一 理论介绍</h1><h2 id="1-1缺页中断"><a href="#1-1缺页中断" class="headerlink" title="1.1缺页中断"></a>1.1缺页中断</h2><p>cpu加载数据到内存时，先根据数据对应的虚拟内存的地址，在页表找到其在物理内存中的地址。如果不存在相应的物理内存、该地址非法或没有权限，都会造成缺页中断。每个缺页中断耗时约0.6-0.8ms，虽然很短。但是消耗的时间 &#x3D; 单次时间 * 次数。那什么时候，次数会非常大呢？冷启动的时候。尤其是对于大型APP，启动时调用的方法非常多。</p>
+<p>举个例子，内存的布局如图，page1中有方法1-5，page2中有方法6-10，page3中有方法11-15。假如APP启动时调用方法1、6、11。则需要触发缺页中断3次。如果能将方法1、6、11收敛在一起，都放置在page1，则只会触发一次缺页中断。<br>(img)</p>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462689057590.jpg"></p>
+<h2 id="1-2-Linkmap"><a href="#1-2-Linkmap" class="headerlink" title="1.2 Linkmap"></a>1.2 Linkmap</h2><p>Linkmap是iOS编译过程的中间产物，记录了二进制文件的布局，里面记录了可执行文件的路径、CPU架构、目标文件、符号等信息。<br>   linkmap主要包括三大部分，如下图</p>
+<ul>
+<li>Object Files 生成二进制用到的link单元的路径和文件编号，如图从第3行开始；</li>
+<li>Sections 记录Mach-O每个Segment&#x2F;section的地址范围，如图从第15行开始；</li>
+<li>Symbols 按顺序记录每个符号的地址范围，如图从第44行开始。</li>
+</ul>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462689139006.jpg"></p>
+<p>其中Symbols中可以看到方法的地址、大小，其顺序是Build Phases中的Link Binary With Libraries中文件的顺序。我们的目标就是要修改这些方法的顺序。 下面分析一下详细步骤。</p>
+<h2 id="1-3-看二进制文件布局"><a href="#1-3-看二进制文件布局" class="headerlink" title="1.3 看二进制文件布局"></a>1.3 看二进制文件布局</h2><p>  xcode编译的工程，二进制文件内的数据、代码是如何分布的？Xcode提供了Write Link Map File选项。打开如图所示选项。</p>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462689201881.jpg"></p>
+<p>接着在选择Products -&gt; show in finder，看到项目名+LinkMap-normal-arm64.txt的文件，即为二进制文件的符号表。</p>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462689288252.jpg"></p>
+<p><img src="http://cdn.kangqingyu.com/mweb/16462689373197.jpg"></p>
+<p><img src="http://cdn.kangqingyu.com/mweb/16462689139006.jpg"></p>
+<p>  从图中可以看到从第46行开始，即为符号地址、大小、方法名。第46行的0x100004218 + 0x00000054，相加结果即为第47行的0x10000426C。</p>
+<p>我们的目标，就是重排这些顺序，使启动时调用的方法，收敛在一起，达到减少缺页中断个数的目的。</p>
+<h1 id="二-探索重排方案"><a href="#二-探索重排方案" class="headerlink" title="二 探索重排方案"></a>二 探索重排方案</h1><p>如何找到启动时方法的调用顺序。其实比较容易想到的方法就是hook所有的方法。但是hook方案也非常多。</p>
+<h2 id="静态扫描-运行时trace。"><a href="#静态扫描-运行时trace。" class="headerlink" title="静态扫描+运行时trace。"></a>静态扫描+运行时trace。</h2><p>有个团队也公开了自己的方法与效果。包括以下几种：</p>
+<ul>
+<li>扫描linkmap的__TEXT,__text，正则匹配拿到load方法，</li>
+<li>扫描linkmap的__DATA，__mod_init_func，C++静态初始化方法</li>
+<li>通过hook来获取oc方法、block符号。</li>
+</ul>
+<p>但是initialize hook拿不到，部分block hook不到，C++通过寄存器的间接函数调用静态扫描不出来。<br>最终结论是覆盖率达到80%，启动速度提升了15%。</p>
+<h2 id="思维方式，自顶向下的思维方式"><a href="#思维方式，自顶向下的思维方式" class="headerlink" title="思维方式，自顶向下的思维方式"></a>思维方式，自顶向下的思维方式</h2><p>如果拿一个金字塔作比喻，那这种方法就是自底向下的方式，即最底层找所有的方法，有哪些种类，对其依次进行解决。这种思维方式也可以解决问题。但我可以转换一下思维：自顶向下。即从顶层向下层拆分，其需要满足MECE原则，即各部分之间满足两个原则</p>
+<ul>
+<li>mutually exclusive，各部分之间相互独立 ，没有重叠、具有排他性。</li>
+<li>collectively exhaustive，没有遗漏。</li>
+</ul>
+<p>有一种测试覆盖率的方法就可以满足这些要求。</p>
+<h2 id="Clang-SanitizerCoverage-的方案"><a href="#Clang-SanitizerCoverage-的方案" class="headerlink" title="Clang SanitizerCoverage 的方案"></a>Clang SanitizerCoverage 的方案</h2><p>想一想如果让我们测试代码覆盖率，我们可以怎么办？<br> Clang提供了__sanitizer_cov_trace_pc_guard能力。其将代码分为函数、基本块、边界三类。 这样就可以覆盖所有的方法。__<br>本来是用于测试代码覆盖率的，但其实也可以用在二进制重排中。<br>这种方式叫做静态插桩。将“桩”插入到了所有函数中。</p>
+<h1 id="三-Clang-SanitizerCoverage操作步骤"><a href="#三-Clang-SanitizerCoverage操作步骤" class="headerlink" title="三 Clang SanitizerCoverage操作步骤"></a>三 Clang SanitizerCoverage操作步骤</h1><h2 id="1-打开选项"><a href="#1-打开选项" class="headerlink" title="1 打开选项"></a>1 打开选项</h2><p>搜索Other C Flags，如图所示，添加<code>-fsanitize-coverage=trace-pc-guard</code>。</p>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462689514231.jpg"></p>
+<p>添加完这个选项之后，即可在编译期，为每一个函数内部插入一行代码__sanitizer_cov_trace_pc_guard，以此来达到AOP的效果。</p>
+<h2 id="2-收集order-file"><a href="#2-收集order-file" class="headerlink" title="2 收集order file"></a>2 收集order file</h2><p>接下来需要在APP首屏加载之后，调用方法<code>AppOrderFiles</code>，即可收集所有启动时调用的方法。<br><a target="_blank" rel="noopener" href="https://github.com/yulingtianxia/AppOrderFiles">源码</a></p>
+<p>因为用真机运行，在沙盒中可以拿到符号表文件，将其改名为app.order。准备写入order file文件。</p>
+<h2 id="3-写入order-file文件"><a href="#3-写入order-file文件" class="headerlink" title="3 写入order file文件"></a>3 写入order file文件</h2><p>在链接阶段，可以修改即将生成的可执行文件的代码段进行重排。<br>Xcode使用的链接器是ld，ld有一个参数是Order File，通过配置路径<code>$(SRCROOT)/Binary/app.order </code>，并将文件放入工程相应的路径下即可，如图所示。</p>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462689601279.jpg"></p>
+<p><img src="http://cdn.kangqingyu.com/mweb/16462689637965.jpg"></p>
+<h1 id="四-效果验证"><a href="#四-效果验证" class="headerlink" title="四 效果验证"></a>四 效果验证</h1><p>这一章节放在最后压轴，足以说明其重要性之高。验证效果应该是做性能优化的第一步，即通过制定一个目标，作为自己需要达到的标准与方向的指针，只有指针的指向正确，才能距离目标越来越近。<br>我们需要参考的指标有两个：缺页中断个数（毕竟直接优化的就是这个值）和启动时间。</p>
+<h2 id="指标1：缺页中断个数"><a href="#指标1：缺页中断个数" class="headerlink" title="指标1：缺页中断个数"></a>指标1：缺页中断个数</h2><p>打开 Instruments，选择 System Trace，运行之后。分析数据如图，选择“Main Thread”，底部的File Backed Page In即为缺页中断个数。</p>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462689704743.jpg"></p>
+<h2 id="指标2：启动时间"><a href="#指标2：启动时间" class="headerlink" title="指标2：启动时间"></a>指标2：启动时间</h2><p>   虽然我们优化的是缺页中断的个数，但其最终目的还是启动时间。统计时间有几种：<br>  1 打开Xcode的DYLD_PRINT_STATISTICS选项。<br>  2 Instrument AppLaunch功能。</p>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462689773668.jpg"></p>
+<h2 id="如何分析数据"><a href="#如何分析数据" class="headerlink" title="如何分析数据"></a>如何分析数据</h2><h3 id="自动化平台"><a href="#自动化平台" class="headerlink" title="自动化平台"></a>自动化平台</h3><p>无疑这是最好的分析方式，只要有大量的用户数据，接着做一下可视化的分析，即可清晰看到效果。<br>但是有些团队可能没有很完善的平台，那是否可以使用手动的方式呢？</p>
+<h3 id="手动"><a href="#手动" class="headerlink" title="手动"></a>手动</h3><h4 id="冷启动与杀进程"><a href="#冷启动与杀进程" class="headerlink" title="冷启动与杀进程"></a>冷启动与杀进程</h4><p>为了避免缓存所造成的误差，需要杀进程，但杀进程 &#x3D; 冷启动？显然并非如此，因为如果只是杀进程，因为内存还没有被其他进程使用，所以也没必要清空所有的缓存，苹果做了一些优化。即杀进程 ！&#x3D; 冷启动。那如何保证尽可能得接近冷启动的效果呢？<br>杀进程之后，再多打开几个其他耗内存很高的APP。<br>并且删除Xcode的缓存<code>~/Library/Developer/Xcode/DerivedData</code><br>这样虽然可以尽可能接近冷启动，但是每次完全编译，分析缺页中断的个数、启动时间。再优化前后对比2次。总共要完全重新编译4次。如果是比较大的项目，可能一个小时都不够。<br>并且，不同机型，也会有较大的差距。<br>所以，不建议使用手动的方式进行效果对比。</p>
+<h1 id="五-风险"><a href="#五-风险" class="headerlink" title="五 风险"></a>五 风险</h1><h2 id="order-文件里符号写错了或不存在会不会有问题"><a href="#order-文件里符号写错了或不存在会不会有问题" class="headerlink" title="order 文件里符号写错了或不存在会不会有问题"></a>order 文件里符号写错了或不存在会不会有问题</h2><p>ld 会忽略这些符号，如果提供了 link 选项 -order_file_statistics，他们会以 warning 的形式把这些没找到的符号打印在日志里。</p>
+<h2 id="会不会影响上架"><a href="#会不会影响上架" class="headerlink" title="会不会影响上架"></a>会不会影响上架</h2><p>不会，order文件只是重新排列了所生成的 mach-O(可执行文件) 中函数表与符号表的顺序。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/52e0dee35830">iOS调优 | 深入理解Link Map File</a></p>
+<p><a target="_blank" rel="noopener" href="http://yulingtianxia.com/blog/2019/09/01/App-Order-Files/">App 二进制文件重排已经被玩坏了</a></p>
+<p><a target="_blank" rel="noopener" href="https://clang.llvm.org/docs/SanitizerCoverage.html#tracing-pcs">Clang SanitizerCoverage¶</a></p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>Author：</strong>KangQingYu<br>
+        <strong>Link：</strong><a href="http://example.com/2021/12/29/20211229_APP%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%87%8D%E6%8E%92%EF%BC%8C%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/" title="http:&#x2F;&#x2F;example.com&#x2F;2021&#x2F;12&#x2F;29&#x2F;20211229_APP%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%87%8D%E6%8E%92%EF%BC%8C%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2021&#x2F;12&#x2F;29&#x2F;20211229_APP%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%87%8D%E6%8E%92%EF%BC%8C%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '2164cca1a9c9effa7fde',
+        clientSecret: '22c7bbf0da70c945b4f9772805d0ce05d563dfb2',
+        id: window.location.pathname,
+        repo: 'kangqingyu.github.io',
+        owner: 'kangqingyu',
+        admin: 'kangqingyu'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+    <div id="nexmoe-search-space">
+        <div class="search-container">
+            <div class="search-header">
+                <div class="search-input-container">
+                    <input class="search-input" type="text" placeholder="Search" oninput="sinput();">
+                </div>
+                <a class="search-close" onclick="sclose();">×</a>
+            </div>
+            <div class="search-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+ 
+
+<script async src="/js/app.js?v=1673933545628"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+    <!-- Google Analytics -->
+<script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'G-R4DSD88YCM', 'auto');
+    ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
+
+
+
+
+    <!-- baidu Analytics -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?eef3d100bb564c2ac2c53dca022a5a3e';
+    var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</body>
+
+</html>

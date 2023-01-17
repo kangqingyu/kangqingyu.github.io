@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    
+    <title>Hexo github 博客预览正常，但是部署之后无法展示 - KangQingYu</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="images/web.ico" type="image/x-icon" />
+    <meta name="description" content="问题：Hexo本地预览正常，但是发布之后无法展示这时要看github的日志了，打开我们的github博客库，“Actions”选项，看最近的pages build，红色的叉号表示出现错误。打开看看。   解决步骤其实根据build日志，可以很清楚得看出来原因：原来是文件的名字太长了。当然每个人的问题原因都不一样，在这里找相应的报错日志，解决即可。 Hexo github 博客2021最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo github 博客预览正常，但是部署之后无法展示">
+<meta property="og:url" content="http://example.com/2021/08/20/20210820_Hexo%20github%20%E5%8D%9A%E5%AE%A2%E9%A2%84%E8%A7%88%E6%AD%A3%E5%B8%B8%EF%BC%8C%E4%BD%86%E6%98%AF%E9%83%A8%E7%BD%B2%E4%B9%8B%E5%90%8E%E6%97%A0%E6%B3%95%E5%B1%95%E7%A4%BA/index.html">
+<meta property="og:site_name" content="KangQingYu">
+<meta property="og:description" content="问题：Hexo本地预览正常，但是发布之后无法展示这时要看github的日志了，打开我们的github博客库，“Actions”选项，看最近的pages build，红色的叉号表示出现错误。打开看看。   解决步骤其实根据build日志，可以很清楚得看出来原因：原来是文件的名字太长了。当然每个人的问题原因都不一样，在这里找相应的报错日志，解决即可。 Hexo github 博客2021最">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16461898173506.jpg">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16461898867212.jpg">
+<meta property="article:published_time" content="2021-08-19T22:39:23.000Z">
+<meta property="article:modified_time" content="2022-03-03T09:44:52.000Z">
+<meta property="article:author" content="KangQingYu">
+<meta property="article:tag" content="开发调试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.kangqingyu.com/mweb/16461898173506.jpg">
+    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1673933545636">
+    
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1673933545636">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1673933545636">
+    <link rel="stylesheet" href="/css/style.css?v=1673933545636">
+     
+    
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(http://cdn.kangqingyu.com/mweb/1920-213.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="KangQingYu" class="mdui-btn mdui-btn-icon"><img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="KangQingYu">
+            <img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu" alt="KangQingYu">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>Articles</span>30</div>
+        <div><span>Tags</span>13</div>
+        <div><span>Categories</span>6</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="个人简介">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                个人简介
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/投资理财/">投资理财</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/拆机/">拆机</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/知行合一/">知行合一</a>
+          <span class="category-list-count">12</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/编程/">编程</a>
+          <span class="category-list-count">8</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/脚本/">脚本</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/软件使用/">软件使用</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:kangqingyu.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://book.douban.com/people/kangqingyu/collect" target="_blank" mdui-tooltip="{content: '豆瓣'}" style="color: rgb(00, 77, 11);background-color: rgba(00, 77, 11, .1);">
+            <i class="nexmoefont icon-douban-fill"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/552775698" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/kangqingyu/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="mailto:kangqingyu@gmail.com" target="_blank" mdui-tooltip="{content: 'mail'}" style="color: rgb(249,8,8);background-color: rgba(249,8,8,.1);">
+            <i class="nexmoefont icon-mail-fill"></i>
+        </a>
+    </div>
+</div>
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/Omni-Automation/" style="font-size: 10px;">Omni Automation</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/appleScript/" style="font-size: 10px;">appleScript</a> <a href="/tags/script/" style="font-size: 10px;">script</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%95%88%E7%8E%87/" style="font-size: 14px;">学习效率</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87/" style="font-size: 12px;">工作效率</a> <a href="/tags/%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95/" style="font-size: 18px;">开发调试</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">性能优化</a> <a href="/tags/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/" style="font-size: 16px;">时间管理</a> <a href="/tags/%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81/" style="font-size: 12px;">电子产品</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E6%80%9D%E7%BB%B4/" style="font-size: 10px;">编程思维</a> <a href="/tags/%E8%89%BE%E5%AE%BE%E6%B5%A9%E6%96%AF%E8%AE%B0%E5%BF%86%E6%9B%B2%E7%BA%BF/" style="font-size: 14px;">艾宾浩斯记忆曲线</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E6%84%9F%E6%82%9F/" style="font-size: 20px;">读书感悟</a>
+    </div>
+    
+  </div>
+
+    
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2023 KangQingYu
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 16.302083333333332%;"> 
+              <img data-src="http://cdn.kangqingyu.com/mweb/1920-213.png" data-sizes="auto" alt="Hexo github 博客预览正常，但是部署之后无法展示" class="lazyload">
+              <h1>Hexo github 博客预览正常，但是部署之后无法展示</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2021年08月20日</a>
+</div>
+
+      
+
+      <span id="more"></span> 
+
+
+
+
+<h1 id="问题：Hexo本地预览正常，但是发布之后无法展示"><a href="#问题：Hexo本地预览正常，但是发布之后无法展示" class="headerlink" title="问题：Hexo本地预览正常，但是发布之后无法展示"></a>问题：Hexo本地预览正常，但是发布之后无法展示</h1><p>这时要看github的日志了，打开我们的github博客库，“Actions”选项，看最近的pages build，红色的叉号表示出现错误。打开看看。</p>
+<p><img src="http://cdn.kangqingyu.com/mweb/16461898173506.jpg"></p>
+<p><img src="http://cdn.kangqingyu.com/mweb/16461898867212.jpg"></p>
+<h2 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h2><p>其实根据build日志，可以很清楚得看出来原因：原来是文件的名字太长了。当然每个人的问题原因都不一样，在这里找相应的报错日志，解决即可。</p>
+<h1 id="Hexo-github-博客2021最新版注意事项，2021年github的几个改变"><a href="#Hexo-github-博客2021最新版注意事项，2021年github的几个改变" class="headerlink" title="Hexo github 博客2021最新版注意事项，2021年github的几个改变"></a>Hexo github 博客2021最新版注意事项，2021年github的几个改变</h1><p>如何使用Hexo github建自己的网站，具体步骤这里就不说了，搜索关键字“Hexo github 博客”，就有很多详细的步骤。</p>
+<p>在搜索的是时候，我筛选的是近一年的博客（在搜索的网站后面加上&amp;as_qdr&#x3D;d即可按时间排序），但是依然有一些过时的东西。</p>
+<p>这里就分享一下2021年github的几个改变：</p>
+<h2 id="变化1：config-yml中branch不是master，而是main"><a href="#变化1：config-yml中branch不是master，而是main" class="headerlink" title="变化1：config.yml中branch不是master，而是main"></a>变化1：config.yml中branch不是master，而是main</h2><p>本地预览之后、准备发布时（hexo d命令），需要在根目录下的 _config.yml，配置 GitHub 相关信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/kangqingyu/kangqingyu.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
+<p>注意2020年底开始，github的主干不再是master而是main。</p>
+<h2 id="变化2：Support-for-password-authentication-was-removed-on-August-13-2021-Please-use-a-personal-access-token-instead"><a href="#变化2：Support-for-password-authentication-was-removed-on-August-13-2021-Please-use-a-personal-access-token-instead" class="headerlink" title="变化2：Support for password authentication was removed on August 13, 2021. Please use a personal access token instead"></a>变化2：Support for password authentication was removed on August 13, 2021. Please use a personal access token instead</h2><p>在发布时，会要求输入账号和密码，终端有如下问题显示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Username for &#x27;https://github.com&#x27;: kangqingyu</span><br><span class="line">Password for &#x27;https://kangqingyu@github.com&#x27;:</span><br><span class="line">remote: Support for password authentication was removed on August 13, 2021. Please use a personal access token instead.</span><br><span class="line">remote: Please see https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/ for more information.</span><br><span class="line">fatal: Authentication failed for &#x27;https://github.com/kangqingyu/kangqingyu.github.io.git/&#x27;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="参考：官方文档的解决方案介绍"><a href="#参考：官方文档的解决方案介绍" class="headerlink" title="参考：官方文档的解决方案介绍"></a>参考：官方文档的解决方案介绍</h2><p><a target="_blank" rel="noopener" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token</a></p>
+<p>翻译过来意思就是github登陆需要token。<br>注意需要在Github上设置一下token，并且要及时记录其值，因为再次刷新网页之后就不再显示了。</p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>Author：</strong>KangQingYu<br>
+        <strong>Link：</strong><a href="http://example.com/2021/08/20/20210820_Hexo%20github%20%E5%8D%9A%E5%AE%A2%E9%A2%84%E8%A7%88%E6%AD%A3%E5%B8%B8%EF%BC%8C%E4%BD%86%E6%98%AF%E9%83%A8%E7%BD%B2%E4%B9%8B%E5%90%8E%E6%97%A0%E6%B3%95%E5%B1%95%E7%A4%BA/" title="http:&#x2F;&#x2F;example.com&#x2F;2021&#x2F;08&#x2F;20&#x2F;20210820_Hexo%20github%20%E5%8D%9A%E5%AE%A2%E9%A2%84%E8%A7%88%E6%AD%A3%E5%B8%B8%EF%BC%8C%E4%BD%86%E6%98%AF%E9%83%A8%E7%BD%B2%E4%B9%8B%E5%90%8E%E6%97%A0%E6%B3%95%E5%B1%95%E7%A4%BA&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2021&#x2F;08&#x2F;20&#x2F;20210820_Hexo%20github%20%E5%8D%9A%E5%AE%A2%E9%A2%84%E8%A7%88%E6%AD%A3%E5%B8%B8%EF%BC%8C%E4%BD%86%E6%98%AF%E9%83%A8%E7%BD%B2%E4%B9%8B%E5%90%8E%E6%97%A0%E6%B3%95%E5%B1%95%E7%A4%BA&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/">软件使用</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95/" rel="tag">开发调试</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '2164cca1a9c9effa7fde',
+        clientSecret: '22c7bbf0da70c945b4f9772805d0ce05d563dfb2',
+        id: window.location.pathname,
+        repo: 'kangqingyu.github.io',
+        owner: 'kangqingyu',
+        admin: 'kangqingyu'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+    <div id="nexmoe-search-space">
+        <div class="search-container">
+            <div class="search-header">
+                <div class="search-input-container">
+                    <input class="search-input" type="text" placeholder="Search" oninput="sinput();">
+                </div>
+                <a class="search-close" onclick="sclose();">×</a>
+            </div>
+            <div class="search-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+ 
+
+<script async src="/js/app.js?v=1673933545637"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+    <!-- Google Analytics -->
+<script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'G-R4DSD88YCM', 'auto');
+    ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
+
+
+
+
+    <!-- baidu Analytics -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?eef3d100bb564c2ac2c53dca022a5a3e';
+    var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</body>
+
+</html>

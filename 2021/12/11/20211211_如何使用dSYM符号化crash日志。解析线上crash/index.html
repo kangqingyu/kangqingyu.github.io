@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    
+    <title>如何使用dSYM符号化crash日志。iOS解析线上crash - KangQingYu</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="images/web.ico" type="image/x-icon" />
+    <meta name="description" content="如何使用dSYM符号化crash日志。解析线上crash 1 获取未解析的crash日志。 2 获取dSYM文件 3 使用xcode的symbolicatecrash工具进行符号化 3.1 找到symbolicatecrash 3.2 将crash, dSYM，symbolicatecrash放置在同一个文件夹 3.3 执行命令，生成符号化的文件   4 常见问题 4.1 Erro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用dSYM符号化crash日志。iOS解析线上crash">
+<meta property="og:url" content="http://example.com/2021/12/11/20211211_%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8dSYM%E7%AC%A6%E5%8F%B7%E5%8C%96crash%E6%97%A5%E5%BF%97%E3%80%82%E8%A7%A3%E6%9E%90%E7%BA%BF%E4%B8%8Acrash/index.html">
+<meta property="og:site_name" content="KangQingYu">
+<meta property="og:description" content="如何使用dSYM符号化crash日志。解析线上crash 1 获取未解析的crash日志。 2 获取dSYM文件 3 使用xcode的symbolicatecrash工具进行符号化 3.1 找到symbolicatecrash 3.2 将crash, dSYM，symbolicatecrash放置在同一个文件夹 3.3 执行命令，生成符号化的文件   4 常见问题 4.1 Erro">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16462688411477.jpg">
+<meta property="article:published_time" content="2021-12-11T00:26:32.000Z">
+<meta property="article:modified_time" content="2023-01-17T05:31:08.098Z">
+<meta property="article:author" content="KangQingYu">
+<meta property="article:tag" content="开发调试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.kangqingyu.com/mweb/16462688411477.jpg">
+    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1673933545632">
+    
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1673933545632">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1673933545632">
+    <link rel="stylesheet" href="/css/style.css?v=1673933545632">
+     
+    
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(http://cdn.kangqingyu.com/mweb/1920-213.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="KangQingYu" class="mdui-btn mdui-btn-icon"><img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="KangQingYu">
+            <img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu" alt="KangQingYu">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>Articles</span>30</div>
+        <div><span>Tags</span>13</div>
+        <div><span>Categories</span>6</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="个人简介">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                个人简介
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/投资理财/">投资理财</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/拆机/">拆机</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/知行合一/">知行合一</a>
+          <span class="category-list-count">12</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/编程/">编程</a>
+          <span class="category-list-count">8</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/脚本/">脚本</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/软件使用/">软件使用</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:kangqingyu.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://book.douban.com/people/kangqingyu/collect" target="_blank" mdui-tooltip="{content: '豆瓣'}" style="color: rgb(00, 77, 11);background-color: rgba(00, 77, 11, .1);">
+            <i class="nexmoefont icon-douban-fill"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/552775698" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/kangqingyu/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="mailto:kangqingyu@gmail.com" target="_blank" mdui-tooltip="{content: 'mail'}" style="color: rgb(249,8,8);background-color: rgba(249,8,8,.1);">
+            <i class="nexmoefont icon-mail-fill"></i>
+        </a>
+    </div>
+</div>
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/Omni-Automation/" style="font-size: 10px;">Omni Automation</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/appleScript/" style="font-size: 10px;">appleScript</a> <a href="/tags/script/" style="font-size: 10px;">script</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%95%88%E7%8E%87/" style="font-size: 14px;">学习效率</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87/" style="font-size: 12px;">工作效率</a> <a href="/tags/%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95/" style="font-size: 18px;">开发调试</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">性能优化</a> <a href="/tags/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/" style="font-size: 16px;">时间管理</a> <a href="/tags/%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81/" style="font-size: 12px;">电子产品</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E6%80%9D%E7%BB%B4/" style="font-size: 10px;">编程思维</a> <a href="/tags/%E8%89%BE%E5%AE%BE%E6%B5%A9%E6%96%AF%E8%AE%B0%E5%BF%86%E6%9B%B2%E7%BA%BF/" style="font-size: 14px;">艾宾浩斯记忆曲线</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E6%84%9F%E6%82%9F/" style="font-size: 20px;">读书感悟</a>
+    </div>
+    
+  </div>
+
+    
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2023 KangQingYu
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 16.302083333333332%;"> 
+              <img data-src="http://cdn.kangqingyu.com/mweb/1920-213.png" data-sizes="auto" alt="如何使用dSYM符号化crash日志。iOS解析线上crash" class="lazyload">
+              <h1>如何使用dSYM符号化crash日志。iOS解析线上crash</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2021年12月11日</a>
+</div>
+
+      
+
+      <span id="more"></span> 
+
+ <!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+<ul>
+<li><a href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8dsym%E7%AC%A6%E5%8F%B7%E5%8C%96crash%E6%97%A5%E5%BF%97%E8%A7%A3%E6%9E%90%E7%BA%BF%E4%B8%8Acrash">如何使用dSYM符号化crash日志。解析线上crash</a></li>
+<li><a href="#1-%E8%8E%B7%E5%8F%96%E6%9C%AA%E8%A7%A3%E6%9E%90%E7%9A%84crash%E6%97%A5%E5%BF%97">1 获取未解析的crash日志。</a></li>
+<li><a href="#2-%E8%8E%B7%E5%8F%96dsym%E6%96%87%E4%BB%B6">2 获取dSYM文件</a></li>
+<li><a href="#3-%E4%BD%BF%E7%94%A8xcode%E7%9A%84symbolicatecrash%E5%B7%A5%E5%85%B7%E8%BF%9B%E8%A1%8C%E7%AC%A6%E5%8F%B7%E5%8C%96">3 使用xcode的symbolicatecrash工具进行符号化</a><ul>
+<li><a href="#31-%E6%89%BE%E5%88%B0symbolicatecrash">3.1 找到symbolicatecrash</a></li>
+<li><a href="#32-%E5%B0%86crash-dsymsymbolicatecrash%E6%94%BE%E7%BD%AE%E5%9C%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9">3.2 将crash, dSYM，symbolicatecrash放置在同一个文件夹</a></li>
+<li><a href="#33-%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4%E7%94%9F%E6%88%90%E7%AC%A6%E5%8F%B7%E5%8C%96%E7%9A%84%E6%96%87%E4%BB%B6">3.3 执行命令，生成符号化的文件</a></li>
+</ul>
+</li>
+<li><a href="#4-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98">4 常见问题</a><ul>
+<li><a href="#41-error-developer_dir-is-not-defined-at-symbolicatecrash">4.1 Error: “DEVELOPER_DIR” is not defined at .&#x2F;symbolicatecrash</a></li>
+<li><a href="#42-warning-unable-to-symbolicate-from-required-binary-xcodeios-devicesupport136-17g68-arm64esymbolssystemlibraryframeworkscfnetworkframeworkcfnetwork">4.2 Warning: Unable to symbolicate from required binary: ~&#x2F;Xcode&#x2F;iOS DeviceSupport&#x2F;13.6 (17G68) arm64e&#x2F;Symbols&#x2F;System&#x2F;Library&#x2F;Frameworks&#x2F;CFNetwork.framework&#x2F;CFNetwork</a><ul>
+<li><a href="#421-%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8Buuid">4.21 如何查看uuid</a><ul>
+<li><a href="#dsym%E7%9A%84uuid">dsym的uuid</a></li>
+<li><a href="#crash%E6%97%A5%E5%BF%97%E7%9A%84uuid">crash日志的uuid</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<h1 id="1-获取未解析的crash日志。"><a href="#1-获取未解析的crash日志。" class="headerlink" title="1 获取未解析的crash日志。"></a>1 获取未解析的crash日志。</h1><p>iPhone连接mac，从Xcode-&gt;Window-&gt;Devices View Device Logs ，可以下载在此iPhone上当时crash的日志。</p>
+<h1 id="2-获取dSYM文件"><a href="#2-获取dSYM文件" class="headerlink" title="2 获取dSYM文件"></a>2 获取dSYM文件</h1><p>每次编译项目，生成一个与APP同名的dSYM文件。</p>
+<p>不同的公司，用不同的方式打包。如果自动化流程做得好，通常是有集群的，找到相应的dsym文件下载即可。命名通常是XXX.app.dSYM</p>
+<h1 id="3-使用xcode的symbolicatecrash工具进行符号化"><a href="#3-使用xcode的symbolicatecrash工具进行符号化" class="headerlink" title="3 使用xcode的symbolicatecrash工具进行符号化"></a>3 使用xcode的symbolicatecrash工具进行符号化</h1><h2 id="3-1-找到symbolicatecrash"><a href="#3-1-找到symbolicatecrash" class="headerlink" title="3.1 找到symbolicatecrash"></a>3.1 找到symbolicatecrash</h2><p>打开终端输入命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /Applications/Xcode.app -name symbolicatecrash -type f</span><br></pre></td></tr></table></figure>
+
+<p>我的mac出现的结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/iOSSupport/Library/PrivateFrameworks/DVTFoundation.framework/Versions/A/Resources/symbolicatecrash</span><br><span class="line">/Applications/Xcode.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/Library/PrivateFrameworks/DVTFoundation.framework/symbolicatecrash</span><br><span class="line">/Applications/Xcode.app/Contents/Developer/Platforms/AppleTVSimulator.platform/Developer/Library/PrivateFrameworks/DVTFoundation.framework/symbolicatecrash</span><br><span class="line">/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/DVTFoundation.framework/symbolicatecrash</span><br><span class="line">/Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/symbolicatecrash</span><br></pre></td></tr></table></figure>
+<p>mac, 手机，模拟器等不同的版本。如果是iPhone真机就选择最后一个。<br>打开路径：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/</span><br></pre></td></tr></table></figure>
+<p>将symbolicatecrash复制出来。</p>
+<h2 id="3-2-将crash-dSYM，symbolicatecrash放置在同一个文件夹"><a href="#3-2-将crash-dSYM，symbolicatecrash放置在同一个文件夹" class="headerlink" title="3.2 将crash, dSYM，symbolicatecrash放置在同一个文件夹"></a>3.2 将crash, dSYM，symbolicatecrash放置在同一个文件夹</h2><p>比如我放置在了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Users/kqy/Documents/crashProblem1211</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-3-执行命令，生成符号化的文件"><a href="#3-3-执行命令，生成符号化的文件" class="headerlink" title="3.3 执行命令，生成符号化的文件"></a>3.3 执行命令，生成符号化的文件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./symbolicatecrash my.crash my1211.app.dSYM &gt; result.crash</span><br></pre></td></tr></table></figure>
+<p> 其中my.crash是crash日志；my1211.app.dSYM是dSYM文件。</p>
+<p> 所有命令汇聚一张图</p>
+<p> <img src="http://cdn.kangqingyu.com/mweb/16462688411477.jpg"></p>
+<h1 id="4-常见问题"><a href="#4-常见问题" class="headerlink" title="4 常见问题"></a>4 常见问题</h1><h2 id="4-1-Error-“DEVELOPER-DIR”-is-not-defined-at-x2F-symbolicatecrash"><a href="#4-1-Error-“DEVELOPER-DIR”-is-not-defined-at-x2F-symbolicatecrash" class="headerlink" title="4.1 Error: “DEVELOPER_DIR” is not defined at .&#x2F;symbolicatecrash"></a>4.1 Error: “DEVELOPER_DIR” is not defined at .&#x2F;symbolicatecrash</h2><p>解决方法是在终端执行命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export DEVELOPER_DIR=&quot;/Applications/XCode.app/Contents/Developer&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-2-Warning-Unable-to-symbolicate-from-required-binary-x2F-Xcode-x2F-iOS-DeviceSupport-x2F-13-6-17G68-arm64e-x2F-Symbols-x2F-System-x2F-Library-x2F-Frameworks-x2F-CFNetwork-framework-x2F-CFNetwork"><a href="#4-2-Warning-Unable-to-symbolicate-from-required-binary-x2F-Xcode-x2F-iOS-DeviceSupport-x2F-13-6-17G68-arm64e-x2F-Symbols-x2F-System-x2F-Library-x2F-Frameworks-x2F-CFNetwork-framework-x2F-CFNetwork" class="headerlink" title="4.2 Warning: Unable to symbolicate from required binary: ~&#x2F;Xcode&#x2F;iOS DeviceSupport&#x2F;13.6 (17G68) arm64e&#x2F;Symbols&#x2F;System&#x2F;Library&#x2F;Frameworks&#x2F;CFNetwork.framework&#x2F;CFNetwork"></a>4.2 Warning: Unable to symbolicate from required binary: ~&#x2F;Xcode&#x2F;iOS DeviceSupport&#x2F;13.6 (17G68) arm64e&#x2F;Symbols&#x2F;System&#x2F;Library&#x2F;Frameworks&#x2F;CFNetwork.framework&#x2F;CFNetwork</h2><p>因为crash日志和.dSYM文件的uuid不匹配。</p>
+<p>比如QA说这个crash是周五产生的，于是我从集群下载了周五的包对应dSYM文件。<br>但是实际QA记错了，这个crash是用的周四下载的包，所以应该使用周四的包对应的dSYM文件，才能保证uuid一致。</p>
+<h3 id="4-21-如何查看uuid"><a href="#4-21-如何查看uuid" class="headerlink" title="4.21 如何查看uuid"></a>4.21 如何查看uuid</h3><h4 id="dsym的uuid"><a href="#dsym的uuid" class="headerlink" title="dsym的uuid"></a>dsym的uuid</h4><p>查看 my1211.app.dSYM 文件的 UUID ，在终端输入命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dwarfdump --uuid my1211.app.dSYM</span><br></pre></td></tr></table></figure>
+<h4 id="crash日志的uuid"><a href="#crash日志的uuid" class="headerlink" title="crash日志的uuid"></a>crash日志的uuid</h4><p>crash文件内Binary Images，其下一行 &lt;&gt; 内的 字符串就是crash文件的UUID。其行尾是app的名字及其路径。</p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>Author：</strong>KangQingYu<br>
+        <strong>Link：</strong><a href="http://example.com/2021/12/11/20211211_%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8dSYM%E7%AC%A6%E5%8F%B7%E5%8C%96crash%E6%97%A5%E5%BF%97%E3%80%82%E8%A7%A3%E6%9E%90%E7%BA%BF%E4%B8%8Acrash/" title="http:&#x2F;&#x2F;example.com&#x2F;2021&#x2F;12&#x2F;11&#x2F;20211211_%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8dSYM%E7%AC%A6%E5%8F%B7%E5%8C%96crash%E6%97%A5%E5%BF%97%E3%80%82%E8%A7%A3%E6%9E%90%E7%BA%BF%E4%B8%8Acrash&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2021&#x2F;12&#x2F;11&#x2F;20211211_%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8dSYM%E7%AC%A6%E5%8F%B7%E5%8C%96crash%E6%97%A5%E5%BF%97%E3%80%82%E8%A7%A3%E6%9E%90%E7%BA%BF%E4%B8%8Acrash&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95/" rel="tag">开发调试</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '2164cca1a9c9effa7fde',
+        clientSecret: '22c7bbf0da70c945b4f9772805d0ce05d563dfb2',
+        id: window.location.pathname,
+        repo: 'kangqingyu.github.io',
+        owner: 'kangqingyu',
+        admin: 'kangqingyu'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+    <div id="nexmoe-search-space">
+        <div class="search-container">
+            <div class="search-header">
+                <div class="search-input-container">
+                    <input class="search-input" type="text" placeholder="Search" oninput="sinput();">
+                </div>
+                <a class="search-close" onclick="sclose();">×</a>
+            </div>
+            <div class="search-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+ 
+
+<script async src="/js/app.js?v=1673933545633"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+    <!-- Google Analytics -->
+<script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'G-R4DSD88YCM', 'auto');
+    ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
+
+
+
+
+    <!-- baidu Analytics -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?eef3d100bb564c2ac2c53dca022a5a3e';
+    var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</body>
+
+</html>
