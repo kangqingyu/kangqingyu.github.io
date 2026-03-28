@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    
+    <title>gem依赖多项目版本不一致，用 bundle exec + Gemfile 做项目级隔离 - KangQingYu</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="images/web.ico" type="image/x-icon" />
+    <meta name="description" content="司机，乘客，外卖，金融，每个业务方都有自己的独立APP，每个还分巴西，墨西哥。当涉及的业务多了，APP多了，每个业务环境都不一样，就出现问题了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gem依赖多项目版本不一致，用 bundle exec + Gemfile 做项目级隔离">
+<meta property="og:url" content="http://example.com/2023/05/13/20230513gem%E4%BE%9D%E8%B5%96%E5%A4%9A%E9%A1%B9%E7%9B%AE%E7%89%88%E6%9C%AC%E4%B8%8D%E4%B8%80%E8%87%B4%EF%BC%8C%E7%94%A8%20bundle%20exec%20+%20Gemfile%20%E5%81%9A%E9%A1%B9%E7%9B%AE%E7%BA%A7%E9%9A%94%E7%A6%BB/index.html">
+<meta property="og:site_name" content="KangQingYu">
+<meta property="og:description" content="司机，乘客，外卖，金融，每个业务方都有自己的独立APP，每个还分巴西，墨西哥。当涉及的业务多了，APP多了，每个业务环境都不一样，就出现问题了。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-05-13T02:41:32.000Z">
+<meta property="article:modified_time" content="2026-03-27T23:01:53.065Z">
+<meta property="article:author" content="KangQingYu">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1774682049991">
+    
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1774682049991">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1774682049991">
+    <link rel="stylesheet" href="/css/style.css?v=1774682049991">
+     
+    
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(http://cdn.kangqingyu.com/mweb/1920-213.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="KangQingYu" class="mdui-btn mdui-btn-icon"><img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="KangQingYu">
+            <img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu" alt="KangQingYu">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>Articles</span>57</div>
+        <div><span>Tags</span>21</div>
+        <div><span>Categories</span>9</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="个人简介">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                个人简介
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/个人成长/">个人成长</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/互联网思维/">互联网思维</a>
+          <span class="category-list-count">8</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/器：软件与硬件/">器：软件与硬件</a>
+          <span class="category-list-count">7</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/年度总结/">年度总结</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/搭建个人成长系统/">搭建个人成长系统</a>
+          <span class="category-list-count">10</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/新闻点评/">新闻点评</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/编程实战/">编程实战</a>
+          <span class="category-list-count">12</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/读书感悟/">读书感悟</a>
+          <span class="category-list-count">11</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/运动健身/">运动健身</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:kangqingyu.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://book.douban.com/people/kangqingyu/collect" target="_blank" mdui-tooltip="{content: '豆瓣'}" style="color: rgb(00, 77, 11);background-color: rgba(00, 77, 11, .1);">
+            <i class="nexmoefont icon-douban-fill"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/552775698" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/kangqingyu/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="mailto:kangqingyu@gmail.com" target="_blank" mdui-tooltip="{content: 'mail'}" style="color: rgb(249,8,8);background-color: rgba(249,8,8,.1);">
+            <i class="nexmoefont icon-mail-fill"></i>
+        </a>
+    </div>
+</div>
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/apple/" style="font-size: 13.33px;">apple</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 18.33px;">iOS</a> <a href="/tags/script/" style="font-size: 10px;">script</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 16.67px;">个人成长</a> <a href="/tags/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/" style="font-size: 10px;">人生感悟</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E6%96%87%E5%8C%96/" style="font-size: 13.33px;">企业文化</a> <a href="/tags/%E5%8A%9B%E9%87%8F%E8%AE%AD%E7%BB%83/" style="font-size: 10px;">力量训练</a> <a href="/tags/%E5%B9%B8%E7%A6%8F%E5%BF%AB%E4%B9%90/" style="font-size: 10px;">幸福快乐</a> <a href="/tags/%E6%88%90%E5%8A%9F/" style="font-size: 11.67px;">成功</a> <a href="/tags/%E6%8A%95%E8%B5%84%E7%90%86%E8%B4%A2/" style="font-size: 10px;">投资理财</a> <a href="/tags/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/" style="font-size: 15px;">时间管理</a> <a href="/tags/%E7%9D%A1%E7%9C%A0/" style="font-size: 10px;">睡眠</a> <a href="/tags/%E8%84%9A%E6%9C%AC/" style="font-size: 10px;">脚本</a> <a href="/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 20px;">读书</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 11.67px;">软件</a> <a href="/tags/%E8%BF%90%E5%8A%A8/" style="font-size: 10px;">运动</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 10px;">逆向</a> <a href="/tags/%E9%BB%91%E4%BA%A7/" style="font-size: 10px;">黑产</a>
+    </div>
+    
+  </div>
+
+    
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2026 KangQingYu
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 16.302083333333332%;"> 
+              <img data-src="http://cdn.kangqingyu.com/mweb/1920-213.png" data-sizes="auto" alt="gem依赖多项目版本不一致，用 bundle exec + Gemfile 做项目级隔离" class="lazyload">
+              <h1>gem依赖多项目版本不一致，用 bundle exec + Gemfile 做项目级隔离</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2023年05月13日</a>
+</div>
+
+      
+
+      <p>司机，乘客，外卖，金融，每个业务方都有自己的独立APP，每个还分巴西，墨西哥。当涉及的业务多了，APP多了，每个业务环境都不一样，就出现问题了。</p>
+<span id="more"></span> 
+<p>以前项目比较简单的时候，pod install即可。但是当涉及到业务线比较多，不同APP有不同的版本依赖的时候，再用pod install就会有各种奇怪的报错，因为pod install使用的是全局安装的版本。</p>
+<h1 id="一-xcode工程配置各种报错"><a href="#一-xcode工程配置各种报错" class="headerlink" title="一 xcode工程配置各种报错"></a>一 xcode工程配置各种报错</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[!] Failed to download &#x27;BoringSSL&#x27;: wrong number of arguments (given 2, expected 1)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> minitest-5.27.0 requires ruby version &gt;= 3.1, which is incompatible with the current</span><br><span class="line">version, ruby 2.7.4p191</span><br><span class="line"></span><br><span class="line">bundler: failed to load command: pod (/Users/kqy/.rbenv/versions/2.7.4/bin/pod) </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[!] Invalid `Podfile` file: Unable to activate onetool-1.8.12, because json-2.18.1 conflicts with json (= 2.7.2).</span><br></pre></td></tr></table></figure>
+
+<h1 id="二-查看gem版本"><a href="#二-查看gem版本" class="headerlink" title="二 查看gem版本"></a>二 查看gem版本</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gem list onetool</span><br><span class="line"></span><br><span class="line">onetool (1.8.12, 1.6.3, 1.5.1)</span><br></pre></td></tr></table></figure>
+<p>可以看到各个版本onetool (1.8.12, 1.6.3, 1.5.1)，说明全局的onetool版本很多。</p>
+<h1 id="三-问题原因"><a href="#三-问题原因" class="headerlink" title="三 问题原因"></a>三 问题原因</h1><p>bundle exec的本质是建立一个隔离的沙盒，使用当前项目中的Gemfile。<br>除了Cocoapods的版本，还有Ruby工具库和插件，比如onetool。<br>Bundler可以锁定这些版本，避免互相不兼容。</p>
+<p>比如不同APP，有不同的Gemfile</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">source &#x27;https://gems.ruby-china.com/&#x27;</span><br><span class="line">source &#x27;http://artifactory.companyname.com/artifactory/api/gems/rubygems/&#x27;</span><br><span class="line"></span><br><span class="line">gem &#x27;onetool&#x27;, &quot;1.6.3&quot;, source: &#x27;http://apparch.companyname.com/&#x27;</span><br><span class="line">gem &#x27;cocoapods&#x27;, &quot;1.12.0&quot;</span><br><span class="line">gem &#x27;activesupport&#x27;, &#x27;&gt;= 6.1.7.3&#x27;, &#x27;&lt; 7.1.0&#x27;</span><br><span class="line">gem &#x27;plist&#x27;, &quot;3.7.0&quot;</span><br><span class="line">gem &#x27;minitest&#x27;, &#x27;~&gt; 5.15.0&#x27;</span><br><span class="line">gem &#x27;ffi&#x27;, &#x27;~&gt; 1.15.5&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="四-Rbenv安装"><a href="#四-Rbenv安装" class="headerlink" title="四 Rbenv安装"></a>四 Rbenv安装</h1><p>rbenv是多版本环境管理器。<br>列出可安装的版本<br><code>rbenv install --list</code><br>安装制定版本<br><code>rbenv install 2.7.4</code></p>
+<p>切换全局版本<br><code>rbenv global 2.7.4</code><br>切换项目版本<br><code>rbenv local 3.1.2</code></p>
+<p>查看本地ruby有哪些版本<br> <code>rbenv versions</code> </p>
+<h1 id="五-Ruby与Gem关系"><a href="#五-Ruby与Gem关系" class="headerlink" title="五 Ruby与Gem关系"></a>五 Ruby与Gem关系</h1><p>Gem(RubyGems）是包管理器与软件包，类似苹果的AppStore。<br>而具体的一个gem，是写好的一段Ruby代码包，类似AppStore中的App。</p>
+<p>CocoaPods就是一个Gem。<br>被CocoaPods借用的底层工具包，就是依赖的Gem。比如activesupport、ffi。</p>
+<h1 id="六-标准用法"><a href="#六-标准用法" class="headerlink" title="六 标准用法"></a>六 标准用法</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 1. 确保按照 Gemfile 安装了指定版本的依赖</span><br><span class="line">bundle install</span><br><span class="line"></span><br><span class="line"># 2. 加上 bundle exec 前缀来执行 pod install</span><br><span class="line">bundle exec pod install</span><br></pre></td></tr></table></figure>
+
+<p><strong>原理：</strong> <code>bundle exec</code> 会强制 <code>pod install</code> 只使用 <code>Gemfile</code> 中声明的版本（即 <code>onetool 1.6.3</code> 和 <code>cocoapods 1.12.0</code>），从而完全屏蔽掉全局环境里那个捣乱的 <code>1.8.12</code> 版本。</p>
+<p>生成的<code>Gemfile.lock</code>，是项目真正锁定的版本。</p>
+<h1 id="七-全局统一Gem"><a href="#七-全局统一Gem" class="headerlink" title="七 全局统一Gem"></a>七 全局统一Gem</h1><p>如果不同APP的配置都一样，或者只开发一款APP，那其实全局一个版本即可。手动把冲突的 <code>onetool</code> 卸载掉。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem uninstall onetool -v 1.8.12</span><br></pre></td></tr></table></figure>
+
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>Author：</strong>KangQingYu<br>
+        <strong>Link：</strong><a href="http://example.com/2023/05/13/20230513gem%E4%BE%9D%E8%B5%96%E5%A4%9A%E9%A1%B9%E7%9B%AE%E7%89%88%E6%9C%AC%E4%B8%8D%E4%B8%80%E8%87%B4%EF%BC%8C%E7%94%A8%20bundle%20exec%20+%20Gemfile%20%E5%81%9A%E9%A1%B9%E7%9B%AE%E7%BA%A7%E9%9A%94%E7%A6%BB/" title="http:&#x2F;&#x2F;example.com&#x2F;2023&#x2F;05&#x2F;13&#x2F;20230513gem%E4%BE%9D%E8%B5%96%E5%A4%9A%E9%A1%B9%E7%9B%AE%E7%89%88%E6%9C%AC%E4%B8%8D%E4%B8%80%E8%87%B4%EF%BC%8C%E7%94%A8%20bundle%20exec%20+%20Gemfile%20%E5%81%9A%E9%A1%B9%E7%9B%AE%E7%BA%A7%E9%9A%94%E7%A6%BB&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2023&#x2F;05&#x2F;13&#x2F;20230513gem%E4%BE%9D%E8%B5%96%E5%A4%9A%E9%A1%B9%E7%9B%AE%E7%89%88%E6%9C%AC%E4%B8%8D%E4%B8%80%E8%87%B4%EF%BC%8C%E7%94%A8%20bundle%20exec%20+%20Gemfile%20%E5%81%9A%E9%A1%B9%E7%9B%AE%E7%BA%A7%E9%9A%94%E7%A6%BB&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98/">编程实战</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/iOS/" rel="tag">iOS</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '2164cca1a9c9effa7fde',
+        clientSecret: '22c7bbf0da70c945b4f9772805d0ce05d563dfb2',
+        id: window.location.pathname,
+        repo: 'kangqingyu.github.io',
+        owner: 'kangqingyu',
+        admin: 'kangqingyu'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+    <div id="nexmoe-search-space">
+        <div class="search-container">
+            <div class="search-header">
+                <div class="search-input-container">
+                    <input class="search-input" type="text" placeholder="Search" oninput="sinput();">
+                </div>
+                <a class="search-close" onclick="sclose();">×</a>
+            </div>
+            <div class="search-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+ 
+
+<script async src="/js/app.js?v=1774682049991"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+    <!-- Google Analytics -->
+<script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'G-R4DSD88YCM', 'auto');
+    ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
+
+
+
+
+    <!-- baidu Analytics -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?eef3d100bb564c2ac2c53dca022a5a3e';
+    var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</body>
+
+</html>

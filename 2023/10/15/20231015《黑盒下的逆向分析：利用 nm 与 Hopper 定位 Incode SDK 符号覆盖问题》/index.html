@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    
+    <title>黑盒下的逆向分析：利用 nm 与 Hopper 定位 Incode SDK 符号覆盖问题 - KangQingYu</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="images/web.ico" type="image/x-icon" />
+    <meta name="description" content="不提供阅读源码权限，如何排查问题？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="黑盒下的逆向分析：利用 nm 与 Hopper 定位 Incode SDK 符号覆盖问题">
+<meta property="og:url" content="http://example.com/2023/10/15/20231015%E3%80%8A%E9%BB%91%E7%9B%92%E4%B8%8B%E7%9A%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%EF%BC%9A%E5%88%A9%E7%94%A8%20nm%20%E4%B8%8E%20Hopper%20%E5%AE%9A%E4%BD%8D%20Incode%20SDK%20%E7%AC%A6%E5%8F%B7%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98%E3%80%8B/index.html">
+<meta property="og:site_name" content="KangQingYu">
+<meta property="og:description" content="不提供阅读源码权限，如何排查问题？">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-10-15T12:23:45.000Z">
+<meta property="article:modified_time" content="2026-03-27T23:04:31.213Z">
+<meta property="article:author" content="KangQingYu">
+<meta property="article:tag" content="逆向">
+<meta name="twitter:card" content="summary">
+    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1774682049989">
+    
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1774682049989">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1774682049989">
+    <link rel="stylesheet" href="/css/style.css?v=1774682049989">
+     
+    
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(http://cdn.kangqingyu.com/mweb/1920-213.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="KangQingYu" class="mdui-btn mdui-btn-icon"><img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="KangQingYu">
+            <img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu" alt="KangQingYu">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>Articles</span>57</div>
+        <div><span>Tags</span>21</div>
+        <div><span>Categories</span>9</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="个人简介">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                个人简介
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/个人成长/">个人成长</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/互联网思维/">互联网思维</a>
+          <span class="category-list-count">8</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/器：软件与硬件/">器：软件与硬件</a>
+          <span class="category-list-count">7</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/年度总结/">年度总结</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/搭建个人成长系统/">搭建个人成长系统</a>
+          <span class="category-list-count">10</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/新闻点评/">新闻点评</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/编程实战/">编程实战</a>
+          <span class="category-list-count">12</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/读书感悟/">读书感悟</a>
+          <span class="category-list-count">11</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/运动健身/">运动健身</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:kangqingyu.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://book.douban.com/people/kangqingyu/collect" target="_blank" mdui-tooltip="{content: '豆瓣'}" style="color: rgb(00, 77, 11);background-color: rgba(00, 77, 11, .1);">
+            <i class="nexmoefont icon-douban-fill"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/552775698" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/kangqingyu/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="mailto:kangqingyu@gmail.com" target="_blank" mdui-tooltip="{content: 'mail'}" style="color: rgb(249,8,8);background-color: rgba(249,8,8,.1);">
+            <i class="nexmoefont icon-mail-fill"></i>
+        </a>
+    </div>
+</div>
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/apple/" style="font-size: 13.33px;">apple</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 18.33px;">iOS</a> <a href="/tags/script/" style="font-size: 10px;">script</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 16.67px;">个人成长</a> <a href="/tags/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/" style="font-size: 10px;">人生感悟</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E6%96%87%E5%8C%96/" style="font-size: 13.33px;">企业文化</a> <a href="/tags/%E5%8A%9B%E9%87%8F%E8%AE%AD%E7%BB%83/" style="font-size: 10px;">力量训练</a> <a href="/tags/%E5%B9%B8%E7%A6%8F%E5%BF%AB%E4%B9%90/" style="font-size: 10px;">幸福快乐</a> <a href="/tags/%E6%88%90%E5%8A%9F/" style="font-size: 11.67px;">成功</a> <a href="/tags/%E6%8A%95%E8%B5%84%E7%90%86%E8%B4%A2/" style="font-size: 10px;">投资理财</a> <a href="/tags/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/" style="font-size: 15px;">时间管理</a> <a href="/tags/%E7%9D%A1%E7%9C%A0/" style="font-size: 10px;">睡眠</a> <a href="/tags/%E8%84%9A%E6%9C%AC/" style="font-size: 10px;">脚本</a> <a href="/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 20px;">读书</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 11.67px;">软件</a> <a href="/tags/%E8%BF%90%E5%8A%A8/" style="font-size: 10px;">运动</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 10px;">逆向</a> <a href="/tags/%E9%BB%91%E4%BA%A7/" style="font-size: 10px;">黑产</a>
+    </div>
+    
+  </div>
+
+    
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2026 KangQingYu
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 16.302083333333332%;"> 
+              <img data-src="http://cdn.kangqingyu.com/mweb/1920-213.png" data-sizes="auto" alt="黑盒下的逆向分析：利用 nm 与 Hopper 定位 Incode SDK 符号覆盖问题" class="lazyload">
+              <h1>黑盒下的逆向分析：利用 nm 与 Hopper 定位 Incode SDK 符号覆盖问题</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2023年10月15日</a>
+</div>
+
+      
+
+      <p>不提供阅读源码权限，如何排查问题？</p>
+<span id="more"></span> 
+<h1 id="一-背景"><a href="#一-背景" class="headerlink" title="一 背景"></a>一 背景</h1><p>在引入第三方Incode SDK的过程中，发现公司内埋点SDK，数据上报功能全部失效。<br>由于Incode不提供给我们阅读源码权限，因此无法直接分析其逻辑。</p>
+<h1 id="二-集团业务方调用链路"><a href="#二-集团业务方调用链路" class="headerlink" title="二 集团业务方调用链路"></a>二 集团业务方调用链路</h1><p>埋点SDK调用的是SSZipArchive SDK，具体方法是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (**BOOL**)writeData:(NSData *)data filename:(**nullable** NSString *)filename withPassword:(**nullable** NSString *)password</span><br></pre></td></tr></table></figure>
+
+<p>接着调用的是<code>zipOpenNewFileInZip5</code></p>
+<p>打断点发现，没有执行这里的zipOpenNewFileInZip5方法。所以怀疑底层函数行为已经发生了变化。询问双方SSZipArchive SDK版本号，发现分别是2.2.3和2.5.4，git上可以搜索到这两个是跨了几年的大更新。<br>2.2.3是最后一个版本，后来代码仓库都换了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/karmarama/SSZipArchive/tags</span><br><span class="line"></span><br><span class="line">https://cocoapods.org/pods/SSZipArchive</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="三-incode-SDK分析步骤"><a href="#三-incode-SDK分析步骤" class="headerlink" title="三 incode SDK分析步骤"></a>三 incode SDK分析步骤</h2><p><code>strings libIncdOnboarding.a | grep zipOpenNewFileInZip5</code><br>结果是<br><code>zipOpenNewFileInZip5</code></p>
+<p>可以看到有一个结果，说明该字符串存在于二进制中，可能来源于函数名、日志或其他常量，但不能证明该函数被实现或导出。</p>
+<p><code>nm -o libIncdOnboarding.a | grep &quot;zipOpenNewFileInZip5&quot;</code><br>结果可以看到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">libIncdOnboarding.a:SSZipArchive.o:                  U  zipOpenNewFileInZip5</span><br><span class="line">libIncdOnboarding.a:mz_compat.o: 00000000000003bc T  zipOpenNewFileInZip5</span><br></pre></td></tr></table></figure>
+
+<p>结果分析：<br>U 代表这段代码在这个文件里只是被引用（调用）。<br>T 代表这段代码在 TEXT 段（代码段）中被真正定义（实现）了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T (Text Section)。 这里的 T 代表该函数真实的代码指令就存放在 mz_compat.o 的代码段（Text Segment）中。00000000000003bc 是它在这个 .o 文件里的相对内存地址。</span><br></pre></td></tr></table></figure>
+
+
+<p>所以SSZipArchive.o 仅仅是调用方。需要找到实际的定义。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ar -x libIncdOnboarding.a mz_compat.o</span><br></pre></td></tr></table></figure>
+<p>可以将mz_compat.o 从libIncdOnboarding.a中抽离出来。</p>
+<p>不过其实使用Hopper Disassembler也可以直接拆分出这个。<br>打开Hopper Disassembler，按下 <code>Option + Enter</code> 生成类似 C 语言的伪代码（Pseudocode）。</p>
+<p>Incode SDK 中的实现位于 mz_compat.o，而埋点 SDK 中未发现同名 object file，说明两者内部实现来源或封装方式不同。</p>
+<h1 id="四-问题原因"><a href="#四-问题原因" class="headerlink" title="四 问题原因"></a>四 问题原因</h1><p>C语言处于扁平命名空间(Flat Namespace），在Mach-O中属于全局符号。当多个静态库包含同名全局 C 函数时，链接器在链接阶段（Link Time）进行符号解析（Symbol Resolution），可能导致符号被覆盖（Symbol Collision &#x2F; Interposition），从而改变实际执行逻辑。</p>
+<h1 id="五-解决方案"><a href="#五-解决方案" class="headerlink" title="五 解决方案"></a>五 解决方案</h1><p>符号前缀隔离方案（Symbol Prefixing）。通过 加前缀重命名所有相关函数（声明、实现、调用、头文件暴露）。</p>
+<h1 id="六-命令与软件介绍"><a href="#六-命令与软件介绍" class="headerlink" title="六 命令与软件介绍"></a>六 命令与软件介绍</h1><ul>
+<li>strings：二进制扫描；查找所有可打印字符串。</li>
+<li>nm：Mach-O符号表；查看函数&#x2F;变量符号。</li>
+<li>otool：汇编级；查看机器指令。</li>
+</ul>
+<p><code>nm -gU libIncdOnboarding.a | grep -i &quot;zipOpenNewFileInZip5&quot;</code></p>
+<p>提取该函数的反汇编<br><code>otool -tv libIncdOnboarding.a | grep -A 100 &quot;zipOpenNewFileInZip5:&quot;</code></p>
+<p><code>objdump -t libIncdOnboarding.a | grep zipOpenNewFileInZip5</code><br>-t，–syms，查看符号表</p>
+<p>otool (macOS&#x2F;iOS) &#x2F; objdump： 查看 Mach-O 或 ELF 文件的汇编代码、依赖库（otool -L）和头文件信息。</p>
+<ul>
+<li><p>Hopper Disassembler &#x2F; IDA Pro<br>如果不仅仅是看符号，还要看 zipOpenNewFileInZip5 在 2.5.4 版本到底改了什么内部逻辑，就可以用这些伪代码反编译工具。</p>
+</li>
+<li><p>Hopper Disassembler：50M，价格US$99.00。<br>IDA Pro：770M，官方价格不菲，订阅制。个人版每年$365。</p>
+</li>
+</ul>
+<h2 id="Hopper-Disassembler-操作步骤"><a href="#Hopper-Disassembler-操作步骤" class="headerlink" title="Hopper Disassembler 操作步骤"></a>Hopper Disassembler 操作步骤</h2><p>1 将二进制拖进软件，需要选择File。有Entry+ZIP64.o，URL + ZIP.o，FileManager+ZIP.o，Archive+ZIP64.o。<br>因为要查SSZip，所以选择SSZipArchive.o</p>
+<p>可以看到Hopper Disassembler主界面的显示<br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  zipOpenNewFileInZip5:</span><br><span class="line"></span><br><span class="line">0000000000006518         **extern function code**                                   ; CODE XREF=-[IncdZipArchive writeSymlinkFileAtPath:withFileName:compressionLevel:password:AES:]+404, +[IncdZipArchive _zipOpenEntry:name:zipfi:level:password:aes:]+192</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>CODE XREF&#x3D;… (Cross Reference，交叉引用)。<br>双击方法名，比如<code>writeSymlinkFileAtPath:</code>，Hopper 会跳转到调用的那行汇编代码。<br>主界面可以看到调用顺序，右侧有简化的Control Flow Graph。</p>
+<h2 id="对incode的分析"><a href="#对incode的分析" class="headerlink" title="对incode的分析"></a>对incode的分析</h2><p>Hopper Disassembler可以查看其实现的伪函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">int  zipOpenNewFileInZip5(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) &#123;</span><br><span class="line">    r7 = arg7;</span><br><span class="line">    r6 = arg6;</span><br><span class="line">    r5 = arg5;</span><br><span class="line">    r2 = arg2;</span><br><span class="line">    r1 = arg1;</span><br><span class="line">    r0 = arg0;</span><br><span class="line">    if (r0 != 0x0) &#123;</span><br><span class="line">            r31 = r31 - 0xf0;</span><br><span class="line">            var_60 = r28;</span><br><span class="line">            stack[-88] = r27;</span><br><span class="line">            var_50 = r26;</span><br><span class="line">            stack[-72] = r25;</span><br><span class="line">            var_40 = r24;</span><br><span class="line">            stack[-56] = r23;</span><br><span class="line">            var_30 = r22;</span><br><span class="line">            stack[-40] = r21;</span><br><span class="line">            var_20 = r20;</span><br><span class="line">            stack[-24] = r19;</span><br><span class="line">            var_10 = r29;</span><br><span class="line">            stack[-8] = r30;</span><br><span class="line">            r29 = &amp;var_10;</span><br><span class="line">            r20 = r7;</span><br><span class="line">            r21 = r6;</span><br><span class="line">            r22 = r5;</span><br><span class="line">            r23 = r2;</span><br><span class="line">            r24 = r1;</span><br><span class="line">            r19 = r0;</span><br><span class="line">            r26 = *(int128_t *)(r29 + 0x40);</span><br><span class="line">            r25 = *(int128_t *)(r29 + 0x48);</span><br><span class="line">            r27 = *(int32_t *)(r29 + 0x10);</span><br><span class="line">            if (r2 != 0x0) &#123;</span><br><span class="line">                    r0 = *(int32_t *)r23;</span><br><span class="line">                    if (r0 == 0x0) &#123;</span><br><span class="line">                            r0 =  mz_zip_tm_to_dosdate(r23 + 0x8);</span><br><span class="line">                    &#125;</span><br><span class="line">                     mz_zip_dosdate_to_time_t(r0);</span><br><span class="line">            &#125;</span><br><span class="line">            r28 = *(int32_t *)(r29 +  fill_win32_filefunc64A);</span><br><span class="line">            r23 = *(r29 +  fill_win32_filefunc);</span><br><span class="line">            r8 = &quot;-&quot;;</span><br><span class="line">            if (r24 == 0x0) &#123;</span><br><span class="line">                    if (!CPU_FLAGS &amp; E) &#123;</span><br><span class="line">                            r8 = r24;</span><br><span class="line">                    &#125;</span><br><span class="line">                    else &#123;</span><br><span class="line">                            r8 = &quot;-&quot;;</span><br><span class="line">                    &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if (r20 != 0x0) &#123;</span><br><span class="line">                    _strlen(r20);</span><br><span class="line">            &#125;</span><br><span class="line">            r9 = *(int128_t *)(r29 +  fill_fopen64_filefunc);</span><br><span class="line">            r8 = *(int128_t *)(r29 + 0x18);</span><br><span class="line">            if (r28 == 0x0) &#123;</span><br><span class="line">                    asm &#123; cinc       w10, w10, eq &#125;;</span><br><span class="line">            &#125;</span><br><span class="line">            r0 = *(r19 + 0x8);</span><br><span class="line">            r0 =  mz_zip_entry_write_open(r0, &amp;var_F0, sign_extend_64(r9), r8 &amp; 0xff, r23);</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">            r0 = 0xffffff9a;</span><br><span class="line">    &#125;</span><br><span class="line">    return r0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="七-汇编操作含义"><a href="#七-汇编操作含义" class="headerlink" title="七 汇编操作含义"></a>七 汇编操作含义</h1><h3 id="1-提取-C-字符串-UTF8String"><a href="#1-提取-C-字符串-UTF8String" class="headerlink" title="1. 提取 C 字符串 (UTF8String)"></a>1. 提取 C 字符串 (<code>UTF8String</code>)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov        x0, x21      ; 将某个 Objective-C 对象（可能是 NSString 实例）放入 x0 作为消息接收者</span><br><span class="line">bl         _objc_retainAutorelease ; ARC 机制：保留并自动释放，确保字符串在执行期间不被销毁</span><br><span class="line">bl         _objc_msgSend$UTF8String ; 调用 [NSString UTF8String]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>解释：</strong> 这一步相当于源码里的 <code>const char *cString = [myString UTF8String];</code>。将 OC 的字符串转换成了 C 语言的字符指针，返回值存放在 <code>x0</code> 寄存器中。这个字符串大概率是<strong>解压密码</strong>或者<strong>文件名</strong>。</li>
+</ul>
+<h3 id="2-准备-zipOpenNewFileInZip5-的海量参数"><a href="#2-准备-zipOpenNewFileInZip5-的海量参数" class="headerlink" title="2. 准备 zipOpenNewFileInZip5 的海量参数"></a>2. 准备 <code>zipOpenNewFileInZip5</code> 的海量参数</h3><p><code>minizip</code> 库的 <code>zipOpenNewFileInZip5</code> 是一个参数极其庞大的函数（足足有 <strong>19 个参数</strong>）。</p>
+<p>在 ARM64 架构的调用约定（Calling Convention）中：<strong>前 8 个参数放在 <code>x0</code> 到 <code>x7</code> 寄存器中，剩下的参数必须压入栈（Stack, 即 <code>sp</code>）中传递。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">; ----- 这里是准备压入栈（sp）的参数 (第9个到第19个参数) -----</span><br><span class="line">str        wzr, [sp, #0x4f0 + var_4B0]  ; 往栈里存 0 (wzr 是 zero register)</span><br><span class="line">mov        w8, #0x300                   ; 准备一个常量 0x300</span><br><span class="line">stp        x8, xzr, [sp, #0x30]         ; 把 0x300 和 0 压入栈</span><br><span class="line">strb       w24, [sp, #0x4f0 + var_4C8]  ; 存入一个布尔值或字节</span><br><span class="line">stp        x0, xzr, [sp, #0x18]         ; 注意这里！把刚才 UTF8String 的结果 (x0) 压入栈了，说明密码或注释作为后面的参数传递了</span><br><span class="line">mov        w8, #0x8</span><br><span class="line">mov        x9, #0xfff100000000</span><br><span class="line">movk       x9, #0xffff, lsl #48</span><br><span class="line">stp        x9, x8, [sp, #0x8]           ; 压入一系列标志位 (flags / method 等参数)</span><br><span class="line">stp        w8, w23, [sp]</span><br><span class="line"></span><br><span class="line">; ----- 这里是准备寄存器的参数 (前8个参数) -----</span><br><span class="line">add        x2, sp, #0x50                ; 参数2 (x2)：将栈上的一个地址传给 x2。这通常是指向 zip_fileinfo 结构体的指针</span><br><span class="line">mov        x0, x25                      ; 参数0 (x0)：zipFile file (Zip 文件的句柄)</span><br><span class="line">mov        x1, x26                      ; 参数1 (x1)：const char* filename (要在 Zip 里创建的文件名)</span><br><span class="line">mov        x3, #0x0                     ; 参数3 (x3)：extrafield_local = NULL</span><br><span class="line">mov        w4, #0x0                     ; 参数4 (x4)：size_extrafield_local = 0</span><br><span class="line">mov        x5, #0x0                     ; 参数5 (x5)：extrafield_global = NULL</span><br><span class="line">mov        w6, #0x0                     ; 参数6 (x6)：size_extrafield_global = 0</span><br><span class="line">mov        x7, #0x0                     ; 参数7 (x7)：comment = NULL</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>解释：</strong> 这段代码看似凌乱，其实就是在老老实实地凑齐 <code>zipOpenNewFileInZip5</code> 所需要的 19 个参数。大部分额外字段都被写死了 <code>NULL</code> (0x0)。</li>
+</ul>
+<h3 id="3-执行核心调用"><a href="#3-执行核心调用" class="headerlink" title="3. 执行核心调用"></a>3. 执行核心调用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bl          zipOpenNewFileInZip5 ; 调用方法！</span><br><span class="line">mov        x23, x0                    ; 将返回值 (通常是 int) 备份到 x23 寄存器里。0 一般代表 ZIP_OK。</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="4-写入数据-zipWriteInFileInZip"><a href="#4-写入数据-zipWriteInFileInZip" class="headerlink" title="4. 写入数据 (zipWriteInFileInZip)"></a>4. 写入数据 (<code>zipWriteInFileInZip</code>)</h3><p>打开了 Zip 里的空文件后，接下来要往里面写东西。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ldr        x24, [x22, #0x10]          ; 从 x22 对象的偏移 0x10 处取出 zipFile 句柄，暂存到 x24</span><br><span class="line"></span><br><span class="line">add        x0, sp, #0x98              ; x0 指向栈上的一个字符串缓冲区</span><br><span class="line">bl         _strlen                    ; 调用 strlen(x0) 获取字符串长度</span><br><span class="line">mov        x2, x0                     ; 将长度 (返回值) 放入 x2，作为 write 函数的 len 参数</span><br><span class="line"></span><br><span class="line">add        x1, sp, #0x98              ; 将刚才的字符串缓冲区地址放入 x1，作为 write 的 buf 参数</span><br><span class="line">mov        x0, x24                    ; 将 zipFile 句柄放入 x0</span><br><span class="line">bl          zipWriteInFileInZip  ; 调用 zipWriteInFileInZip(file, buf, len)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>解释：</strong> 相当于 C 源码：<code>zipWriteInFileInZip(file, buffer, strlen(buffer));</code>。它在把一段字符串（可能是一个符号链接的内容、或者简单的文本配置）写入到刚才创建的 Zip 文件条目中。</li>
+</ul>
+<h3 id="5-关闭文件并判断结果"><a href="#5-关闭文件并判断结果" class="headerlink" title="5. 关闭文件并判断结果"></a>5. 关闭文件并判断结果</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ldr        x0, [x22, #0x10]           ; 再次取出 zipFile 句柄放入 x0</span><br><span class="line">bl          zipCloseFileInZip    ; 调用 zipCloseFileInZip(file) 关闭当前文件条目</span><br><span class="line"></span><br><span class="line">cmp        w23, #0x0                  ; w23 保存的是第3步 zipOpenNewFileInZip5 的返回值。这里将它和 0 (ZIP_OK) 进行比较</span><br><span class="line">cset       w22, eq                    ; Condition Set: 如果相等 (eq)，就把 w22 寄存器设置为 1 (YES/true)，否则设置为 0 (NO/false)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>解释：</strong> 对应源码：<code>BOOL success = (openResult == ZIP_OK);</code>。记录刚才打开文件的操作是否成功，供后续逻辑使用。</li>
+</ul>
+<hr>
+<h1 id="技术点总结"><a href="#技术点总结" class="headerlink" title="技术点总结"></a>技术点总结</h1><p>在无三方源码的限制下，使用 <code>strings</code> 命令进行全盘文本嗅探。<br>使用 <code>nm</code> 工具分析 Mach-O 符号表，精准判别符号的定义，锁定冲突源文件。<br>使用 <code>ar</code> 命令对庞大的静态库进行 <code>.o</code> 目标文件的抽离与精准降噪。<br>借助逆向工具Hopper Disassembler，提取其伪代码。<br>通过符号前缀隔离方案（Symbol Prefixing）解决命名冲突而导致符号覆盖的问题。</p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>Author：</strong>KangQingYu<br>
+        <strong>Link：</strong><a href="http://example.com/2023/10/15/20231015%E3%80%8A%E9%BB%91%E7%9B%92%E4%B8%8B%E7%9A%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%EF%BC%9A%E5%88%A9%E7%94%A8%20nm%20%E4%B8%8E%20Hopper%20%E5%AE%9A%E4%BD%8D%20Incode%20SDK%20%E7%AC%A6%E5%8F%B7%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98%E3%80%8B/" title="http:&#x2F;&#x2F;example.com&#x2F;2023&#x2F;10&#x2F;15&#x2F;20231015%E3%80%8A%E9%BB%91%E7%9B%92%E4%B8%8B%E7%9A%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%EF%BC%9A%E5%88%A9%E7%94%A8%20nm%20%E4%B8%8E%20Hopper%20%E5%AE%9A%E4%BD%8D%20Incode%20SDK%20%E7%AC%A6%E5%8F%B7%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98%E3%80%8B&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2023&#x2F;10&#x2F;15&#x2F;20231015%E3%80%8A%E9%BB%91%E7%9B%92%E4%B8%8B%E7%9A%84%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%EF%BC%9A%E5%88%A9%E7%94%A8%20nm%20%E4%B8%8E%20Hopper%20%E5%AE%9A%E4%BD%8D%20Incode%20SDK%20%E7%AC%A6%E5%8F%B7%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98%E3%80%8B&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98/">编程实战</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E9%80%86%E5%90%91/" rel="tag">逆向</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '2164cca1a9c9effa7fde',
+        clientSecret: '22c7bbf0da70c945b4f9772805d0ce05d563dfb2',
+        id: window.location.pathname,
+        repo: 'kangqingyu.github.io',
+        owner: 'kangqingyu',
+        admin: 'kangqingyu'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+    <div id="nexmoe-search-space">
+        <div class="search-container">
+            <div class="search-header">
+                <div class="search-input-container">
+                    <input class="search-input" type="text" placeholder="Search" oninput="sinput();">
+                </div>
+                <a class="search-close" onclick="sclose();">×</a>
+            </div>
+            <div class="search-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+ 
+
+<script async src="/js/app.js?v=1774682049990"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+    <!-- Google Analytics -->
+<script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'G-R4DSD88YCM', 'auto');
+    ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
+
+
+
+
+    <!-- baidu Analytics -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?eef3d100bb564c2ac2c53dca022a5a3e';
+    var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    
+    <title>Codex CLI反代CPA配置 - KangQingYu</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="images/web.ico" type="image/x-icon" />
+    <meta name="description" content="Claude Code Pro 5小时一重置，不够用？反向代理来补足。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codex CLI反代CPA配置">
+<meta property="og:url" content="http://example.com/2026/02/23/20260223Codex%20CLI%20%E5%8F%8D%E4%BB%A3%20CPA%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="KangQingYu">
+<meta property="og:description" content="Claude Code Pro 5小时一重置，不够用？反向代理来补足。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-02-23T01:56:42.000Z">
+<meta property="article:modified_time" content="2026-03-28T07:14:06.854Z">
+<meta property="article:author" content="KangQingYu">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="软件">
+<meta name="twitter:card" content="summary">
+    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1774682049944">
+    
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1774682049944">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1774682049944">
+    <link rel="stylesheet" href="/css/style.css?v=1774682049944">
+     
+    
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(http://cdn.kangqingyu.com/mweb/1920-213.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="KangQingYu" class="mdui-btn mdui-btn-icon"><img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="KangQingYu">
+            <img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu" alt="KangQingYu">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>Articles</span>57</div>
+        <div><span>Tags</span>21</div>
+        <div><span>Categories</span>9</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="个人简介">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                个人简介
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/个人成长/">个人成长</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/互联网思维/">互联网思维</a>
+          <span class="category-list-count">8</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/器：软件与硬件/">器：软件与硬件</a>
+          <span class="category-list-count">7</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/年度总结/">年度总结</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/搭建个人成长系统/">搭建个人成长系统</a>
+          <span class="category-list-count">10</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/新闻点评/">新闻点评</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/编程实战/">编程实战</a>
+          <span class="category-list-count">12</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/读书感悟/">读书感悟</a>
+          <span class="category-list-count">11</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/运动健身/">运动健身</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:kangqingyu.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://book.douban.com/people/kangqingyu/collect" target="_blank" mdui-tooltip="{content: '豆瓣'}" style="color: rgb(00, 77, 11);background-color: rgba(00, 77, 11, .1);">
+            <i class="nexmoefont icon-douban-fill"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/552775698" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/kangqingyu/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="mailto:kangqingyu@gmail.com" target="_blank" mdui-tooltip="{content: 'mail'}" style="color: rgb(249,8,8);background-color: rgba(249,8,8,.1);">
+            <i class="nexmoefont icon-mail-fill"></i>
+        </a>
+    </div>
+</div>
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/apple/" style="font-size: 13.33px;">apple</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 18.33px;">iOS</a> <a href="/tags/script/" style="font-size: 10px;">script</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 16.67px;">个人成长</a> <a href="/tags/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/" style="font-size: 10px;">人生感悟</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E6%96%87%E5%8C%96/" style="font-size: 13.33px;">企业文化</a> <a href="/tags/%E5%8A%9B%E9%87%8F%E8%AE%AD%E7%BB%83/" style="font-size: 10px;">力量训练</a> <a href="/tags/%E5%B9%B8%E7%A6%8F%E5%BF%AB%E4%B9%90/" style="font-size: 10px;">幸福快乐</a> <a href="/tags/%E6%88%90%E5%8A%9F/" style="font-size: 11.67px;">成功</a> <a href="/tags/%E6%8A%95%E8%B5%84%E7%90%86%E8%B4%A2/" style="font-size: 10px;">投资理财</a> <a href="/tags/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/" style="font-size: 15px;">时间管理</a> <a href="/tags/%E7%9D%A1%E7%9C%A0/" style="font-size: 10px;">睡眠</a> <a href="/tags/%E8%84%9A%E6%9C%AC/" style="font-size: 10px;">脚本</a> <a href="/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 20px;">读书</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 11.67px;">软件</a> <a href="/tags/%E8%BF%90%E5%8A%A8/" style="font-size: 10px;">运动</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 10px;">逆向</a> <a href="/tags/%E9%BB%91%E4%BA%A7/" style="font-size: 10px;">黑产</a>
+    </div>
+    
+  </div>
+
+    
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2026 KangQingYu
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 16.302083333333332%;"> 
+              <img data-src="http://cdn.kangqingyu.com/mweb/1920-213.png" data-sizes="auto" alt="Codex CLI反代CPA配置" class="lazyload">
+              <h1>Codex CLI反代CPA配置</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2026年02月23日</a>
+</div>
+
+      
+
+      <p>Claude Code Pro 5小时一重置，不够用？反向代理来补足。</p>
+<span id="more"></span> 
+
+<h1 id="一-账号"><a href="#一-账号" class="headerlink" title="一 账号"></a>一 账号</h1><p>data_group_329.7z GXt41TQCnqf22hzM<br>mac自带的软件无法解压缩，需要终端</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">7z x data_group_329.7z</span><br></pre></td></tr></table></figure>
+
+<p>接着输入密码GXt41TQCnqf22hzM即可</p>
+<h1 id="二-cliproxyapi"><a href="#二-cliproxyapi" class="headerlink" title="二 cliproxyapi"></a>二 cliproxyapi</h1><p>2.1 Mac安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew install cliproxyapi</span><br><span class="line">brew services start cliproxyapi</span><br></pre></td></tr></table></figure>
+
+<p>2.2 配置<br>~&#x2F;.cli-proxy-api&#x2F;config.yaml</p>
+<p>secret-key:MGT-123，是WebUI的登录密码。</p>
+<p>your-api-key-1要改成sk开头的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sk-001</span><br><span class="line">sk-12345678901234567890</span><br><span class="line">ABC-12dafasdfasdf8883236</span><br></pre></td></tr></table></figure>
+
+<p>如果修改配置，改密码之后需要重启：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew services restart cliproxyapi</span><br></pre></td></tr></table></figure>
+
+<h1 id="三-配置WebUI"><a href="#三-配置WebUI" class="headerlink" title="三 配置WebUI"></a>三 配置WebUI</h1><p>3.1<br><a target="_blank" rel="noopener" href="http://localhost:8317/management.html">http://localhost:8317/management.html</a><br><a target="_blank" rel="noopener" href="http://127.0.0.1:8317/management.html">http://127.0.0.1:8317/management.html</a></p>
+<p>认证文件管理，导入认证文件。</p>
+<p>3.2 配置访问网络<br>开启TUN模式；<br>或者配置代理URL：<br>socks5:&#x2F;&#x2F;host.docker.internal:7890</p>
+<p>Base URL：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8317/v1</span><br></pre></td></tr></table></figure>
+<p>3.3 获取API Key，在”配置面板“中查看API密钥列表，其实就是刚才在~&#x2F;.cli-proxy-api&#x2F;config.yaml配置的</p>
+<p>3.4 Codex API 配置<br>Base URL (必填):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8317/v1</span><br></pre></td></tr></table></figure>
+
+<p>API密钥:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sk-001</span><br></pre></td></tr></table></figure>
+
+<p>点击”从 &#x2F;v1&#x2F;models 获取”，可以找到gpt-5.3-codex等模型。</p>
+<p>如果用终端验证，可以使用命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -v -H &quot;Authorization: Bearer sk-001&quot; http://localhost:8317/v1/models</span><br></pre></td></tr></table></figure>
+<p>也能返回支持的模型</p>
+<p>3.6 其他连通性测试方法<br>Cherry Studio设置apikey和baseUrl，可视化的界面，也能判断baseurl, apikey是否可用。</p>
+<h1 id="Codex使用"><a href="#Codex使用" class="headerlink" title="Codex使用"></a>Codex使用</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/.codex/config.toml</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">model = &quot;gpt-5.3-codex&quot;</span><br><span class="line">model_reasoning_effort = &quot;xhigh&quot;</span><br><span class="line">reasoning_effort = &quot;xhigh&quot;</span><br><span class="line">personality = &quot;pragmatic&quot;</span><br><span class="line"></span><br><span class="line">model_provider = &quot;cpa&quot;</span><br><span class="line"></span><br><span class="line">[features]</span><br><span class="line">skills =true</span><br><span class="line"></span><br><span class="line">[projects.&quot;/Users/kk/Documents/kCode/AIRule&quot;]</span><br><span class="line">trust_level = &quot;trusted&quot;</span><br><span class="line"></span><br><span class="line">[projects.&quot;/Users/ll/.codex&quot;]</span><br><span class="line">trust_level = &quot;trusted&quot;</span><br><span class="line"></span><br><span class="line">[model_providers.cpa]</span><br><span class="line">name = &quot;cpa&quot;</span><br><span class="line">base_url = &quot;http://localhost:8317/v1&quot;</span><br><span class="line">wire_api = &quot;responses&quot;</span><br><span class="line">requires_openai_auth = false</span><br></pre></td></tr></table></figure>
+
+<p>这里如果配置env_key，则会从本地变量OPENAI_API_KEY取值；否则会从auth.json中的OPENAI_API_KEY取值</p>
+<p>~&#x2F;.codex&#x2F;auth.json</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;auth_mode&quot; : &quot;apikey&quot;</span><br><span class="line">  &quot;OPENAI_API_KEY&quot;: &quot;sk-001&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="奇葩报错"><a href="#奇葩报错" class="headerlink" title="奇葩报错"></a>奇葩报错</h1><h2 id="服务器地址无效或管理接口未启用"><a href="#服务器地址无效或管理接口未启用" class="headerlink" title="服务器地址无效或管理接口未启用"></a>服务器地址无效或管理接口未启用</h2><p>在<code>http://localhost:8317/management.html </code> 登录的时候，如果提示：<br><code>服务器地址无效或管理接口未启用</code><br>以下命令不生效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew services stop cliproxyapi</span><br><span class="line">brew services start cliproxyapi</span><br></pre></td></tr></table></figure>
+
+<p>那么使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">killall cliproxyapi</span><br><span class="line">cliproxyapi --config ~/.cli-proxy-api/config.yaml</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>看到<br><code>management routes registered after secret key configuration</code><br>即可登录了。</p>
+<h2 id="Codex使用时，401"><a href="#Codex使用时，401" class="headerlink" title="Codex使用时，401"></a>Codex使用时，401</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">• Reconnecting… 1/5 (6s • esc to interrupt)</span><br><span class="line">└ Unexpected status 401 Unauthorized: Incorrect API key provided: sk-001. You can find your API key at https://</span><br><span class="line">platform.openai.com/account/api-keys., url: https://api.openai.com/v1/responses, cf-ray: 9d8a8f81eedcc0cc-LAX, request id:</span><br><span class="line">req_07d439c5b38747f8a7f567fd5bf3eef2</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用AI搜索的经历"><a href="#使用AI搜索的经历" class="headerlink" title="使用AI搜索的经历"></a>使用AI搜索的经历</h3><p>Gemini， ChatGPT说配置zshrc，<br>export OPENAI_BASE_URL&#x3D;””<a target="_blank" rel="noopener" href="http://localhost:8317/v1&quot;">http://localhost:8317/v1&quot;</a><br>export OPENAI_API_KEY&#x3D;”sk-001”<br>看起来就不对。</p>
+<p>最后还是Grok看出来问题了。<br>我之前配置如下（因为我单独改过model_provider，而且是在信任路径之后改的）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[projects.&quot;/Users/kk/Documents/kCode/Workspace&quot;]</span><br><span class="line">trust_level = &quot;trusted&quot;</span><br><span class="line">model_provider = &quot;cpa&quot;</span><br></pre></td></tr></table></figure>
+
+<p>Grok发现了问题的原因：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">你的 cat ~/.codex/config.toml 显示 model_provider = &quot;cpa&quot; 被错误地放在了 [projects.&quot;...&quot;] 表里面！</span><br><span class="line">TOML 解析规则：一旦进入 [projects.xxx] 这个 section，后面的 key（直到下一个 [）都属于这个表。所以全局 model_provider 实际上不存在，Codex 直接回退默认 openai provider → 强制走 https://api.openai.com/v1/responses（这就是你一直看到的错误）。</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="“detail”-”Unsupported-parameter-response-format”"><a href="#“detail”-”Unsupported-parameter-response-format”" class="headerlink" title="{“detail”:”Unsupported parameter: response_format”}"></a>{“detail”:”Unsupported parameter: response_format”}</h2><p>格式问题，容易解决<br>在 CPA 的 <code>config.yaml</code> 末尾添加 payload 覆盖规则：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">payload:</span><br><span class="line">  override:</span><br><span class="line">    - models:</span><br><span class="line">        - name: &quot;gpt-*&quot;</span><br><span class="line">          protocol: &quot;codex&quot;</span><br><span class="line">      params:</span><br><span class="line">        &quot;reasoning.effort&quot;: &quot;xhigh&quot;</span><br><span class="line">  filter:</span><br><span class="line">    - models:</span><br><span class="line">        - name: &quot;gpt-*&quot;</span><br><span class="line">      params:</span><br><span class="line">        - &quot;response_format&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>~&#x2F;.cli-proxy-api&#x2F;config.yaml 配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br></pre></td><td class="code"><pre><span class="line"># 服务器绑定主机/接口，默认空字符串同时绑定 IPv4/IPv6。</span><br><span class="line"># 使用 &quot;127.0.0.1&quot; 或 &quot;localhost&quot; 可限制仅本机访问。</span><br><span class="line">host: &quot;&quot;</span><br><span class="line"># 服务器端口</span><br><span class="line">port: 8317</span><br><span class="line"># TLS 设置：启用后使用提供的证书与私钥监听 HTTPS。</span><br><span class="line">tls:</span><br><span class="line">  enable: false</span><br><span class="line">  cert: &quot;&quot;</span><br><span class="line">  key: &quot;&quot;</span><br><span class="line"># 管理 API 设置</span><br><span class="line">remote-management:</span><br><span class="line"># 是否允许远程（非 localhost）访问管理接口。</span><br><span class="line"># 为 false 时仅允许 localhost，仍需管理密钥。</span><br><span class="line">  allow-remote: false</span><br><span class="line"># 管理密钥。若填写明文，启动时会自动哈希后生效。</span><br><span class="line"># 所有管理请求（包括本地）都需要该密钥。</span><br><span class="line"># 留空则完全禁用管理 API（所有 /v0/management 路由返回 404）。</span><br><span class="line">  secret-key: &quot;$2a$10$ed06tCcxP4L9jJ33PoYu..BWTtA9VatA9XJsYFFAlhusQfw3AvBz2&quot;</span><br><span class="line"># 为 true 时禁用内置管理面板资源下载与路由。</span><br><span class="line">  disable-control-panel: false</span><br><span class="line"># 管理面板的 GitHub 仓库，可填写仓库 URL 或 releases API URL。</span><br><span class="line">  panel-github-repository: &quot;https://github.com/router-for-me/Cli-Proxy-API-Management-Center&quot;</span><br><span class="line"># 认证目录（支持 ~ 展开为主目录）</span><br><span class="line">auth-dir: &quot;~/.cli-proxy-api&quot;</span><br><span class="line"># 用于请求认证的 API 密钥</span><br><span class="line">api-keys:</span><br><span class="line">  - &quot;sk-001&quot;</span><br><span class="line">  - &quot;sk-12345678901234567890&quot;</span><br><span class="line">  - &quot;ABC-12dafasdfasdf8883236&quot;</span><br><span class="line"># 是否启用调试日志</span><br><span class="line">debug: false</span><br><span class="line"># 为 true 时禁用高开销 HTTP 中间件以降低高并发下的内存占用</span><br><span class="line">commercial-mode: false</span><br><span class="line"># 为 true 时将应用日志写入滚动文件而非 stdout</span><br><span class="line">logging-to-file: false</span><br><span class="line"># 日志目录的最大总大小（MB）；超过后会删除最旧的日志。0 表示不限制。</span><br><span class="line">logs-max-total-size-mb: 0</span><br><span class="line"># 为 false 时禁用内存用量统计聚合</span><br><span class="line">usage-statistics-enabled: false</span><br><span class="line"># 代理地址。支持 socks5/http/https，例如 socks5://user:pass@192.168.1.1:1080/</span><br><span class="line">proxy-url: &quot;&quot;</span><br><span class="line"># 为 true 时，无前缀模型请求只会匹配无前缀凭据（除非前缀与模型名相同）。</span><br><span class="line">force-model-prefix: false</span><br><span class="line"># 请求重试次数；当响应码为 403/408/500/502/503/504 时重试。</span><br><span class="line">request-retry: 3</span><br><span class="line"># 冷却中的凭据等待的最长时间（秒），超过则触发重试。</span><br><span class="line">max-retry-interval: 30</span><br><span class="line"># 配额超限时的处理</span><br><span class="line">quota-exceeded:</span><br><span class="line">  switch-project: true # 配额超限时是否自动切换其他项目</span><br><span class="line">  switch-preview-model: true # 配额超限时是否自动切换预览模型</span><br><span class="line"># 多凭据匹配时的路由策略</span><br><span class="line">routing:</span><br><span class="line">  strategy: &quot;round-robin&quot; # 轮询（默认）或 fill-first</span><br><span class="line"># 是否为 WebSocket API (/v1/ws) 启用认证</span><br><span class="line">ws-auth: false</span><br><span class="line"># 当 &gt; 0 时，为非流式响应每隔 N 秒发送空行以防止空闲超时</span><br><span class="line">nonstream-keepalive-interval: 0</span><br><span class="line"># 当为 true 时，为 Codex API 请求启用官方 Codex 指令注入</span><br><span class="line"># 当为 false（默认）时，CodexInstructionsForModel 立即返回而不修改</span><br><span class="line">codex-instructions-enabled: false</span><br><span class="line"># 流式传输行为（SSE keep-alive 与安全启动重试）</span><br><span class="line">streaming:</span><br><span class="line">  keepalive-seconds: 15 # 默认：0（禁用）；≤0 关闭 keep-alive。</span><br><span class="line">  bootstrap-retries: 1 # 默认：0（禁用）；首字节前的重试次数。</span><br><span class="line"># Gemini API 密钥</span><br><span class="line">gemini-api-key:</span><br><span class="line">  - api-key: &quot;AIzaSy...01&quot;</span><br><span class="line">    prefix: &quot;test&quot; # 可选：需要以 &quot;test/gemini-3-pro-preview&quot; 访问</span><br><span class="line">    base-url: &quot;https://generativelanguage.googleapis.com&quot;</span><br><span class="line">    headers:</span><br><span class="line">      X-Custom-Header: &quot;custom-value&quot;</span><br><span class="line">    proxy-url: &quot;socks5://proxy.example.com:1080&quot;</span><br><span class="line">    models:</span><br><span class="line">      - name: &quot;gemini-2.5-flash&quot; # 上游模型名</span><br><span class="line">        alias: &quot;gemini-flash&quot; # 客户端别名</span><br><span class="line">    excluded-models:</span><br><span class="line">      - &quot;gemini-2.5-pro&quot; # 精确排除</span><br><span class="line">      - &quot;gemini-2.5-*&quot; # 前缀通配</span><br><span class="line">      - &quot;*-preview&quot; # 后缀通配</span><br><span class="line">      - &quot;*flash*&quot; # 子串通配</span><br><span class="line">  - api-key: &quot;AIzaSy...02&quot;</span><br><span class="line"># Codex API 密钥</span><br><span class="line">codex-api-key:</span><br><span class="line">  - api-key: &quot;sk-atSM...&quot;</span><br><span class="line">    prefix: &quot;test&quot; # 可选：需以 &quot;test/gpt-5-codex&quot; 访问</span><br><span class="line">    base-url: &quot;https://www.example.com&quot; # 自定义 Codex 端点</span><br><span class="line">    headers:</span><br><span class="line">      X-Custom-Header: &quot;custom-value&quot;</span><br><span class="line">    proxy-url: &quot;socks5://proxy.example.com:1080&quot; # 可选：单独代理</span><br><span class="line">    models:</span><br><span class="line">      - name: &quot;gpt-5-codex&quot; # 上游模型名</span><br><span class="line">        alias: &quot;codex-latest&quot; # 客户端别名</span><br><span class="line">    excluded-models:</span><br><span class="line">      - &quot;gpt-5.1&quot; # 精确排除</span><br><span class="line">      - &quot;gpt-5-*&quot; # 前缀通配</span><br><span class="line">      - &quot;*-mini&quot; # 后缀通配</span><br><span class="line">      - &quot;*codex*&quot; # 子串通配</span><br><span class="line">  - api-key: sk-001</span><br><span class="line">    base-url: http://localhost:8317/v1</span><br><span class="line">    proxy-url: &quot;&quot;</span><br><span class="line">    models:</span><br><span class="line">      - name: gpt-5.2-codex</span><br><span class="line">        alias: &quot;&quot;</span><br><span class="line">      - name: gpt-5.4</span><br><span class="line">        alias: &quot;&quot;</span><br><span class="line">      - name: gpt-5.3-codex</span><br><span class="line">        alias: &quot;&quot;</span><br><span class="line"># Claude API 密钥</span><br><span class="line">claude-api-key:</span><br><span class="line">  - api-key: &quot;sk-atSM...&quot; # 使用官方 Claude API 时无需 base-url</span><br><span class="line">  - api-key: &quot;sk-atSM...&quot;</span><br><span class="line">    prefix: &quot;test&quot; # 可选：需以 &quot;test/claude-sonnet-latest&quot; 访问</span><br><span class="line">    base-url: &quot;https://www.example.com&quot; # 自定义 Claude 端点</span><br><span class="line">    headers:</span><br><span class="line">      X-Custom-Header: &quot;custom-value&quot;</span><br><span class="line">    proxy-url: &quot;socks5://proxy.example.com:1080&quot; # 可选：单独代理</span><br><span class="line">    models:</span><br><span class="line">      - name: &quot;claude-3-5-sonnet-20241022&quot; # 上游模型名</span><br><span class="line">        alias: &quot;claude-sonnet-latest&quot; # 客户端别名</span><br><span class="line">    excluded-models:</span><br><span class="line">      - &quot;claude-opus-4-5-20251101&quot; # 精确排除</span><br><span class="line">      - &quot;claude-3-*&quot; # 前缀通配</span><br><span class="line">      - &quot;*-thinking&quot; # 后缀通配</span><br><span class="line">      - &quot;*haiku*&quot; # 子串通配</span><br><span class="line">    cloak:</span><br><span class="line"># 可选：为非 Claude Code 客户端进行请求伪装</span><br><span class="line">      mode: &quot;auto&quot; # &quot;auto&quot;（默认）：仅当客户端不是 Claude Code 时伪装</span><br><span class="line"># &quot;always&quot;：始终应用伪装</span><br><span class="line"># &quot;never&quot;：从不应用伪装</span><br><span class="line">      strict-mode: false # false（默认）：将 Claude Code 提示前置到用户系统消息</span><br><span class="line"># true：删除所有用户系统消息，仅保留 Claude Code 提示</span><br><span class="line">      sensitive-words:</span><br><span class="line"># 可选：用零宽字符混淆的词汇</span><br><span class="line">        - &quot;API&quot;</span><br><span class="line">        - &quot;proxy&quot;</span><br><span class="line"># OpenAI 兼容提供商</span><br><span class="line">openai-compatibility:</span><br><span class="line">  - name: &quot;openrouter&quot; # 提供商名称，用于 UA 等</span><br><span class="line">    prefix: &quot;test&quot; # 可选：需以 &quot;test/kimi-k2&quot; 访问</span><br><span class="line">    base-url: &quot;https://openrouter.ai/api/v1&quot; # 提供商基础 URL</span><br><span class="line">    headers:</span><br><span class="line">      X-Custom-Header: &quot;custom-value&quot;</span><br><span class="line">    api-key-entries:</span><br><span class="line">      - api-key: &quot;sk-or-v1-...b780&quot;</span><br><span class="line">        proxy-url: &quot;socks5://proxy.example.com:1080&quot; # 可选：单独代理</span><br><span class="line">      - api-key: &quot;sk-or-v1-...b781&quot; # 无代理</span><br><span class="line">    models:</span><br><span class="line"># 提供商支持的模型</span><br><span class="line">      - name: &quot;moonshotai/kimi-k2:free&quot; # 上游模型名</span><br><span class="line">        alias: &quot;kimi-k2&quot; # 客户端别名</span><br><span class="line">  - name: codexCustom</span><br><span class="line">    base-url: http://localhost:8317/v1</span><br><span class="line">    api-key-entries:</span><br><span class="line">      - api-key: ABC-12dafasdfasdf8883236</span><br><span class="line">        proxy-url: socks5://host.docker.internal:7890</span><br><span class="line">    models:</span><br><span class="line">      - name: gpt-5.2-codex</span><br><span class="line">        alias: &quot;&quot;</span><br><span class="line">      - name: gpt-5.3-codex</span><br><span class="line">        alias: &quot;&quot;</span><br><span class="line"># Vertex API 密钥（Vertex 兼容端点，使用 API key + base URL）</span><br><span class="line">vertex-api-key:</span><br><span class="line">  - api-key: &quot;vk-123...&quot; # x-goog-api-key 头</span><br><span class="line">    prefix: &quot;test&quot; # 可选前缀</span><br><span class="line">    base-url: &quot;https://example.com/api&quot; # 例如 https://zenmux.ai/api</span><br><span class="line">    proxy-url: &quot;socks5://proxy.example.com:1080&quot; # 可选单独代理</span><br><span class="line">    headers:</span><br><span class="line">      X-Custom-Header: &quot;custom-value&quot;</span><br><span class="line">    models:</span><br><span class="line"># 可选：别名到上游模型</span><br><span class="line">      - name: &quot;gemini-2.5-flash&quot; # 上游模型名</span><br><span class="line">        alias: &quot;vertex-flash&quot; # 客户端别名</span><br><span class="line">      - name: &quot;gemini-2.5-pro&quot;</span><br><span class="line">        alias: &quot;vertex-pro&quot;</span><br><span class="line"># Amp 集成</span><br><span class="line">ampcode:</span><br><span class="line"># Amp CLI OAuth 与管理功能的上游地址</span><br><span class="line">  upstream-url: &quot;https://ampcode.com&quot;</span><br><span class="line"># 可选：覆盖 Amp 上游 API Key（否则使用环境变量或文件）</span><br><span class="line">  upstream-api-key: &quot;&quot;</span><br><span class="line"># 按客户端的上游 API Key 映射</span><br><span class="line"># 将顶层 api-keys 中的客户端密钥映射到不同的 Amp 上游密钥。</span><br><span class="line"># 若未匹配到则回退到 upstream-api-key。</span><br><span class="line">  upstream-api-keys:</span><br><span class="line">    - upstream-api-key: &quot;amp_key_for_team_a&quot; # 供这些客户端使用的上游密钥</span><br><span class="line">      api-keys:</span><br><span class="line"># 使用该上游密钥的客户端密钥</span><br><span class="line">        - &quot;your-api-key-1&quot;</span><br><span class="line">        - &quot;your-api-key-2&quot;</span><br><span class="line">    - upstream-api-key: &quot;amp_key_for_team_b&quot;</span><br><span class="line">      api-keys:</span><br><span class="line">        - &quot;your-api-key-3&quot;</span><br><span class="line"># 是否将 Amp 管理路由 (/api/auth, /api/user 等) 仅限 localhost（默认 false）</span><br><span class="line">  restrict-management-to-localhost: false</span><br><span class="line"># 是否在检查本地 API 密钥前强制执行模型映射（默认 false）</span><br><span class="line">  force-model-mappings: false</span><br><span class="line"># Amp 模型映射：当请求的模型不可用时路由到本地可用模型</span><br><span class="line"># 适用于 Amp CLI 请求不可用模型（如 Claude Opus 4.5）但本地有相似模型的情况</span><br><span class="line">  model-mappings:</span><br><span class="line">    - from: &quot;claude-opus-4-5-20251101&quot; # Amp 请求的模型</span><br><span class="line">      to: &quot;gemini-claude-opus-4-5-thinking&quot; # 路由到的可用模型</span><br><span class="line">    - from: &quot;claude-sonnet-4-5-20250929&quot;</span><br><span class="line">      to: &quot;gemini-claude-sonnet-4-5-thinking&quot;</span><br><span class="line">    - from: &quot;claude-haiku-4-5-20251001&quot;</span><br><span class="line">      to: &quot;gemini-2.5-flash&quot;</span><br><span class="line"># 全局 OAuth 模型名称别名（按渠道）</span><br><span class="line"># 这些别名同时用于模型列表和请求路由的模型 ID 重命名。</span><br><span class="line"># 支持的渠道：gemini-cli、vertex、aistudio、antigravity、claude、codex、qwen、iflow。</span><br><span class="line"># 注意：别名不适用于 gemini-api-key、codex-api-key、claude-api-key、openai-compatibility、vertex-api-key 或 ampcode。</span><br><span class="line"># 您可以使用不同的别名重复相同的名称，以暴露多个客户端模型名称。</span><br><span class="line">oauth-model-alias:</span><br><span class="line">  antigravity:</span><br><span class="line">    - name: &quot;rev19-uic3-1p&quot;</span><br><span class="line">      alias: &quot;gemini-2.5-computer-use-preview-10-2025&quot;</span><br><span class="line">    - name: &quot;gemini-3-pro-image&quot;</span><br><span class="line">      alias: &quot;gemini-3-pro-image-preview&quot;</span><br><span class="line">    - name: &quot;gemini-3-pro-high&quot;</span><br><span class="line">      alias: &quot;gemini-3-pro-preview&quot;</span><br><span class="line">    - name: &quot;gemini-3-flash&quot;</span><br><span class="line">      alias: &quot;gemini-3-flash-preview&quot;</span><br><span class="line">    - name: &quot;claude-sonnet-4-5&quot;</span><br><span class="line">      alias: &quot;gemini-claude-sonnet-4-5&quot;</span><br><span class="line">    - name: &quot;claude-sonnet-4-5-thinking&quot;</span><br><span class="line">      alias: &quot;gemini-claude-sonnet-4-5-thinking&quot;</span><br><span class="line">    - name: &quot;claude-opus-4-5-thinking&quot;</span><br><span class="line">      alias: &quot;gemini-claude-opus-4-5-thinking&quot;</span><br><span class="line">#   gemini-cli:</span><br><span class="line">#     - name: &quot;gemini-2.5-pro&quot;          # 该渠道下的原始模型名</span><br><span class="line">#       alias: &quot;g2.5p&quot;                  # 客户端可见别名</span><br><span class="line">#       fork: true                      # 为 true 时保留原名并同时增加别名作为额外模型（默认：false）</span><br><span class="line">#   vertex:</span><br><span class="line">#     - name: &quot;gemini-2.5-pro&quot;</span><br><span class="line">#       alias: &quot;g2.5p&quot;</span><br><span class="line">#   aistudio:</span><br><span class="line">#     - name: &quot;gemini-2.5-pro&quot;</span><br><span class="line">#       alias: &quot;g2.5p&quot;</span><br><span class="line">#   claude:</span><br><span class="line">#     - name: &quot;claude-sonnet-4-5-20250929&quot;</span><br><span class="line">#       alias: &quot;cs4.5&quot;</span><br><span class="line">#   codex:</span><br><span class="line">#     - name: &quot;gpt-5&quot;</span><br><span class="line">#       alias: &quot;g5&quot;</span><br><span class="line">#   qwen:</span><br><span class="line">#     - name: &quot;qwen3-coder-plus&quot;</span><br><span class="line">#       alias: &quot;qwen-plus&quot;</span><br><span class="line">#   iflow:</span><br><span class="line">#     - name: &quot;glm-4.7&quot;</span><br><span class="line">#       alias: &quot;glm-god&quot;</span><br><span class="line"></span><br><span class="line"># OAuth 提供商的模型排除列表</span><br><span class="line">oauth-excluded-models:</span><br><span class="line">  gemini-cli:</span><br><span class="line">    - &quot;gemini-2.5-pro&quot; # 精确排除</span><br><span class="line">    - &quot;gemini-2.5-*&quot; # 前缀通配</span><br><span class="line">    - &quot;*-preview&quot; # 后缀通配</span><br><span class="line">    - &quot;*flash*&quot; # 子串通配</span><br><span class="line">  vertex:</span><br><span class="line">    - &quot;gemini-3-pro-preview&quot;</span><br><span class="line">  aistudio:</span><br><span class="line">    - &quot;gemini-3-pro-preview&quot;</span><br><span class="line">  antigravity:</span><br><span class="line">    - &quot;gemini-3-pro-preview&quot;</span><br><span class="line">  claude:</span><br><span class="line">    - &quot;claude-3-5-haiku-20241022&quot;</span><br><span class="line">  codex:</span><br><span class="line">    - &quot;gpt-5-codex-mini&quot;</span><br><span class="line">  qwen:</span><br><span class="line">    - &quot;vision-model&quot;</span><br><span class="line">  iflow:</span><br><span class="line">    - &quot;tstars2.0&quot;</span><br><span class="line"># 可选的 payload 配置</span><br><span class="line">payload:</span><br><span class="line">  override:</span><br><span class="line">    - models:</span><br><span class="line">        - name: &quot;gpt-*&quot;</span><br><span class="line">          protocol: &quot;codex&quot;</span><br><span class="line">      params:</span><br><span class="line">        &quot;reasoning.effort&quot;: &quot;xhigh&quot;</span><br><span class="line">  filter:</span><br><span class="line">    - models:</span><br><span class="line">        - name: gpt-*</span><br><span class="line">          protocol: &quot;&quot;</span><br><span class="line">      params:</span><br><span class="line">        - response_format</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>Author：</strong>KangQingYu<br>
+        <strong>Link：</strong><a href="http://example.com/2026/02/23/20260223Codex%20CLI%20%E5%8F%8D%E4%BB%A3%20CPA%E9%85%8D%E7%BD%AE/" title="http:&#x2F;&#x2F;example.com&#x2F;2026&#x2F;02&#x2F;23&#x2F;20260223Codex%20CLI%20%E5%8F%8D%E4%BB%A3%20CPA%E9%85%8D%E7%BD%AE&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2026&#x2F;02&#x2F;23&#x2F;20260223Codex%20CLI%20%E5%8F%8D%E4%BB%A3%20CPA%E9%85%8D%E7%BD%AE&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98/">编程实战</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/AI/" rel="tag">AI</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '2164cca1a9c9effa7fde',
+        clientSecret: '22c7bbf0da70c945b4f9772805d0ce05d563dfb2',
+        id: window.location.pathname,
+        repo: 'kangqingyu.github.io',
+        owner: 'kangqingyu',
+        admin: 'kangqingyu'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+    <div id="nexmoe-search-space">
+        <div class="search-container">
+            <div class="search-header">
+                <div class="search-input-container">
+                    <input class="search-input" type="text" placeholder="Search" oninput="sinput();">
+                </div>
+                <a class="search-close" onclick="sclose();">×</a>
+            </div>
+            <div class="search-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+ 
+
+<script async src="/js/app.js?v=1774682049944"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+    <!-- Google Analytics -->
+<script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'G-R4DSD88YCM', 'auto');
+    ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
+
+
+
+
+    <!-- baidu Analytics -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?eef3d100bb564c2ac2c53dca022a5a3e';
+    var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</body>
+
+</html>
