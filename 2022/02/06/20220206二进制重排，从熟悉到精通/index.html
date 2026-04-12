@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    
+    <title>二进制重排，从熟悉到精通 - KangQingYu</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="images/web.ico" type="image/x-icon" />
+    <meta name="description" content="二进制重排，通过重新排列可执行文件Mach-O中函数的相对布局，将启动阶段需要调用的函数集中在一起，减少缺页中断次数，从而优化冷启动速度。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二进制重排，从熟悉到精通">
+<meta property="og:url" content="http://example.com/2022/02/06/20220206%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%87%8D%E6%8E%92%EF%BC%8C%E4%BB%8E%E7%86%9F%E6%82%89%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">
+<meta property="og:site_name" content="KangQingYu">
+<meta property="og:description" content="二进制重排，通过重新排列可执行文件Mach-O中函数的相对布局，将启动阶段需要调用的函数集中在一起，减少缺页中断次数，从而优化冷启动速度。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-02-06T12:16:24.000Z">
+<meta property="article:modified_time" content="2026-04-11T00:49:53.327Z">
+<meta property="article:author" content="KangQingYu">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1775868619656">
+    
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1775868619656">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1775868619656">
+    <link rel="stylesheet" href="/css/style.css?v=1775868619656">
+     
+    
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(http://cdn.kangqingyu.com/mweb/1920-213.png)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="KangQingYu" class="mdui-btn mdui-btn-icon"><img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="KangQingYu">
+            <img src="http://cdn.kangqingyu.com/common/avatar51k.JPG" alt="KangQingYu" alt="KangQingYu">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>Articles</span>58</div>
+        <div><span>Tags</span>21</div>
+        <div><span>Categories</span>9</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="个人简介">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                个人简介
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/个人成长/">个人成长</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/互联网思维/">互联网思维</a>
+          <span class="category-list-count">8</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/器：软件与硬件/">器：软件与硬件</a>
+          <span class="category-list-count">7</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/年度总结/">年度总结</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/搭建个人成长系统/">搭建个人成长系统</a>
+          <span class="category-list-count">10</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/新闻点评/">新闻点评</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/编程实战/">编程实战</a>
+          <span class="category-list-count">13</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/读书感悟/">读书感悟</a>
+          <span class="category-list-count">11</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/运动健身/">运动健身</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:kangqingyu.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://book.douban.com/people/kangqingyu/collect" target="_blank" mdui-tooltip="{content: '豆瓣'}" style="color: rgb(00, 77, 11);background-color: rgba(00, 77, 11, .1);">
+            <i class="nexmoefont icon-douban-fill"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/552775698" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/kangqingyu/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="mailto:kangqingyu@gmail.com" target="_blank" mdui-tooltip="{content: 'mail'}" style="color: rgb(249,8,8);background-color: rgba(249,8,8,.1);">
+            <i class="nexmoefont icon-mail-fill"></i>
+        </a>
+    </div>
+</div>
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/apple/" style="font-size: 13.33px;">apple</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 18.33px;">iOS</a> <a href="/tags/script/" style="font-size: 10px;">script</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 16.67px;">个人成长</a> <a href="/tags/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/" style="font-size: 10px;">人生感悟</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E6%96%87%E5%8C%96/" style="font-size: 13.33px;">企业文化</a> <a href="/tags/%E5%8A%9B%E9%87%8F%E8%AE%AD%E7%BB%83/" style="font-size: 10px;">力量训练</a> <a href="/tags/%E5%B9%B8%E7%A6%8F%E5%BF%AB%E4%B9%90/" style="font-size: 10px;">幸福快乐</a> <a href="/tags/%E6%88%90%E5%8A%9F/" style="font-size: 11.67px;">成功</a> <a href="/tags/%E6%8A%95%E8%B5%84%E7%90%86%E8%B4%A2/" style="font-size: 10px;">投资理财</a> <a href="/tags/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/" style="font-size: 15px;">时间管理</a> <a href="/tags/%E7%9D%A1%E7%9C%A0/" style="font-size: 10px;">睡眠</a> <a href="/tags/%E8%84%9A%E6%9C%AC/" style="font-size: 10px;">脚本</a> <a href="/tags/%E8%AF%BB%E4%B9%A6/" style="font-size: 20px;">读书</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 11.67px;">软件</a> <a href="/tags/%E8%BF%90%E5%8A%A8/" style="font-size: 10px;">运动</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 10px;">逆向</a> <a href="/tags/%E9%BB%91%E4%BA%A7/" style="font-size: 10px;">黑产</a>
+    </div>
+    
+  </div>
+
+    
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2026 KangQingYu
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 16.302083333333332%;"> 
+              <img data-src="http://cdn.kangqingyu.com/mweb/1920-213.png" data-sizes="auto" alt="二进制重排，从熟悉到精通" class="lazyload">
+              <h1>二进制重排，从熟悉到精通</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2022年02月06日</a>
+</div>
+
+      
+
+      <p>二进制重排，通过重新排列可执行文件Mach-O中函数的相对布局，将启动阶段需要调用的函数集中在一起，减少缺页中断次数，从而优化冷启动速度。</p>
+<span id="more"></span> 
+
+
+
+<ul>
+<li><a href="#%E4%B8%80%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD">一 缺页中断</a><ul>
+<li><a href="#linkmap%E5%88%86%E6%9E%90%E4%B8%8E%E5%8F%8D%E9%A6%88">linkMap分析与反馈</a></li>
+<li><a href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E8%B7%AF">核心思路</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C%E6%89%BE%E5%88%B0%E5%90%AF%E5%8A%A8%E7%9A%84%E6%96%B9%E6%B3%95%E7%9A%84%E9%A1%BA%E5%BA%8F">二 找到启动的方法的顺序</a><ul>
+<li><a href="#%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95%E7%9A%84%E9%80%89%E6%8B%A9">几种方法的选择</a><ul>
+<li><a href="#1-dyld-trace">1 dyld trace</a></li>
+<li><a href="#2-instruments-time-profiler">2 Instruments (Time Profiler)</a></li>
+<li><a href="#3%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%8B%E7%82%B9">3 自定义埋点</a></li>
+</ul>
+</li>
+<li><a href="#%E6%9B%B4%E6%88%90%E7%86%9F%E7%9A%84%E6%96%B9%E6%A1%88clang%E6%8F%92%E6%A1%A9">更成熟的方案Clang插桩</a><ul>
+<li><a href="#1%E5%BC%80%E5%90%AF%E7%BC%96%E8%AF%91%E6%8F%92%E6%A1%A9%E9%85%8D%E7%BD%AE">1 开启编译插桩配置</a></li>
+<li><a href="#2%E7%BC%96%E5%86%99%E6%8F%92%E6%A1%A9%E6%8B%A6%E6%88%AA%E4%BB%A3%E7%A0%81%EF%BC%88%E8%8E%B7%E5%8F%96%E5%90%AF%E5%8A%A8%E5%87%BD%E6%95%B0%E9%A1%BA%E5%BA%8F%EF%BC%89">2 编写插桩拦截代码（获取启动函数顺序）</a></li>
+<li><a href="#3%E8%A7%A3%E6%9E%90%E7%AC%A6%E5%8F%B7%E5%B9%B6%E7%94%9F%E6%88%90-order-file">3 解析符号并生成 Order File</a></li>
+<li><a href="#4%E9%85%8D%E7%BD%AE-order-file%E5%88%B0%E9%A1%B9%E7%9B%AE%E4%B8%AD">4 配置 Order File 到项目中</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89%E4%BC%98%E5%8C%96%E5%B1%9E%E4%BA%8E%E7%BC%96%E8%AF%91%E4%B8%AD%E7%9A%84%E5%93%AA%E4%B8%AA%E9%98%B6%E6%AE%B5%EF%BC%9F">三 优化属于编译中的哪个阶段？</a></li>
+<li><a href="#%E5%9B%9B%E6%95%88%E6%9E%9C%E8%A1%A1%E9%87%8F%E6%8C%87%E6%A0%87">四 效果衡量指标</a><ul>
+<li><a href="#%E6%8C%87%E6%A0%871%E7%BC%BA%E2%BB%9A%E4%B8%AD%E6%96%AD%E4%B8%AA%E6%95%B0">指标1:缺⻚中断个数</a></li>
+<li><a href="#%E6%8C%87%E6%A0%872%E5%90%AF%E5%8A%A8%E6%97%B6%E9%97%B4">指标2:启动时间</a><ul>
+<li><a href="#%E6%89%8B%E5%8A%A8%E5%86%B7%E5%90%AF%E5%8A%A8%E4%B8%8E%E6%9D%80%E8%BF%9B%E7%A8%8B">手动冷启动与杀进程</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%BA%94%E5%90%8E%E8%AE%B0">五 后记</a></li>
+</ul>
+<h1 id="一-缺页中断"><a href="#一-缺页中断" class="headerlink" title="一 缺页中断"></a>一 缺页中断</h1><p>操作系统的虚拟内存机制，是分页的，避免一次把应用程序的可执行文件一次性全部加载到物理内存。而是将其划分为固定的页，比如iOS每页是16KB。<br>程序访问的时候，是操作系统分配的虚拟内存地址。CPU的内存管理单元（MMU）负责将这些虚拟内存地址，映射为物理内存地址。<br>当程序执行到某段代码，发现虚拟内存没有对应物理内存的时候，会触发硬件异常，即缺页中断。<br>缺页中断，操作系统处理流程：</p>
+<ul>
+<li>暂停当前进程执行</li>
+<li>根据虚拟地址，在页表中发现该页尚未映射到物理内存（触发缺页中断）</li>
+<li>操作系统根据映射关系，从磁盘上的可执行文件（Mach-O）或内存映射文件中读取对应页数据</li>
+<li>将该页加载到物理内存（RAM）</li>
+<li>更新虚拟地址到物理地址的映射关系（页表）</li>
+<li>恢复进程执行</li>
+</ul>
+<p>虚拟内存与分页机制，是操作系统的一种优化。宏观层面避免数据全部都加载到物理内存。<br>缺页中断是这个优化过程中的一个异常触发信号。<br>虽然每次缺页中断耗时不到1ms，但是当启动方法达到几万个，则有一定的优化空间。</p>
+<h2 id="linkMap分析与反馈"><a href="#linkMap分析与反馈" class="headerlink" title="linkMap分析与反馈"></a>linkMap分析与反馈</h2><p>想要查看APP所有符号的启动顺序，可以通过linkMap。既能在调研阶段查看不同方法调用内存的分布，又能在优化完成之后做量化分析。</p>
+<p>LinkMap是iOS编译过程的中间产物，记录了二进制文件的分布。</p>
+<p>结构分析，共三部分<br>1 Object Files<br>生成二进制用到的link单元的路径和文件编号。<br>每一行对应一个.o，包括.m&#x2F;.cpp，其中.h头文件是预处理阶段，原封不动引入的。<br>2 Section（段&#x2F;区段列表）。描述了最终生成的Mach-O文件中，各个虚拟内存段（Segment）和区段（Section）的布局信息。<br>代码段（__TEXT, __text），数据段(__DATA, __data），字符串常量段（__TEXT, __cstring）</p>
+<p>3 Symbol（符号表&#x2F;具体的排列顺序）<br>每一个方法、全局变量、字符串存放具体内存地址，占了多大空间，属于哪个.o文件（有与第一部分Object Files中对应文件的编号）。</p>
+<p>Mach-O二进制体系，内存布局与传统操作系统的内存布局不同。Mach-O内存布局分两级：Segment（段），Section（区段）。<br>1 __TEXT（代码段Segment），这是最高级别的一大块，核心权限是可读和可执行（r-x）。</p>
+<p>__TEXT.__text（Section），这是__TEXT段下面的一个核心区段，是传统操作系统中的text段，存储的是CPU要执行的机器码0101</p>
+<p>2 __DATA(数据段Segment)，这也是一大块，核心权限是可读可写（rw-)，APP运行过程中各种变量的修改都在这里。<br>传统操作系统的data段（已初始化的全局变量、静态变量），在Mach-O里叫”__DATA.__data”；<br>传统操作系统的bss段（未初始化的全局变量、静态变量），在Mach-O里叫”__DATA.__bss”。</p>
+<h2 id="核心思路"><a href="#核心思路" class="headerlink" title="核心思路"></a>核心思路</h2><p>生成Order File（符号表顺序文件），在编译器配置，告诉链接器在打包的时候，将所有启动阶段会调用的函数，紧密的排列在一起，集中放在二进制文件的最前面（Text段的开头）。</p>
+<h1 id="二-找到启动的方法的顺序"><a href="#二-找到启动的方法的顺序" class="headerlink" title="二 找到启动的方法的顺序"></a>二 找到启动的方法的顺序</h1><h2 id="几种方法的选择"><a href="#几种方法的选择" class="headerlink" title="几种方法的选择"></a>几种方法的选择</h2><h3 id="1-dyld-trace"><a href="#1-dyld-trace" class="headerlink" title="1 dyld trace"></a>1 dyld trace</h3><p><code>dyld</code>（Dynamic Link Editor）是苹果系统的动态链接器。当用户点击 App 图标，在 <code>main()</code> 函数执行之前，其实是 <code>dyld</code> 在干活（加载动态库、绑定符号、执行 <code>+load</code> 和 C++ 静态构造函数）。</p>
+<ul>
+<li><p>作用： 这里的 dyld trace 指的是通过配置系统环境变量（比如早期的 <code>DYLD_PRINT_STATISTICS</code> 或 <code>DYLD_PRINT_BINDINGS</code>），让系统在控制台打印出 main 函数执行前的耗时细节。</p>
+</li>
+<li><p>局限： 只能说明加载了哪些库、花了多久，不能用来追踪业务代码里每个函数的调用顺序。</p>
+</li>
+</ul>
+<h3 id="2-Instruments-Time-Profiler"><a href="#2-Instruments-Time-Profiler" class="headerlink" title="2 Instruments (Time Profiler)"></a>2 Instruments (Time Profiler)</h3><ul>
+<li><p>原理： 采样（Sampling）。比如每隔 1 毫秒，去偷看一眼当前 CPU 正在执行什么函数。</p>
+</li>
+<li><p>局限： 无法用于二进制重排！ 因为它会漏抓。如果一个函数执行只花了 0.1 毫秒，且正好在两次采样间隔中间执行完了，Time Profiler 根本不知道它执行过。</p>
+</li>
+</ul>
+<h3 id="3-自定义埋点"><a href="#3-自定义埋点" class="headerlink" title="3 自定义埋点"></a>3 自定义埋点</h3><ul>
+<li>原理： 利用 OC 的 Runtime 机制，Hook 掉 <code>objc_msgSend</code>，记录每一次方法调用。</li>
+<li>局限： 只能抓到 Objective-C 方法，抓不到底层纯 C 函数（比如压缩库 <code>zipOpenNewFileInZip5</code>）或者 Swift 函数，覆盖面不够。</li>
+</ul>
+<h2 id="更成熟的方案Clang插桩"><a href="#更成熟的方案Clang插桩" class="headerlink" title="更成熟的方案Clang插桩"></a>更成熟的方案Clang插桩</h2><p>目前业界最成熟、覆盖率最高（能同时覆盖 OC、Swift、C、C++ 以及 Block）的方案是利用 LLVM 编译器的Clang SanitizerCoverage功能来进行插桩。</p>
+<p>整体流程分为三步：开启编译插桩 -&gt; 拦截并记录函数执行顺序 -&gt; 生成并配置 Order File。</p>
+<h3 id="1-开启编译插桩配置"><a href="#1-开启编译插桩配置" class="headerlink" title="1 开启编译插桩配置"></a>1 开启编译插桩配置</h3><p>让编译器在每个函数的入口处自动插入一句回调代码，以便“监听”到函数的调用。</p>
+<ul>
+<li>在 Xcode 中，找到 <code>Build Settings</code> -&gt; 搜索 <code>Other C Flags</code>。</li>
+<li>添加配置：<code>-fsanitize-coverage=func,trace-pc-guard</code></li>
+<li>如果有 Swift 代码，搜索 <code>Other Swift Flags</code>，添加：<code>-sanitize-coverage=func</code> 和 <code>-sanitize=undefined</code>。</li>
+</ul>
+<h3 id="2-编写插桩拦截代码（获取启动函数顺序）"><a href="#2-编写插桩拦截代码（获取启动函数顺序）" class="headerlink" title="2 编写插桩拦截代码（获取启动函数顺序）"></a>2 编写插桩拦截代码（获取启动函数顺序）</h3><p>开启配置后，编译器会在每个函数内部调用一个名为 <code>__sanitizer_cov_trace_pc_guard</code> 的底层 C 函数。在代码中自己实现这个函数来收集被调用的函数内存地址，并反向解析出函数名。</p>
+<p>在项目启动最早的地方（比如 <code>main.m</code> 或者新建一个纯 C 文件），写入代码。</p>
+<h3 id="3-解析符号并生成-Order-File"><a href="#3-解析符号并生成-Order-File" class="headerlink" title="3 解析符号并生成 Order File"></a>3 解析符号并生成 Order File</h3><p>在 App 完成冷启动的标志性时刻（比如首屏 <code>ViewController</code> 的 <code>viewDidAppear</code> 中），触发符号解析逻辑，将收集到的内存地址转换为函数名，并导出到文件中。</p>
+<h3 id="4-配置-Order-File-到项目中"><a href="#4-配置-Order-File-到项目中" class="headerlink" title="4 配置 Order File 到项目中"></a>4 配置 Order File 到项目中</h3><ol>
+<li>找到手机沙盒中生成的 <code>app.order</code> 文件，把它拖到 Xcode 工程根目录下。</li>
+<li>在 Xcode 的 <code>Build Settings</code> 中搜索 <code>Order File</code>。</li>
+<li>将刚才拖入的 <code>app.order</code> 文件的相对路径填进去（例如：<code>$(SRCROOT)/app.order</code>）。</li>
+<li>关闭之前第 1 步中开启的 <code>Other C Flags</code> 的插桩配置（删掉 <code>-fsanitize-coverage=func,trace-pc-guard</code>）。因为插桩本身是极其耗时的，仅在“获取启动顺序”的调试阶段使用它。</li>
+</ol>
+<p>重新编译打包，此时App 二进制文件就已经重排完毕了。可以通过 <code>Link Map</code> 文件来验证函数顺序是否与 <code>app.order</code> 中的一致。</p>
+<h1 id="三-优化属于编译中的哪个阶段？"><a href="#三-优化属于编译中的哪个阶段？" class="headerlink" title="三 优化属于编译中的哪个阶段？"></a>三 优化属于编译中的哪个阶段？</h1><p> 编译阶段，Clang会将.m源文件编译为目标单元.o文件，代码被翻译成了机器码。<br> 链接阶段，链接器会将.o文件以及依赖的动态库、静态库组装在一起，生成最终的Mach-O可执行文件。<br>链接器的文件顺序，是按照Xcode 中 <code>Build Phases -&gt; Compile Sources</code> 里的编译顺序。如果想要修改这个顺序，就需要传递一个Order File，使这些函数挨个排在Mach-O文件的<code>__TEXT, __text</code>段的最前面。</p>
+<h1 id="四-效果衡量指标"><a href="#四-效果衡量指标" class="headerlink" title="四 效果衡量指标"></a>四 效果衡量指标</h1><h2 id="指标1-缺⻚中断个数"><a href="#指标1-缺⻚中断个数" class="headerlink" title="指标1:缺⻚中断个数"></a>指标1:缺⻚中断个数</h2><p>打开 Instruments，选择 System Trace，运行之后。分析数据如图，选择“Main Thread”，底部的<br>File Backed Page In即为缺⻚中断个数。</p>
+<blockquote>
+<p>Count 10312个，Duration 1.32s；</p>
+</blockquote>
+<h2 id="指标2-启动时间"><a href="#指标2-启动时间" class="headerlink" title="指标2:启动时间"></a>指标2:启动时间</h2><p>虽然我们优化的是缺⻚中断的个数，但其最终目的还是启动时间。统计时间有几种:</p>
+<p>1 打开Xcode的DYLDPRINTSTATISTICS选项。<br>2 Instrument AppLaunch功能。</p>
+<h3 id="手动冷启动与杀进程"><a href="#手动冷启动与杀进程" class="headerlink" title="手动冷启动与杀进程"></a>手动冷启动与杀进程</h3><p>因为Mach-O加载到内存之后会有缓存，下次不会触发磁盘IO。为了避免缓存所造成的误差，需要杀进程，但杀进程 &#x3D; 冷启动?显然并非如此，因为如果只是杀进程，因为内存还没有被其他进程使用，所以也没必要清空所有的缓存，苹果做了一些优化。即 杀进程 !&#x3D; 冷启动。那如何保证尽可能得接近冷启动的效果呢?</p>
+<ul>
+<li>杀进程之后，再多打开几个其他耗内存很高的APP。 这样可以迫使iOS内存回收。</li>
+<li>重启手机</li>
+<li>删除 Xcode 缓存：~&#x2F;Library&#x2F;Developer&#x2F;Xcode&#x2F;DerivedData</li>
+</ul>
+<p>这样虽然可以尽可能接近冷启动，但是每次完全编译，分析缺⻚中断的个数、启动时间。再优化 前后对比2次。总共要完全重新编译4次。如果是比较大的项目，可能一个小时都不够。</p>
+<h1 id="五-后记"><a href="#五-后记" class="headerlink" title="五 后记"></a>五 后记</h1><p>分享之后，领导提到这个技术方案与业务方向的问题。业务上目前对启动速度关注不大，所以这个优化纯粹是技术驱动。<br>技术是一种手段，而非目的。还是以业务方向为准，进行技术探究更好。</p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>Author：</strong>KangQingYu<br>
+        <strong>Link：</strong><a href="http://example.com/2022/02/06/20220206%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%87%8D%E6%8E%92%EF%BC%8C%E4%BB%8E%E7%86%9F%E6%82%89%E5%88%B0%E7%B2%BE%E9%80%9A/" title="http:&#x2F;&#x2F;example.com&#x2F;2022&#x2F;02&#x2F;06&#x2F;20220206%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%87%8D%E6%8E%92%EF%BC%8C%E4%BB%8E%E7%86%9F%E6%82%89%E5%88%B0%E7%B2%BE%E9%80%9A&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2022&#x2F;02&#x2F;06&#x2F;20220206%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%87%8D%E6%8E%92%EF%BC%8C%E4%BB%8E%E7%86%9F%E6%82%89%E5%88%B0%E7%B2%BE%E9%80%9A&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98/">编程实战</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/iOS/" rel="tag">iOS</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '2164cca1a9c9effa7fde',
+        clientSecret: '22c7bbf0da70c945b4f9772805d0ce05d563dfb2',
+        id: window.location.pathname,
+        repo: 'kangqingyu.github.io',
+        owner: 'kangqingyu',
+        admin: 'kangqingyu'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+    <div id="nexmoe-search-space">
+        <div class="search-container">
+            <div class="search-header">
+                <div class="search-input-container">
+                    <input class="search-input" type="text" placeholder="Search" oninput="sinput();">
+                </div>
+                <a class="search-close" onclick="sclose();">×</a>
+            </div>
+            <div class="search-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+ 
+
+<script async src="/js/app.js?v=1775868619658"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+    <!-- Google Analytics -->
+<script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'G-R4DSD88YCM', 'auto');
+    ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
+
+
+
+
+    <!-- baidu Analytics -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?eef3d100bb564c2ac2c53dca022a5a3e';
+    var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</body>
+
+</html>
