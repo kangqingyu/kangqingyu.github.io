@@ -4,7 +4,7 @@
 
 <head>
     
-    <title>Hexo github 博客预览正常，但是部署之后无法展示 - KangQingYu</title>
+    <title>Proxyman rewrite注入vConsole - KangQingYu</title>
     <meta charset="UTF-8">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
@@ -12,26 +12,23 @@
     
 
     <link rel="shortcut icon" href="images/web.ico" type="image/x-icon" />
-    <meta name="description" content="问题：Hexo本地预览正常，但是发布之后无法展示这时要看github的日志了，打开我们的github博客库，“Actions”选项，看最近的pages build，红色的叉号表示出现错误。打开看看。   解决步骤其实根据build日志，可以很清楚得看出来原因：原来是文件的名字太长了。当然每个人的问题原因都不一样，在这里找相应的报错日志，解决即可。 Hexo github 博客2021最">
+    <meta name="description" content="Proxyman rewrite如何使用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo github 博客预览正常，但是部署之后无法展示">
-<meta property="og:url" content="http://example.com/2021/08/20/20210820_Hexo%20github%20%E5%8D%9A%E5%AE%A2%E9%A2%84%E8%A7%88%E6%AD%A3%E5%B8%B8%EF%BC%8C%E4%BD%86%E6%98%AF%E9%83%A8%E7%BD%B2%E4%B9%8B%E5%90%8E%E6%97%A0%E6%B3%95%E5%B1%95%E7%A4%BA/index.html">
+<meta property="og:title" content="Proxyman rewrite注入vConsole">
+<meta property="og:url" content="http://example.com/2024/08/31/Proxyman%20rewrite%E6%B3%A8%E5%85%A5vConsole/index.html">
 <meta property="og:site_name" content="KangQingYu">
-<meta property="og:description" content="问题：Hexo本地预览正常，但是发布之后无法展示这时要看github的日志了，打开我们的github博客库，“Actions”选项，看最近的pages build，红色的叉号表示出现错误。打开看看。   解决步骤其实根据build日志，可以很清楚得看出来原因：原来是文件的名字太长了。当然每个人的问题原因都不一样，在这里找相应的报错日志，解决即可。 Hexo github 博客2021最">
+<meta property="og:description" content="Proxyman rewrite如何使用">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16461898173506.jpg">
-<meta property="og:image" content="http://cdn.kangqingyu.com/mweb/16461898867212.jpg">
-<meta property="article:published_time" content="2021-08-19T22:39:23.000Z">
-<meta property="article:modified_time" content="2024-02-12T07:47:56.000Z">
+<meta property="article:published_time" content="2024-08-31T13:05:52.000Z">
+<meta property="article:modified_time" content="2026-04-21T15:03:51.557Z">
 <meta property="article:author" content="KangQingYu">
-<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="软件">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://cdn.kangqingyu.com/mweb/16461898173506.jpg">
-    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1776784577010">
+    <link rel="stylesheet" href="/lib/jquery.fancybox.min.css?v=1776784576999">
     
-    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1776784577010">
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1776784577010">
-    <link rel="stylesheet" href="/css/style.css?v=1776784577010">
+    <link rel="stylesheet" href="/lib/mdui_043tiny/css/mdui.css?v=1776784576999">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1776784576999">
+    <link rel="stylesheet" href="/css/style.css?v=1776784576999">
      
     
 <meta name="generator" content="Hexo 6.0.0"></head>
@@ -219,46 +216,69 @@
   <article>
       
           <div class="nexmoe-post-cover" style="padding-bottom: 16.302083333333332%;"> 
-              <img data-src="http://cdn.kangqingyu.com/mweb/1920-213.png" data-sizes="auto" alt="Hexo github 博客预览正常，但是部署之后无法展示" class="lazyload">
-              <h1>Hexo github 博客预览正常，但是部署之后无法展示</h1>
+              <img data-src="http://cdn.kangqingyu.com/mweb/1920-213.png" data-sizes="auto" alt="Proxyman rewrite注入vConsole" class="lazyload">
+              <h1>Proxyman rewrite注入vConsole</h1>
           </div>
       
       
       <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
-    <a><i class="nexmoefont icon-calendar-fill"></i>2021年08月20日</a>
+    <a><i class="nexmoefont icon-calendar-fill"></i>2024年08月31日</a>
 </div>
 
       
 
-      <span id="more"></span> 
+      <p>Proxyman rewrite如何使用</p>
+<span id="more"></span> 
+
+<ul>
+<li><a href="#%E4%B8%80%E9%9C%80%E6%B1%82%E8%83%8C%E6%99%AF">一 需求背景</a></li>
+<li><a href="#%E4%BA%8Ccharles%E7%9A%84-rewrite%E9%85%8D%E7%BD%AE">二 Charles 的rewrite配置</a></li>
+<li><a href="#%E4%B8%89proxyman%E7%9A%84%E9%85%8D%E7%BD%AE">三 Proxyman的配置</a><ul>
+<li><a href="#%E6%8B%A6%E6%88%AA%E8%84%9A%E6%9C%AC">拦截脚本</a></li>
+<li><a href="#%E7%B2%BE%E7%A1%AE%E5%88%A4%E6%96%AD%E8%AF%B7%E6%B1%82%E7%9A%84%E6%96%B9%E6%B3%95">精确判断请求的方法</a><ul>
+<li><a href="#%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90">结果分析</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="一-需求背景"><a href="#一-需求背景" class="headerlink" title="一 需求背景"></a>一 需求背景</h1><p>信用卡tab预加载的时候，H5用于统计，所以需要Native调用H5的一段js方法：<br><code>&quot;javascript:window._report_home_sw();&quot;</code></p>
+<p>iOS代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    [self.webView.webView executeScript:@&quot;window._report_home_sw();&quot; handler:nil];</span><br></pre></td></tr></table></figure>
 
 
 
+<p>但是如何自测其生效了？需要注入 vConsole 脚本。通过查看H5变量的变化，确定是否收到。因此本文总结一下注入的步骤。</p>
+<h1 id="二-Charles-的rewrite配置"><a href="#二-Charles-的rewrite配置" class="headerlink" title="二 Charles 的rewrite配置"></a>二 Charles 的rewrite配置</h1><p>使用rewrite；选择response；<br>Rewrite Setting，Type选择Body。<br>Match 的Name空，Value填写<code>&lt;head&gt;</code></p>
+<p>Replace的Name空，Value如下（把<code>&lt;head&gt;</code>替换成如下值）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;&lt;script src=&quot;https://us.kqy.com/silver-bullet-img/2022-08-22/d8twU-vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;var vConsole = new window.VConsole();&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这是公司部署的，其实是用的开源的vconsole。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://unpkg.com/vconsole@3.15.1/dist/vconsole.min.js</span><br></pre></td></tr></table></figure>
 
-<h1 id="问题：Hexo本地预览正常，但是发布之后无法展示"><a href="#问题：Hexo本地预览正常，但是发布之后无法展示" class="headerlink" title="问题：Hexo本地预览正常，但是发布之后无法展示"></a>问题：Hexo本地预览正常，但是发布之后无法展示</h1><p>这时要看github的日志了，打开我们的github博客库，“Actions”选项，看最近的pages build，红色的叉号表示出现错误。打开看看。</p>
-<p><img src="http://cdn.kangqingyu.com/mweb/16461898173506.jpg"></p>
-<p><img src="http://cdn.kangqingyu.com/mweb/16461898867212.jpg"></p>
-<h2 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h2><p>其实根据build日志，可以很清楚得看出来原因：原来是文件的名字太长了。当然每个人的问题原因都不一样，在这里找相应的报错日志，解决即可。</p>
-<h1 id="Hexo-github-博客2021最新版注意事项，2021年github的几个改变"><a href="#Hexo-github-博客2021最新版注意事项，2021年github的几个改变" class="headerlink" title="Hexo github 博客2021最新版注意事项，2021年github的几个改变"></a>Hexo github 博客2021最新版注意事项，2021年github的几个改变</h1><p>如何使用Hexo github建自己的网站，具体步骤这里就不说了，搜索关键字“Hexo github 博客”，就有很多详细的步骤。</p>
-<p>在搜索的是时候，我筛选的是近一年的博客（在搜索的网站后面加上&amp;as_qdr&#x3D;d即可按时间排序），但是依然有一些过时的东西。</p>
-<p>这里就分享一下2021年github的几个改变：</p>
-<h2 id="变化1：config-yml中branch不是master，而是main"><a href="#变化1：config-yml中branch不是master，而是main" class="headerlink" title="变化1：config.yml中branch不是master，而是main"></a>变化1：config.yml中branch不是master，而是main</h2><p>本地预览之后、准备发布时（hexo d命令），需要在根目录下的 _config.yml，配置 GitHub 相关信息：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/kangqingyu/kangqingyu.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
-<p>注意2020年底开始，github的主干不再是master而是main。</p>
-<h2 id="变化2：Support-for-password-authentication-was-removed-on-August-13-2021-Please-use-a-personal-access-token-instead"><a href="#变化2：Support-for-password-authentication-was-removed-on-August-13-2021-Please-use-a-personal-access-token-instead" class="headerlink" title="变化2：Support for password authentication was removed on August 13, 2021. Please use a personal access token instead"></a>变化2：Support for password authentication was removed on August 13, 2021. Please use a personal access token instead</h2><p>在发布时，会要求输入账号和密码，终端有如下问题显示：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Username for &#x27;https://github.com&#x27;: kangqingyu</span><br><span class="line">Password for &#x27;https://kangqingyu@github.com&#x27;:</span><br><span class="line">remote: Support for password authentication was removed on August 13, 2021. Please use a personal access token instead.</span><br><span class="line">remote: Please see https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/ for more information.</span><br><span class="line">fatal: Authentication failed for &#x27;https://github.com/kangqingyu/kangqingyu.github.io.git/&#x27;</span><br></pre></td></tr></table></figure>
+<h1 id="三-Proxyman的配置"><a href="#三-Proxyman的配置" class="headerlink" title="三 Proxyman的配置"></a>三 Proxyman的配置</h1><p>如果用Proxyman操作，应该如何配置？<br>Proxyman没有rewrite，但是有更强大的JavaScript写脚本拦截。</p>
+<h2 id="拦截脚本"><a href="#拦截脚本" class="headerlink" title="拦截脚本"></a>拦截脚本</h2><p>最简单的配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function onResponse(context, url, request, response) &#123;</span><br><span class="line">	// 确保获取到的 response body 是文本格式 (HTML)</span><br><span class="line">	if (typeof response.body === &#x27;string&#x27;) &#123;</span><br><span class="line">	var vconsoleScript = &#x27;&lt;head&gt;&lt;script src=&quot;https://kqy.com/silver-bullet-img/2022-08-22/d8twU-vconsole.min.js&quot;&gt;&lt;/script&gt;&lt;script&gt;var vConsole = new window.VConsole();&lt;/script&gt;&#x27;;</span><br><span class="line">	// 将 &lt;head&gt; 替换为注入了脚本的内容</span><br><span class="line">	response.body = response.body.replace(&#x27;&lt;head&gt;&#x27;, vconsoleScript);</span><br><span class="line">&#125;</span><br><span class="line">    // 必须 return response 才能生效</span><br><span class="line">	return response;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-<h2 id="参考：官方文档的解决方案介绍"><a href="#参考：官方文档的解决方案介绍" class="headerlink" title="参考：官方文档的解决方案介绍"></a>参考：官方文档的解决方案介绍</h2><p><a target="_blank" rel="noopener" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token</a></p>
-<p>翻译过来意思就是github登陆需要token。<br>注意需要在Github上设置一下token，并且要及时记录其值，因为再次刷新网页之后就不再显示了。</p>
+<p>但是不生效，即注入失败。因此要增加更多日志，用于判断为何注入失败。</p>
+<h2 id="精确判断请求的方法"><a href="#精确判断请求的方法" class="headerlink" title="精确判断请求的方法"></a>精确判断请求的方法</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">function onResponse(context, url, request, response) &#123;</span><br><span class="line">	console.log(&quot;🚀 SCRIPT TRIGGERED for URL: &quot; + url);</span><br><span class="line">	const contentType = response.headers[&quot;Content-Type&quot;] || &quot;&quot;;</span><br><span class="line">	console.log(&quot;📄 Content-Type: &quot; + contentType);</span><br><span class="line">	// 只处理 HTML 页面 + 排除所有 /api/ 接口</span><br><span class="line">	if (contentType.includes(&quot;html&quot;) &amp;&amp; !url.includes(&quot;/api/&quot;)) &#123;</span><br><span class="line">		console.log(&quot;✅ 检测到信用卡 H5 HTML 页面，开始注入 vConsole&quot;);</span><br><span class="line">const injectedScript =</span><br><span class="line">`&lt;script src=&quot;https://kqy.com/silver-bullet-img/2022-08-22/d8twU-vconsole.min.js&quot;&gt;&lt;/script&gt;` +</span><br><span class="line"></span><br><span class="line">`&lt;script&gt;var vConsole = new window.VConsole(); console.log(&#x27;%c✅ vConsole by Proxyman injected successfully!&#x27;, &#x27;color:#00ff00;font-size:16px&#x27;);&lt;/script&gt;`;</span><br><span class="line"></span><br><span class="line">	// 双重保险插入方式</span><br><span class="line">	let newBody = response.body.replace(/&lt;\/head&gt;/i, `$&#123;injectedScript&#125;&lt;/head&gt;`);</span><br><span class="line">	if (newBody === response.body) &#123;</span><br><span class="line">		newBody = response.body.replace(/&lt;head(\s[^&gt;]*)?&gt;/i, `&lt;head$1&gt;$&#123;injectedScript&#125;`);</span><br><span class="line">	&#125;</span><br><span class="line">		response.body = newBody;</span><br><span class="line">		console.log(&quot;✅ 注入完成！新 body 长度: &quot; + response.body.length);</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		console.log(&quot;❌ 跳过（非 HTML 或 API 请求）&quot;);</span><br><span class="line">&#125;</span><br><span class="line">	return response;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+
+<p>运行结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[18:22:50.876]: onResponse() is executed with Flow ID = 428</span><br><span class="line">🚀 SCRIPT TRIGGERED for URL: https://kqy.com/b?sig=9c1f780999&amp;h5_country=CN&amp;lang=en-US&amp;oid=YRR6z+T9ScSO8Y5dA</span><br><span class="line">📄 Content-Type: text/html; charset=UTF-8</span><br><span class="line">✅ 检测到信用卡 H5 HTML 页面，开始注入 vConsole</span><br><span class="line">✅ 注入完成！新 body 长度: 5835</span><br><span class="line">18:22:50.883 onResponse() 已执行！</span><br><span class="line">==========================</span><br><span class="line">[18:22:52.218]: onResponse() is executed with Flow ID = 437</span><br><span class="line">🚀 SCRIPT TRIGGERED for URL: https://s.dkqy.com/b/api/home/p?wsgsig=dsWfg%2F</span><br><span class="line">📄 Content-Type: application/json; charset=utf-8</span><br><span class="line">❌ 跳过（非 HTML 或 API 请求）</span><br><span class="line">18:22:52.228 onResponse() 已执行！</span><br><span class="line">==========================</span><br><span class="line">[18:23:03.043]: onResponse() is executed with Flow ID = 475</span><br><span class="line">🚀 SCRIPT TRIGGERED for URL: https://kqy.com/b/api/marketing/resource/queryOldApplyCardPage?wsgsig=dg9C%2F</span><br><span class="line">📄 Content-Type: application/json; charset=utf-8</span><br><span class="line">❌ 跳过（非 HTML 或 API 请求）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h3><p>text&#x2F;html才是需要注入的请求；而application&#x2F;json是API请求，过滤即可。</p>
+<p>为何现金贷的接口，可以看到text&#x2F;html，而信用卡没有呢？原来是打开了离线包。。。<br>关闭离线包之后，即可看到vConsole注入成功。</p>
+<p>通过如下H5打印的变量可以确认调用成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">window._tab_click_flag = true</span><br></pre></td></tr></table></figure>
   </article>
 
   
       
     <div class="nexmoe-post-copyright">
         <strong>Author：</strong>KangQingYu<br>
-        <strong>Link：</strong><a href="http://example.com/2021/08/20/20210820_Hexo%20github%20%E5%8D%9A%E5%AE%A2%E9%A2%84%E8%A7%88%E6%AD%A3%E5%B8%B8%EF%BC%8C%E4%BD%86%E6%98%AF%E9%83%A8%E7%BD%B2%E4%B9%8B%E5%90%8E%E6%97%A0%E6%B3%95%E5%B1%95%E7%A4%BA/" title="http:&#x2F;&#x2F;example.com&#x2F;2021&#x2F;08&#x2F;20&#x2F;20210820_Hexo%20github%20%E5%8D%9A%E5%AE%A2%E9%A2%84%E8%A7%88%E6%AD%A3%E5%B8%B8%EF%BC%8C%E4%BD%86%E6%98%AF%E9%83%A8%E7%BD%B2%E4%B9%8B%E5%90%8E%E6%97%A0%E6%B3%95%E5%B1%95%E7%A4%BA&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2021&#x2F;08&#x2F;20&#x2F;20210820_Hexo%20github%20%E5%8D%9A%E5%AE%A2%E9%A2%84%E8%A7%88%E6%AD%A3%E5%B8%B8%EF%BC%8C%E4%BD%86%E6%98%AF%E9%83%A8%E7%BD%B2%E4%B9%8B%E5%90%8E%E6%97%A0%E6%B3%95%E5%B1%95%E7%A4%BA&#x2F;</a><br>
+        <strong>Link：</strong><a href="http://example.com/2024/08/31/Proxyman%20rewrite%E6%B3%A8%E5%85%A5vConsole/" title="http:&#x2F;&#x2F;example.com&#x2F;2024&#x2F;08&#x2F;31&#x2F;Proxyman%20rewrite%E6%B3%A8%E5%85%A5vConsole&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2024&#x2F;08&#x2F;31&#x2F;Proxyman%20rewrite%E6%B3%A8%E5%85%A5vConsole&#x2F;</a><br>
         
             <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
         
@@ -272,7 +292,7 @@
         <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98/">编程实战</a>
     
     
-        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/hexo/" rel="tag">hexo</a>
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a>
     
 </div>
 
@@ -328,7 +348,7 @@
 
  
 
-<script async src="/js/app.js?v=1776784577010"></script>
+<script async src="/js/app.js?v=1776784576999"></script>
 
 
 
